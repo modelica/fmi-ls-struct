@@ -7,7 +7,7 @@
 :xrefstyle: short
 :docinfo: shared
 :docinfodir: docs
-:stylesheet: docs/fmi-spec.css
+:stylesheet: fmi-spec.css
 :stem: latexmath
 :source-highlighter: highlightjs
 :nofooter:
@@ -90,7 +90,7 @@ An example of a manifest file for this layered standard is shown below:
 
 [source, xml]
 ----
-include::docs/examples/fmi_ls_struct_manifest_example.xml[]
+include::examples/fmi_ls_struct_manifest_example.xml[]
 ----
 
 == Common Concepts
