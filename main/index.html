@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+<title>Layered Standard for Structured Data</title>
+<style>
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Layered Standard for Structured Data</h1>
+<div class="details">
+<span id="revnumber">version main-933349ced37e038e7162821c2f9f25ef0f2522c5,</span>
+<span id="revdate">2023-05-22</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#_intent_of_this_document">1.1. Intent of This Document</a></li>
+<li><a href="#_how_to_read_this_document">1.2. How to Read This Document</a></li>
+<li><a href="#_rough_outline_of_the_approach">1.3. Rough Outline of the Approach</a></li>
+</ul>
+</li>
+<li><a href="#common-concepts">2. Layered Standard Manifest File</a></li>
+<li><a href="#_common_concepts">3. Common Concepts</a>
+<ul class="sectlevel2">
+<li><a href="#_structure_of_the_fmu_archive">3.1. Structure of the FMU archive</a></li>
+</ul>
+</li>
+<li><a href="#_known_limitations_of_this_standard">4. Known Limitations of This Standard</a></li>
+<li><a href="#_references">References</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Based on FMI 3.0, this layered standard defines how variables of an FMU can be structured.</p>
+</div>
+<div class="paragraph">
+<p><br>
+</p>
+</div>
+<div class="paragraph">
+<p>Copyright &#169; 2012-2023 The Modelica Association Project FMI.</p>
+</div>
+<div class="paragraph">
+<p>This document is licensed under the Attribution-ShareAlike 4.0 International license.
+The code is released under the 2-Clause BSD License.
+The licenses text can be found in the <a href="https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt">LICENSE.txt</a> file that accompanies this distribution.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduction">1. Introduction</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_intent_of_this_document">1.1. Intent of This Document</h3>
+<div class="paragraph">
+<p>todo</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_to_read_this_document">1.2. How to Read This Document</h3>
+<div class="paragraph">
+<p>This document is about &#8230;&#8203; todo.</p>
+</div>
+<div class="paragraph">
+<p>The standard document is in HTML allowing use of in-document links.
+By pressing "t", the table of contents can be displayed on the left side or hidden.</p>
+</div>
+<div class="paragraph">
+<p>In key parts of this document, non-normative examples are used to help understand the standard.</p>
+</div>
+<div class="paragraph">
+<p>Conventions used in this document:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Non-normative text is given in square brackets in italic font: <em>[Especially examples are defined in this style.]</em></p>
+</li>
+<li>
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a> (regardless of formatting and capitalization).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rough_outline_of_the_approach">1.3. Rough Outline of the Approach</h3>
+<div class="paragraph">
+<p>todo</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="common-concepts">2. Layered Standard Manifest File</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This layered standard defines additional information about the structure of variables in the layered standard manifest file.
+<a href="#table-schema-fmi-ls-struct-attributes">Table 1</a> shows the content of <code>fmi-ls-manifest.xml</code>.</p>
+</div>
+<table id="table-schema-fmi-ls-struct-attributes" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. <code>fmiLayeredStandardManifest</code> attribute details.</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Namespace</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fmi-ls-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>http://fmi-standard.org/fmi-ls-manifest</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>org.fmi-standard.fmi-ls-struct</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the layered standard in reverse domain name notation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fmi-ls-version</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>http://fmi-standard.org/fmi-ls-manifest</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>1.0.0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version of the layered standard. This layered standard uses semantic versioning, as defined in <a href="#PW13">[PW13]</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fmi-ls-description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>http://fmi-standard.org/fmi-ls-manifest</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Layered standard for structuring of variables</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String with a brief description of the layered standard that is suitable for display to users.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>An example of a manifest file for this layered standard is shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">Unresolved directive in index.adoc - include::docs/examples/fmi_ls_struct_manifest_example.xml[]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_concepts">3. Common Concepts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>todo</p>
+</div>
+<div class="sect2">
+<h3 id="_structure_of_the_fmu_archive">3.1. Structure of the FMU archive</h3>
+<div class="paragraph">
+<p>Files describing the structure of variables are placed in the <code>extra</code> directory: <code>/extra/org.fmi-standard.fmi-ls-struct</code>.</p>
+</div>
+<div id="figure-fmi-layered-struct-directory-structure" class="listingblock">
+<div class="content">
+<pre>extra/org.fmi-standard.fmi-ls-struct  // Contains files related to layered standard
+   fmi-ls-manifest.xml                // The layered standard manifest file</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_known_limitations_of_this_standard">4. Known Limitations of This Standard</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>General limitations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>todo</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references">References</h2>
+<div class="sectionbody">
+<div class="ulist bibliography">
+<ul class="bibliography">
+<li>
+<p><a id="PW13"></a>[PW13] Preston-Werner, T. (2013): <strong>Semantic Versioning 2.0.0</strong>.  <a href="https://semver.org/spec/v2.0.0.html" class="bare">https://semver.org/spec/v2.0.0.html</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
+<script>
+if (!hljs.initHighlighting.called) {
+  hljs.initHighlighting.called = true
+  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
+}
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "none" } }
+})
+MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains("stemblock")) {
+      data.math.root.display = "block"
+    }
+    return data
+  })
+})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+</body>
+</html>
