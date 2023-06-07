@@ -1,7 +1,7 @@
 # fmi-ls-struct
 [![Build Specification](https://github.com/modelica/fmi-ls-struct/actions/workflows/build-ls-struct.yml/badge.svg)](https://github.com/modelica/fmi-ls-struct/actions/workflows/build-ls-struct.yml)
 
-This repository contains a current prototype draft for the FMI Layered Standard for strtucturing of variables (fmi-ls-struct) based on the [Functional Mock-up Interface][FMI].
+This repository contains a current prototype draft for the FMI Layered Standard for structuring of variables (fmi-ls-struct) based on the [Functional Mock-up Interface][FMI].
 
 The goal of this layered standard is to  define semantic groups of variables to ease their access and presentation for the user. The idea of grouping is similar to the Terminals and Icons approach of FMI 3.0 (https://fmi-standard.org/docs/3.0/#fmiTerminalsAndIcons).
 
