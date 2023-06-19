@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiTerminalsAndIcons fmiVersion="3.0">
+  <Terminals>
+    <Terminal name="a.b.c.map"" terminalKind="org.fmi-standard.fmi-ls-struct.regularMap" matchingRule="plug">
+      <TerminalMemberVariable variableName="a.b.c.map_x" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.domain" />
+      <TerminalMemberVariable variableName="a.b.c.map_y" memberName="y" variableKind="org.fmi-standard.fmi-ls-struct.domain" />
+      <TerminalMemberVariable variableName="x.y.map_z" memberName="z" variableKind="org.fmi-standard.fmi-ls-struct.codomain" />
+      <TerminalMemberVariable variableName="InterpolMechanism" memberName="InterpolationOptions" variableKind="org.fmi-standard.fmi-ls-struct.interpolationOptions" />
+    </Terminal>
+  </Terminals>
+</fmiTerminalsAndIcons>

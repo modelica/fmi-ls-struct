@@ -16,7 +16,8 @@
 :revnumber: 1.0
 :icons: font
 
-Based on FMI 3.0, this layered standard defines how variables of an FMU can be structured.
+Based on FMI 3.0, this layered standard defines how variables (especially parameters) of an FMU can be structured and grouped in a more flexible way than with the "structured naming convention" of the FMI Standard (version 1.0, 2.0, 3.0)
+Additionially it defines special semantics to certain parameter groups in order to describe regular maps.
 
 {empty} +
 {empty}
@@ -31,13 +32,17 @@ The licenses text can be found in the https://raw.githubusercontent.com/modelica
 
 == Introduction
 
-=== Intent of This Document
+=== Motivation 
 
-todo
+For many use cases grouping of several variables (especially parmaters) is benefical. 
+A very important application is the definition of regular maps, consisting of several array variables, which requires additional semantics.
+E.g., CombiTable1D or CombiTable2D blocks of the Modelica standard library used within an FMU can be exposed with this approach.
+
+This layered standards defines a layered standard that enables these features based on the concept of Terminals from the FMI Standard of FMI 3.0.
 
 === How to Read This Document
 
-This document is about ... todo.
+This document is about how to describe groups of variables (especially parameters) and as a very important use cases defines special set of variables that define a regular map (with additional semantics).
 
 The standard document is in HTML allowing use of in-document links.
 By pressing "t", the table of contents can be displayed on the left side or hidden.
@@ -52,9 +57,11 @@ Conventions used in this document:
 
 === Rough Outline of the Approach
 
-todo
+FMI 3.0 https://fmi-standard.org/docs/3.0/#fmiTerminalsAndIcons[Terminals] are used to define groups of variables, especially parameters.
 
-[#common-concepts]
+A special kind of parameter group defines a regular map (with additional semantic meaning).
+
+
 == Layered Standard Manifest File
 
 This layered standard defines additional information about the structure of variables in the layered standard manifest file.
@@ -93,18 +100,70 @@ An example of a manifest file for this layered standard is shown below:
 include::examples/fmi_ls_struct_manifest_example.xml[]
 ----
 
-== Common Concepts
+[#common-concepts]
+== Common Concepts for variable grouping
 
-todo
+=== Defintion of Terminal Kinds
+
+ToDo: Define Terminal Kinds. Ideas: 
+
+* TerminalKind org.fmi-standard.fmi-ls-struct.VaribaleGroup
+* TerminalKind org.fmi-standard.fmi-ls-struct.ParameterGroup
+* TerminalKind org.fmi-standard.fmi-ls-struct.regularMap
+
+=== Definition of Matching rules
+
+ToDo: Define Mathching roules 
+
+* Plug: Todo Explain usage for parameter propagation
+* None: No connection rule defined (Todo: or shall it be org.fmi-standard.fmi-ls-struct.None ??)
 
 === Structure of the FMU archive
 
-Files describing the structure of variables are placed in the `extra` directory: `/extra/org.fmi-standard.fmi-ls-struct`.
+This layerd standard uses and extends the "Terminals and Icons Concept" of FMI 3.0. 
+Thus no additional files are used, but all information is stored in the TerminalasAndIcons.xml file in the TerminalsAndIcons folder of an FMU.
 
-[#figure-fmi-layered-struct-directory-structure]
+
+== Regular Maps
+
+=== Definitions
+
+n-d Lookup tables::  In the context of this layered standard, an n-D lookup table is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on the vertices of a rectlinear grid. Such an n-D lookup table could be also called a map from the n-dimensional domain to a codomain.
+
+In <<ASAM-MCD2>> a 1-d lookup table is called *CURVE*, a 2-d lookup table is called *MAP*, and a 3-d lookup table is called *CUBOID*. 4-d and 5-d lookup tables are called *CUBE_4* and \*CUBE\_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.
+
+Domain:: For each of the n dimensions of the lookup table an array variable (typically a parameter or a constant) with the sampling points (along this dimension) of the lookup-table must be referenced.
+Codomain:: The sampled function values are stored in this references n-dimensional array.
+
+Options:: 
+* Optionally, for dimension a variable (typically an input or a local variable) can be referenced that represent the current operating point (along this dimension)
+* Optionally, additional variables containing related information can be referenced. (e.g., the interpolation algorithm in between the sampling points)
+
+=== Schema definition
+
+Used FMI 3.0 Concepts: 
+
+Terminals:: 
+
+Variables Names:: 
+
+Terminal Variables:: ToDo: explain usage usage of MemberName
+
+VariableKind::
+
+New variable kinds defined by this standard
+
+*  org.fmi-standard.fmi-ls-struct.domain
+
+*  org.fmi-standard.fmi-ls-struct.codomain 
+
+* org.fmi-standard.fmi-ls-struct.InterpolationOptions
+
+=== Example
+
+[source, xml]
 ----
-extra/org.fmi-standard.fmi-ls-struct  // Contains files related to layered standard
-   fmi-ls-manifest.xml                // The layered standard manifest file
+include::examples/terminalsAndIcons.xml[]
 ----
 
 == Known Limitations of This Standard
@@ -117,3 +176,6 @@ General limitations:
 == References
 
 - [[[PW13]]] Preston-Werner, T. (2013): **Semantic Versioning 2.0.0**.  https://semver.org/spec/v2.0.0.html
+- [[[ASAM-MCD2]]] ASAM e.V. (2018) **ASAM MCD-2 MC (aka ASAP2) v1.7.1**. https://www.asam.net/standards/detail/mcd-2-mc/
+
+
