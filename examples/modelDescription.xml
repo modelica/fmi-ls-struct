@@ -1,0 +1,12 @@
+<Float64 name="x" valueReference="1" causality="parameter" start="2.0 3.0">
+  <Dimension start="2"/>
+</Float64>
+<Float64 name="y" valueReference="2" causality="parameter" start="10.0 25.0 30.0">
+  <Dimension start="3"/>
+</Float64>
+<Float64 name="v" valueReference="3" causality="parameter" start="11.0 12.0 13.0 21.0 22.0 23.0">
+  <Dimension start="2"/>
+  <Dimension start="3"/>
+</Float64>
+<Float64 name="in_x" valueReference="6" causality="input" start="2.0"/>
+<Float64 name="in_y" valueReference="7" causality="input" start="10.0"/>
