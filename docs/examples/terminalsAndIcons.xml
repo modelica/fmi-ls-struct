@@ -8,6 +8,7 @@
       <TerminalMemberVariable variableName="in_y" memberName="in_y" variableKind="org.fmi-standard.fmi-ls-struct.domainInput" />
       <TerminalMemberVariable variableName="v" memberName="v" variableKind="org.fmi-standard.fmi-ls-struct.codomain" />
       <TerminalMemberVariable variableName="out_v" memberName="out_v" variableKind="org.fmi-standard.fmi-ls-struct.codomainOutput" />
+      <TerminalMemberVariable variableName="interpolationOrder" memberName="interpolationOrder" variableKind="com.example.related" />
     </Terminal>
   </Terminals>
 </fmiTerminalsAndIcons>
