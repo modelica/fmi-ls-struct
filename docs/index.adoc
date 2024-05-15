@@ -112,7 +112,7 @@ include::examples/fmi_ls_struct_manifest_example.xml[]
 
 * org.fmi-standard.fmi-ls-struct.map
 
-Requirement for the matching: The number of domains must be the same and the names(+type+size) of all domains (i.e., `variableKind=org.fmi-standard.fmi-ls-struct.domain`) must match. If all domains match, connect all these domains. Connect all codomains (`variableKind=org.fmi-standard.fmi-ls-struct.codomain`) that match. 
+Requirement for the matching: The number of domains must be the same and the terminal member names (+ variables type + size) of all domains (i.e., `variableKind=org.fmi-standard.fmi-ls-struct.domain`) must match. If all domains match, connect all these domains. Connect all codomains (`variableKind=org.fmi-standard.fmi-ls-struct.codomain`) that match. 
 Don't connect any other terminal member variables.
 
 _[This indicates that the variableKind of the member should be considered for the connection of the individual members of the terminal.]_
