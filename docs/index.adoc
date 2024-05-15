@@ -16,13 +16,15 @@
 :revnumber: 1.0
 :icons: font
 
-Based on FMI 3.0, this layered standard defines how variables (especially parameters) of an FMU can be structured and grouped in a more flexible way than with the "structured naming convention" of the FMI Standard (version 1.0, 2.0, 3.0)
+ToDo: has to concentrate more on lookup tables
+
+Based on FMI 3.0, this layered standard defines how variables (especially parameters) of an FMU can be structured and grouped in a more flexible way than with the "structured naming convention" of the FMI Standard (version 1.0, 2.0, 3.0).
 Additionially it defines special semantics to certain parameter groups in order to describe regular maps.
 
 {empty} +
 {empty}
 
-Copyright (C) 2012-2023 The Modelica Association Project FMI.
+Copyright (C) 2012-2024 The Modelica Association Project FMI.
 
 This document is licensed under the Attribution-ShareAlike 4.0 International license.
 The code is released under the 2-Clause BSD License.
@@ -59,8 +61,7 @@ Conventions used in this document:
 
 FMI 3.0 https://fmi-standard.org/docs/3.0/#fmiTerminalsAndIcons[Terminals] are used to define groups of variables, especially parameters.
 
-A special kind of parameter group defines a regular map (with additional semantic meaning).
-
+A special kind of parameter group defines maps on rectilinear grids (with additional semantic meaning).
 
 == Layered Standard Manifest File
 
@@ -105,18 +106,16 @@ include::examples/fmi_ls_struct_manifest_example.xml[]
 
 === Defintion of Terminal Kinds
 
-ToDo: Define Terminal Kinds. Ideas: 
-
-* TerminalKind org.fmi-standard.fmi-ls-struct.VaribaleGroup
-* TerminalKind org.fmi-standard.fmi-ls-struct.ParameterGroup
-* TerminalKind org.fmi-standard.fmi-ls-struct.regularMap
+* TerminalKind org.fmi-standard.fmi-ls-struct.rectilinearGridMap
 
 === Definition of Matching rules
 
-ToDo: Define Mathching roules 
+* org.fmi-standard.fmi-ls-struct.map
 
-* Plug: Todo Explain usage for parameter propagation
-* None: No connection rule defined (Todo: or shall it be org.fmi-standard.fmi-ls-struct.None ??)
+Requirement for the matching: The number of domains must be the same and the names(+type+size) of all domains (i.e., `variableKind=org.fmi-standard.fmi-ls-struct.domain`) must match. If all domains match, connect all these domains. Connect all co-domains (`variableKind=org.fmi-standard.fmi-ls-struct.`) that match. 
+Don't connect any other terminal member variables.
+
+_[This indicates that the variableKind of the member should be considered for the connection of the individual members of the terminal.]_
 
 === Structure of the FMU archive
 
@@ -124,11 +123,11 @@ This layerd standard uses and extends the "Terminals and Icons Concept" of FMI 3
 Thus no additional files are used, but all information is stored in the TerminalasAndIcons.xml file in the TerminalsAndIcons folder of an FMU.
 
 
-== Regular Maps
+==  Maps on rectilinear grid
 
 === Definitions
 
-n-d Lookup tables::  In the context of this layered standard, an n-D lookup table is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on the vertices of a rectlinear grid. Such an n-D lookup table could be also called a map from the n-dimensional domain to a codomain.
+n-d Lookup tables::  In the context of this layered standard, an n-D lookup table is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on the vertices of a rectlinear grid. Such an n-D lookup table could be also called a map from the n-dimensional domain to a .
 
 In <<ASAM-MCD2>> a 1-d lookup table is called *CURVE*, a 2-d lookup table is called *MAP*, and a 3-d lookup table is called *CUBOID*. 4-d and 5-d lookup tables are called *CUBE_4* and \*CUBE\_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.
 
@@ -157,13 +156,21 @@ New variable kinds defined by this standard
 
 *  org.fmi-standard.fmi-ls-struct.codomain 
 
-* org.fmi-standard.fmi-ls-struct.InterpolationOptions
+*  org.fmi-standard.fmi-ls-struct.domainInput
+
+*  org.fmi-standard.fmi-ls-struct.codomainOutput
+
 
 === Example
 
 [source, xml]
 ----
 include::examples/terminalsAndIcons.xml[]
+----
+
+[source, xml]
+----
+include::examples/modelDescription.xml[]
 ----
 
 == Known Limitations of This Standard
