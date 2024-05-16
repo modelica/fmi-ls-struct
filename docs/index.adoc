@@ -37,14 +37,12 @@ The licenses text can be found in the https://raw.githubusercontent.com/modelica
 === Motivation 
 
 For many use cases grouping of several variables (especially parmaters) is benefical. 
-A very important application is the definition of regular maps, consisting of several array variables, which requires additional semantics.
+A very important application is the definition of maps defined on rectilinear grids,  through several array variables, which requires additional semantics.
 E.g., CombiTable1D or CombiTable2D blocks of the Modelica standard library used within an FMU can be exposed with this approach.
 
-This layered standards defines a layered standard that enables these features based on the concept of Terminals from the FMI Standard of FMI 3.0.
+This layered standards enables these features based on the concept of Terminals from the FMI Standard of FMI 3.0.
 
 === How to Read This Document
-
-This document is about how to describe groups of variables (especially parameters) and as a very important use cases defines special set of variables that define a regular map (with additional semantics).
 
 The standard document is in HTML allowing use of in-document links.
 By pressing "t", the table of contents can be displayed on the left side or hidden.
@@ -65,7 +63,8 @@ A special kind of parameter group defines maps on rectilinear grids (with additi
 
 == Layered Standard Manifest File
 
-This layered standard defines additional information about the structure of variables in the layered standard manifest file.
+The manifst file signals to the importer that the FMU supports this layered standard and enables the interpretation of the `TerminalsAndIcons.xml` file in the intended way.
+
 <<table-schema-fmi-ls-struct-attributes>> shows the content of `fmi-ls-manifest.xml`.
 
 .`fmiLayeredStandardManifest` attribute details.
@@ -102,11 +101,30 @@ include::examples/fmi_ls_struct_manifest_example.xml[]
 ----
 
 [#common-concepts]
-== Common Concepts for variable grouping
+== Common concepts for the representation of maps 
 
-=== Defintion of Terminal Kinds
+===  Defintions
 
-* TerminalKind org.fmi-standard.fmi-ls-struct.rectilinearGridMap
+
+=== Defintion of `terminalKind`s
+
+* TerminalKind `org.fmi-standard.fmi-ls-struct.rectilinearGridMap` for maps defined on rectilinear grids.
+* TerminalKind `org.fmi-standard.fmi-ls-struct.rectilinearGridMap` for maps defined by unsructured tuples of ("point cloud").
+
+=== `variableKinds` of terminal member variables:
+
+We want to represent a map from a domain set to a codomain through by providing the points in the domain set and the values they are mapped to.
+
+* `org.fmi-standard.fmi-ls-struct.domain`:: For each of the n dimensions of the domain set a 1d array variable (typically a parameter or a constant) of coordinates is provided
+
+* `org.fmi-standard.fmi-ls-struct.domainInput`:: Optionally, for for each `domain` variable at most one array variable (typically an input or a local variable) can be referenced that represents the current operating point (along this dimension). If present must be listed directly after the corresponding domain. The domain_input isn't required to be a scalar, it could be variable with several dimensions. However the size of each domainInput must be the same for each domain: For a nonscalar inputs v=[v1,...vn], w=[w1,...wn], ... the function is evalutated elementwise and we get an output vector z=[f(v1, w1, ...), .... f(vn, wn, ...)]
+
+* `org.fmi-standard.fmi-ls-struct.codomain`:: For each of the reprensented points in the domain set, the values to which they are mapped are represented. _[There can be multiple terminal member variables with `variablKind` `codomain` to reperenset multiple maps in one terminal.]_
+
+* `org.fmi-standard.fmi-ls-struct.domainOutput`:: Optionally, for for each `domain` variable at most one array variable (typically an input or a local variable) can be referenced that represents calculted output value of the map. Here the order in the `TerminalsAndIcons.xml`matters: if present, a `domainOutput` variable is defined directly afte the corresponding `codomain` variable.
+
+* Additional terminal member variables that do not fit into these categories shall not have a Variablekind starting with `org.fmi-standard.fmi-ls-struct`. 
+
 
 === Definition of Matching rules
 
@@ -119,8 +137,7 @@ _[This indicates that the variableKind of the member should be considered for th
 
 === Structure of the FMU archive
 
-This layerd standard uses and extends the "Terminals and Icons Concept" of FMI 3.0. 
-Thus no additional files are used, but all information is stored in the TerminalasAndIcons.xml file in the TerminalsAndIcons folder of an FMU.
+This layerd standard uses and extends the "Terminals and Icons Concept" of FMI 3.0. All information is stored in the TerminalasAndIcons.xml file in the TerminalsAndIcons folder of an FMU.
 
 
 ==  Maps on rectilinear grid
@@ -132,37 +149,8 @@ n-d Lookup tables::  In the context of this layered standard, an n-D lookup tabl
 _[In <<ASAM-MCD2>> a 1-d lookup table is called *CURVE*, a 2-d lookup table is called *MAP*, and a 3-d lookup table is called *CUBOID*. 4-d and 5-d lookup tables are called *CUBE_4* and \*CUBE\_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.]_
 
 Domain:: For each of the n dimensions of the lookup table an 1d array variable (typically a parameter or a constant) with the sampling points (along this dimension) of the lookup-table must be referenced.
-Codomain:: The sampled function values are stored in this n-dimensional array. There can be several codomains for the same set of domains and domain inputs.
+Codomain:: The sampled function values are stored in this n-dimensional array. There can be several codomains for the same set of domains and domain inputs.  ToDo: size of a codomain array = Producut of sized ot the domain arrays.
 
-Options:: 
-* Optionally, for dimension a variable (typically an input or a local variable) can be referenced that represent the current operating point (along this dimension)
-* Optionally, additional variables containing related information can be referenced. (e.g., the interpolation algorithm in between the sampling points)
-
-=== Schema definition
-
-Used FMI 3.0 Concepts: 
-
-Terminals:: ToDo: write that order matters for the domains, domainInputs, codomains, codomainOutputs.
-
-Variables Names:: 
-
-Terminal Variables:: ToDo: explain usage usage of MemberName
-
-VariableKind::
-
-New variable kinds defined by this standard
-
-*  `org.fmi-standard.fmi-ls-struct.domain`
-
-*  `org.fmi-standard.fmi-ls-struct.domainInput` : this optional element defines the operating point. If present must be listed directly after the corresponding domain. The domain_input isn't required to be a scalar, it could be variable with several dimensions.
-However the size of each domain_inputs must be the same for each domain: 
-For a nonscalar inputs v=[v1,...vn], w=[w1,...wn], ... the function is evalutated elementwise and we get an output vector z=[f(v1, w1, ...), .... f(vn, wn, ...)]
-
-*  `org.fmi-standard.fmi-ls-struct.codomain`
-
-*  `org.fmi-standard.fmi-ls-struct.codomainOutput`
-
-Additional terminal member variables that do not fit into these categories shall not have a Variablekind starting with `org.fmi-standard.fmi-ls-struct`. 
 
 
 === Example
@@ -176,6 +164,25 @@ include::examples/terminalsAndIcons.xml[]
 ----
 include::examples/modelDescription.xml[]
 ----
+
+
+ToDo: Add description how to handle a combitable.
+
+==  Irregular map ("Point Cloud")
+
+
+=== Definitions
+
+Definition of domains and codomains as above
+
+For domains x=(x_1, x_2, ... x_n), y=(y_1, y_2, ...y_n), z=(z_1, z_2, z_3, ...z_n) ... and codomain u (u_1, u_2,...u_n), v=(v_1, v_2, ... v_n), the tuples of (xi, yi, zi, ...) are mapped to  values (ui, vi, ...).
+
+All domains and codomains must have the same lenght
+
+
+ToDo add picture
+
+
 
 == Known Limitations of This Standard
 
