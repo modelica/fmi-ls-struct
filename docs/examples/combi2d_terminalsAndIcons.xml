@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fmiTerminalsAndIcons fmiVersion="3.0">
   <Terminals>
-    <Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid" matchingRule="org.fmi-standard.fmi-ls-struct.map">
-      <TerminalMemberVariable variableName="x" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" />
+    <Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.combitable2d" matchingRule="org.fmi-standard.fmi-ls-struct.map">
+      <TerminalMemberVariable variableName="combitable2d_example" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" />
       <TerminalMemberVariable variableName="in_x" memberName="in_x" variableKind="org.fmi-standard.fmi-ls-struct.domainInput" />
-      <TerminalMemberVariable variableName="y" memberName="y" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" />
+      <TerminalMemberVariable variableName="combitable2d_example" memberName="y" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" />
       <TerminalMemberVariable variableName="in_y" memberName="in_y" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" />
-      <TerminalMemberVariable variableName="v" memberName="v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" />
+      <TerminalMemberVariable variableName="combitable2d_example" memberName="v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" />
       <TerminalMemberVariable variableName="out_v" memberName="out_v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" />
       <TerminalMemberVariable variableName="interpolationOrder" memberName="interpolationOrder" variableKind="com.example.related" />
     </Terminal>

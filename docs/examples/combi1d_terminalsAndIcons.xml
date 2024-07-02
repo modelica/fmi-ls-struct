@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiTerminalsAndIcons fmiVersion="3.0">
+  <Terminals>
+    <Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.combitable2d" matchingRule="org.fmi-standard.fmi-ls-struct.map">
+      <TerminalMemberVariable variableName="combitable1d_example" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" />
+      <TerminalMemberVariable variableName="in_x" memberName="in_x" variableKind="org.fmi-standard.fmi-ls-struct.domainInput" />
+      <TerminalMemberVariable variableName="combitable1d_example" memberName="v1" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" />
+      <TerminalMemberVariable variableName="out_v1" memberName="out_v1" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" />
+      <TerminalMemberVariable variableName="combitable1d_example" memberName="v2" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" />
+      <TerminalMemberVariable variableName="combitable1d_example" memberName="v3" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" />
+      <TerminalMemberVariable variableName="out_v3" memberName="out_v3" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" />
+      <TerminalMemberVariable variableName="interpolationOrder" memberName="interpolationOrder" variableKind="com.example.related" />
+    </Terminal>
+  </Terminals>
+</fmiTerminalsAndIcons>
