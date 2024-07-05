@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<meta name="author" content="#:toc: left">
 <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 <title>Layered Standard for Structured Data</title>
 <style>
@@ -481,51 +482,33 @@ a {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
 <h1>Layered Standard for Structured Data</h1>
 <div class="details">
-<span id="revnumber">version main-dd512bac49ef6d92117dbcc57bfb478e2da70333,</span>
-<span id="revdate">2023-06-07</span>
-</div>
-<div id="toc" class="toc2">
-<div id="toctitle">Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_introduction">1. Introduction</a>
-<ul class="sectlevel2">
-<li><a href="#_intent_of_this_document">1.1. Intent of This Document</a></li>
-<li><a href="#_how_to_read_this_document">1.2. How to Read This Document</a></li>
-<li><a href="#_rough_outline_of_the_approach">1.3. Rough Outline of the Approach</a></li>
-</ul>
-</li>
-<li><a href="#common-concepts">2. Layered Standard Manifest File</a></li>
-<li><a href="#_common_concepts">3. Common Concepts</a>
-<ul class="sectlevel2">
-<li><a href="#_structure_of_the_fmu_archive">3.1. Structure of the FMU archive</a></li>
-</ul>
-</li>
-<li><a href="#_known_limitations_of_this_standard">4. Known Limitations of This Standard</a></li>
-<li><a href="#_references">References</a></li>
-</ul>
+<span id="author" class="author">#:toc: left</span><br>
+<span id="revnumber">version main-09d67bc8f3d16507235c0098a693a60025d0a9ad,</span>
+<span id="revdate">2024-07-05</span>
 </div>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Based on FMI 3.0, this layered standard defines how variables of an FMU can be structured.</p>
+<p>Based on FMI 3.0, this layered standard defines how variables (especially parameters) of an FMU can be structured and grouped in a more flexible way than with the "structured naming convention" of the FMI Standard.
+The first version of this layered standard is focused on the definition of sampled maps.</p>
 </div>
 <div class="paragraph">
 <p><br>
 </p>
 </div>
 <div class="paragraph">
-<p>Copyright &#169; 2012-2023 The Modelica Association Project FMI.</p>
+<p>Copyright &#169; 2024 The Modelica Association Project FMI.</p>
 </div>
 <div class="paragraph">
 <p>This document is licensed under the Attribution-ShareAlike 4.0 International license.
 The code is released under the 2-Clause BSD License.
-The licenses text can be found in the <a href="https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt">LICENSE.txt</a> file that accompanies this distribution.</p>
+The licenses text can be found in the <a href="https://raw.githubusercontent.com/modelica/fmi-standard/main/LICENSE.txt">LICENSE.txt</a> file that accompanies this distribution.</p>
 </div>
 <div class="paragraph">
 <p></p>
@@ -536,16 +519,18 @@ The licenses text can be found in the <a href="https://raw.githubusercontent.com
 <h2 id="_introduction">1. Introduction</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_intent_of_this_document">1.1. Intent of This Document</h3>
+<h3 id="_motivation">1.1. Motivation</h3>
 <div class="paragraph">
-<p>todo</p>
+<p>For many use cases, the grouping of variables gives the user a better overview about the usage of variables. For certain groupings the importing tool might be able to provide a more user-friendly interface.
+FMUs might use maps/functions sampled on the vertices of a grid to calculate output values. The values at these sampling points and even the locations of the sampling points might get exposed as parameter variables of the FMU to allow calibrations. However, the FMI standard only defines n-dimensional array variable but doesn&#8217;t define any relation between these variables. This layered standard defines how to group variables to represent maps.
+E.g., CombiTable1D or CombiTable2D blocks of the Modelica standard library used within an FMU can be exposed with this approach.</p>
+</div>
+<div class="paragraph">
+<p>This layered standard uses terminals of the FMI 3.0 standard to represent structures like maps by grouping variables in terminals. Terminals are used to group variables and already define means to connect its variables between FMUs. Such a connections could ensure that the same map values are used by different FMUs or allow one FMU to provide the map values to be used by other FMUs.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_how_to_read_this_document">1.2. How to Read This Document</h3>
-<div class="paragraph">
-<p>This document is about &#8230;&#8203; todo.</p>
-</div>
 <div class="paragraph">
 <p>The standard document is in HTML allowing use of in-document links.
 By pressing "t", the table of contents can be displayed on the left side or hidden.</p>
@@ -570,17 +555,22 @@ By pressing "t", the table of contents can be displayed on the left side or hidd
 <div class="sect2">
 <h3 id="_rough_outline_of_the_approach">1.3. Rough Outline of the Approach</h3>
 <div class="paragraph">
-<p>todo</p>
+<p>FMI 3.0 <a href="https://fmi-standard.org/docs/3.0/#fmiTerminalsAndIcons">Terminals</a> are used to define groups of variables, especially parameters.</p>
+</div>
+<div class="paragraph">
+<p>A special kind of parameter group defines maps on rectilinear grids (with additional semantic meaning).</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="common-concepts">2. Layered Standard Manifest File</h2>
+<h2 id="_layered_standard_manifest_file">2. Layered Standard Manifest File</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This layered standard defines additional information about the structure of variables in the layered standard manifest file.
-<a href="#table-schema-fmi-ls-struct-attributes">Table 1</a> shows the content of <code>fmi-ls-manifest.xml</code>.</p>
+<p>The manifst file signals to the importer that the FMU supports this layered standard and enables the interpretation of the <code>TerminalsAndIcons.xml</code> file in the intended way.</p>
+</div>
+<div class="paragraph">
+<p><a href="#table-schema-fmi-ls-struct-attributes">Table 1</a> shows the content of <code>fmi-ls-manifest.xml</code>.</p>
 </div>
 <table id="table-schema-fmi-ls-struct-attributes" class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. <code>fmiLayeredStandardManifest</code> attribute details.</caption>
@@ -637,27 +627,488 @@ By pressing "t", the table of contents can be displayed on the left side or hidd
 </div>
 </div>
 <div class="sect1">
-<h2 id="_common_concepts">3. Common Concepts</h2>
+<h2 id="common-concepts">3. Common concepts for the representation of maps</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_definitions">3.1. Definitions</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">n-D lookup table</dt>
+<dd>
+<p>In the context of this layered standard, an n-D lookup table is a sampled representation of a function of n input variables \((y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)\), sampled on points of the n-dimensional domain. Such an n-D lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.</p>
+</dd>
+</dl>
+</div>
+<div class="sect3">
+<h4 id="_definition_of_terminalkind_attribute_values">3.1.1. Definition of <code>terminalKind</code> attribute values</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>TerminalKind <code>org.fmi-standard.fmi-ls-struct.map.rectilinearGrid</code> for maps defined on the vertices of a rectilinear grid.</p>
+</li>
+<li>
+<p>TerminalKind <code>org.fmi-standard.fmi-ls-struct.map.combitable1d</code> for 1-d maps defined on the vertices of a rectilinear grid, stored in a single matrix.</p>
+</li>
+<li>
+<p>TerminalKind <code>org.fmi-standard.fmi-ls-struct.map.combitable2d</code> for 2-d maps defined on the vertices of a rectilinear grid, in a single matrix.</p>
+</li>
+<li>
+<p>TerminalKind <code>org.fmi-standard.fmi-ls-struct.map.irregular</code> for maps defined by unstructured tuples of ("point cloud").</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_variablekind_attribute_values_of_terminal_member_variables">3.1.2. <code>variableKind</code> attribute values of terminal member variables:</h4>
 <div class="paragraph">
-<p>todo</p>
+<p>We want to represent a map from a domain set to a codomain by providing points in the domain set and the values they are mapped to.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>org.fmi-standard.fmi-ls-struct.map.domain</code>:: For each of the n dimensions of the domain set a 1-dimensional array variable (typically a parameter or a constant) of coordinates (along this dimension) is provided</p>
+</li>
+<li>
+<p><code>org.fmi-standard.fmi-ls-struct.map.domainInput</code>:: Optionally, for each <code>domain</code> variable at most one variable (typically an input or a local variable) can be referenced that represents the current operating point (along this dimension).
+If present, it must be listed directly after the corresponding domain.
+The domain_input isn&#8217;t required to be a scalar, it could be variable with several dimensions.
+However the size of each <code>domainInput</code> must be the same for each domain: For nonscalar inputs \(v=[v_1,\dots,v_n], w=[w_1, \dots, w_n], \dots\) the function is evalutated elementwise and we get an output vector \(z=[f(v_1, w_1, \dots), \dots, f(v_n, w_n, \dots)\)].</p>
+</li>
+<li>
+<p><code>org.fmi-standard.fmi-ls-struct.map.codomain</code>:: For each of the represented points in the domain set, the values to which they are mapped are represented.
+<em>[There can be multiple terminal member variables with <code>variablKind</code> <code>codomain</code> to reperenset multiple maps in one terminal.]</em></p>
+</li>
+<li>
+<p><code>org.fmi-standard.fmi-ls-struct.map.domainOutput</code>:: Optionally, for each <code>domain</code> variable at most one array variable (typically an input or a local variable) can be referenced that represents calculted output value of the map.
+If present, a <code>domainOutput</code> variable must be listed directly after the corresponding <code>codomain</code> variable.</p>
+</li>
+<li>
+<p>Additional terminal member variables can be added to the terminal as related variables but if they do not fit into one of the above categories, they shall not have a <code>variableKind' starting with `org.fmi-standard.fmi-ls-struct</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_definition_of_map_specific_matchingrule">3.1.3. Definition of map specific <code>matchingRule</code></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>org.fmi-standard.fmi-ls-struct.map</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Requirement for the matching:
+The number of domains entries must be the same.
+The terminal member names, its data types and the (effective) size and of all domains (<code>variableKind=org.fmi-standard.fmi-ls-struct.map.domain</code>) must match.
+If all domains match, connect all these domains.
+Connect all codomains (<code>variableKind=org.fmi-standard.fmi-ls-struct.map.codomain</code>) that match.
+Don&#8217;t connect any other terminal member variables.</p>
+</div>
+<div class="paragraph">
+<p><em>[This indicates that the variableKind of the member must be considered for the connection of the individual members of the terminal.]</em></p>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_structure_of_the_fmu_archive">3.1. Structure of the FMU archive</h3>
+<h3 id="_structure_of_the_fmu_archive">3.2. Structure of the FMU archive</h3>
 <div class="paragraph">
-<p>Files describing the structure of variables are placed in the <code>extra</code> directory: <code>/extra/org.fmi-standard.fmi-ls-struct</code>.</p>
+<p>This layered standard uses and extends the "Terminals and Icons Concept" of FMI 3.0. All information is stored in the TerminalsAndIcons.xml file in the TerminalsAndIcons folder of an FMU.</p>
 </div>
-<div id="figure-fmi-layered-struct-directory-structure" class="listingblock">
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_maps_sampled_on_rectilinear_grids">4. Maps sampled on rectilinear grids</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_definitions_2">4.1. Definitions</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">n-d lookup table on rectilinear grid</dt>
+<dd>
+<p>In the context of this layered standard, an n-D lookup table is a sampled representation of a function of n input variables \(y=F(x_1, x_2, x_3, \dots, x_n)\) sampled on the vertices of a rectilinear grid.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><em>[In <a href="#ASAM-MCD2">[ASAM-MCD2]</a>, such a 1-d lookup table is called a <strong>CURVE</strong>, a 2-d lookup table is called <strong>MAP</strong>, and a 3-d lookup table is called <strong>CUBOID</strong>. 4-d and 5-d lookup tables are called <strong>CUBE_4</strong> and *CUBE\_5*, respectively. Higher dimensional lookup tables are not defined in <a href="#ASAM-MCD2">[ASAM-MCD2]</a>.]</em></p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">TerminalKind</dt>
+<dd>
+<p>A terminal with terminalKind <code>org.fmi-standard.fmi-ls-struct.map.rectilinearGrid</code> defines  a map on the vertices of a rectilinear grid.</p>
+</dd>
+<dt class="hdlist1">domain</dt>
+<dd>
+<p>For each of the n dimensions of the lookup table a 1 dimensional array variable (typically a parameter or a constant) with the sampling points (along this dimension) of the lookup-table must be referenced with variableKind <code>org.fmi-standard.fmi-ls-struct.map.domain</code>.</p>
+</dd>
+<dt class="hdlist1">codomain</dt>
+<dd>
+<p>For each of the m dimensions of the codomain, the sampled function values (along this dimension of the codomain) are stored in this n-dimensional array variable and references with variableKind <code>org.fmi-standard.fmi-ls-struct.map.codomain</code>.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The length of the i-th domain vector must be equal to length of the i-th codomain dimension.</p>
+</div>
+<div class="paragraph">
+<p><em>[Note: The standard doesn&#8217;t define how maps have to be represented in a GUI. In particular, the standard doesn&#8217;t define if the first two dimensions are displayed as in columns or rows. However, for the example lookup tables of this document, first dimensions are shown columns and the seconds dimensions are shown as rows.]</em></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example">4.2. Example</h3>
+<table id="rectilinear_example" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2" rowspan="2"><p class="tableblock">v</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">y</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The individual variables of the example 2-dimensional map on a rectilinear grid are given in the modelDescription.xml.</p>
+</div>
+<div class="listingblock">
 <div class="content">
-<pre>extra/org.fmi-standard.fmi-ls-struct  // Contains files related to layered standard
-   fmi-ls-manifest.xml                // The layered standard manifest file</pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">...
+&lt;Float64 name="x" valueReference="1" causality="parameter" start="2.0 3.0"&gt;
+  &lt;Dimension start="2"/&gt;
+&lt;/Float64&gt;
+&lt;Float64 name="y" valueReference="2" causality="parameter" start="10.0 25.0 30.0"&gt;
+  &lt;Dimension start="3"/&gt;
+&lt;/Float64&gt;
+&lt;Float64 name="v" valueReference="3" causality="parameter" start="11.0 12.0 13.0 21.0 22.0 23.0"&gt;
+  &lt;Dimension start="2"/&gt;
+  &lt;Dimension start="3"/&gt;
+&lt;/Float64&gt;
+&lt;Int64 name="InterpolationOrder" valueReference="9" causality="parameter" start="1" /&gt;
+&lt;Float64 name="in_x" valueReference="6" causality="input" start="2.0"/&gt;
+&lt;Float64 name="in_y" valueReference="7" causality="local" /&gt;
+&lt;Float64 name="out_v" valueReference="8" causality="local" /&gt;
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These variables are grouped in a terminal with the terminalKind <code>org.fmi-standard.fmi-ls-struct.map.rectilinearGrid</code> in the TerminalsAndIcons.xml file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;fmiTerminalsAndIcons fmiVersion="3.0"&gt;
+  &lt;Terminals&gt;
+    &lt;Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
+      &lt;TerminalMemberVariable variableName="x" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
+      &lt;TerminalMemberVariable variableName="in_x" memberName="in_x" variableKind="org.fmi-standard.fmi-ls-struct.domainInput" /&gt;
+      &lt;TerminalMemberVariable variableName="y" memberName="y" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
+      &lt;TerminalMemberVariable variableName="in_y" memberName="in_y" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
+      &lt;TerminalMemberVariable variableName="v" memberName="v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
+      &lt;TerminalMemberVariable variableName="out_v" memberName="out_v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" /&gt;
+      &lt;TerminalMemberVariable variableName="interpolationOrder" memberName="interpolationOrder" variableKind="com.example.related" /&gt;
+    &lt;/Terminal&gt;
+  &lt;/Terminals&gt;
+&lt;/fmiTerminalsAndIcons&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_referencing_modelica_library_combitables_matrices">4.3. Referencing Modelica library Combitables matrices</h3>
+<div class="paragraph">
+<p>The Modelica library defines lookup tables which are stored in a single matrix (<a href="https://doc.modelica.org/om/Modelica.Blocks.Tables.html" class="bare">https://doc.modelica.org/om/Modelica.Blocks.Tables.html</a>)</p>
+</div>
+<div class="sect3">
+<h4 id="_referencing_modelica_library_combitable1d">4.3.1. Referencing Modelica library CombiTable1d</h4>
+<div class="sect4">
+<h5 id="_example_2">4.3.1.1. Example</h5>
+<table id="combitable1d_example" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">...
+&lt;Float64 name="combitable1d_example " valueReference="1" causality="parameter"
+start="1.0 2.0 4.0 7.0
+       2.0 3.0 2.0 5.0
+       3.0 4.0 1.0 2.0"&gt;
+  &lt;Dimension start="3"/&gt;
+  &lt;Dimension start="4"/&gt;
+&lt;/Float64&gt;
+&lt;Int64 name="InterpolationOrder" valueReference="2" causality="parameter" start="1" /&gt;
+&lt;Float64 name="in_x" valueReference="3" causality="input" start="2.0"/&gt;
+&lt;Float64 name="out_v1" valueReference="4" causality="local" /&gt;
+&lt;Float64 name="out_v3" valueReference="5" causality="local" /&gt;
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows how to reference the Modelica library CombiTable1D matrix <code>combitable1d_example</code> in the TerminalsAndIcons.xml file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;fmiTerminalsAndIcons fmiVersion="3.0"&gt;
+  &lt;Terminals&gt;
+    &lt;Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.combitable2d" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
+      &lt;TerminalMemberVariable variableName="combitable1d_example" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
+      &lt;TerminalMemberVariable variableName="in_x" memberName="in_x" variableKind="org.fmi-standard.fmi-ls-struct.domainInput" /&gt;
+      &lt;TerminalMemberVariable variableName="combitable1d_example" memberName="v1" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
+      &lt;TerminalMemberVariable variableName="out_v1" memberName="out_v1" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" /&gt;
+      &lt;TerminalMemberVariable variableName="combitable1d_example" memberName="v2" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
+      &lt;TerminalMemberVariable variableName="combitable1d_example" memberName="v3" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
+      &lt;TerminalMemberVariable variableName="out_v3" memberName="out_v3" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" /&gt;
+      &lt;TerminalMemberVariable variableName="interpolationOrder" memberName="interpolationOrder" variableKind="com.example.related" /&gt;
+    &lt;/Terminal&gt;
+  &lt;/Terminals&gt;
+&lt;/fmiTerminalsAndIcons&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_referencing_modelica_library_combitable2d">4.3.2. Referencing Modelica library CombiTable2d</h4>
+<div class="sect4">
+<h5 id="_example_3">4.3.2.1. Example</h5>
+<table id="combitable2d_example" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6.0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">...
+&lt;Float64 name="combitable2d_example" valueReference="1" causality="parameter"
+start="  0 1.0 2.0 3.0
+       1.0 1.0 3.0 5.0
+       2.0 2.0 4.0 6.0"&gt;
+  &lt;Dimension start="3"/&gt;
+  &lt;Dimension start="4"/&gt;
+&lt;/Float64&gt;
+&lt;Int64 name="InterpolationOrder" valueReference="2" causality="parameter" start="1" /&gt;
+&lt;Float64 name="in_x" valueReference="3" causality="input" start="2.0"/&gt;
+&lt;Float64 name="in_y" valueReference="4" causality="local" /&gt;
+&lt;Float64 name="out_v" valueReference="5" causality="local" /&gt;
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows how to reference the Modelica library CombiTable2D matrix <code>combitable2d_example</code> in the TerminalsAndIcons.xml file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;fmiTerminalsAndIcons fmiVersion="3.0"&gt;
+  &lt;Terminals&gt;
+    &lt;Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.combitable2d" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
+      &lt;TerminalMemberVariable variableName="combitable2d_example" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
+      &lt;TerminalMemberVariable variableName="in_x" memberName="in_x" variableKind="org.fmi-standard.fmi-ls-struct.domainInput" /&gt;
+      &lt;TerminalMemberVariable variableName="combitable2d_example" memberName="y" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
+      &lt;TerminalMemberVariable variableName="in_y" memberName="in_y" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
+      &lt;TerminalMemberVariable variableName="combitable2d_example" memberName="v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
+      &lt;TerminalMemberVariable variableName="out_v" memberName="out_v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" /&gt;
+      &lt;TerminalMemberVariable variableName="interpolationOrder" memberName="interpolationOrder" variableKind="com.example.related" /&gt;
+    &lt;/Terminal&gt;
+  &lt;/Terminals&gt;
+&lt;/fmiTerminalsAndIcons&gt;</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_known_limitations_of_this_standard">4. Known Limitations of This Standard</h2>
+<h2 id="_maps_sampled_on_a_irregular_grid_point_cloud">5. Maps sampled on a irregular grid ("Point Cloud")</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_definitions_3">5.1. Definitions</h3>
+<div class="paragraph">
+<p>Definition of domains and codomains as above</p>
+</div>
+<div class="paragraph">
+<p>For domains \(x=[x_1, x_2, \dots, x_n], y=[y_1, y_2, \dots, y_n], z=[z_1, z_2, \dots, z_n], \dots\)
+and codomains \(u=[u_1, u_2, \dots, u_n], v=[v_1, v_2, \dots, v_n], \dots\), the tuple \((x_i, y_i, z_i, \dots)\) gets mapped to the values \((u_i, v_i, ...)\).</p>
+</div>
+<div class="paragraph">
+<p>All domains and codomains must have the same length.</p>
+</div>
+<div class="paragraph">
+<p><em>[Note: A map on a 1 dimensional domain can be equivalently represented with a terminal of <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"</code> or a terminal with <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"</code>.]</em></p>
+</div>
+<div class="paragraph">
+<p>ToDo add picture</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_4">5.2. Example</h3>
+<table id="irregular_example" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">y</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">z</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">28.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;fmiTerminalsAndIcons fmiVersion="3.0"&gt;
+  &lt;Terminals&gt;
+    &lt;Terminal name="points" terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
+      &lt;TerminalMemberVariable variableName="x" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
+      &lt;TerminalMemberVariable variableName="in_x" memberName="in_x" variableKind="org.fmi-standard.fmi-ls-struct.domainInput" /&gt;
+      &lt;TerminalMemberVariable variableName="y" memberName="y" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
+      &lt;TerminalMemberVariable variableName="z" memberName="z" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
+      &lt;TerminalMemberVariable variableName="in_z" memberName="in_y" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
+      &lt;TerminalMemberVariable variableName="v1" memberName="v1" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
+      &lt;TerminalMemberVariable variableName="v2" memberName="v2" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
+      &lt;TerminalMemberVariable variableName="out_v2" memberName="out_v2" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" /&gt;
+      &lt;TerminalMemberVariable variableName="interpolationOrder" memberName="interpolationOrder" variableKind="com.example.related" /&gt;
+    &lt;/Terminal&gt;
+  &lt;/Terminals&gt;
+&lt;/fmiTerminalsAndIcons&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">...
+&lt;Float64 name="x" valueReference="1" causality="parameter" start="2.0 3.0 10.0"&gt;
+  &lt;Dimension start="3"/&gt;
+&lt;/Float64&gt;
+&lt;Float64 name="y" valueReference="2" causality="parameter" start="10.0 25.0 30.0"&gt;
+  &lt;Dimension start="3"/&gt;
+&lt;/Float64&gt;
+&lt;Float64 name="z" valueReference="3" causality="parameter" start="10.0 28.0 30.0"&gt;
+  &lt;Dimension start="3"/&gt;
+&lt;/Float64&gt;
+&lt;Float64 name="v1" valueReference="4" causality="parameter" start="11.0 1.0 13.0"&gt;
+  &lt;Dimension start="3"/&gt;
+&lt;/Float64&gt;
+&lt;Float64 name="v2" valueReference="5" causality="parameter" start="1.0 4.0 3.0"&gt;
+  &lt;Dimension start="3"/&gt;
+&lt;/Float64&gt;
+&lt;Int64 name="InterpolationOrder" valueReference="6" causality="parameter" start="1" /&gt;
+&lt;Float64 name="in_x" valueReference="7" causality="input" start="2.0"/&gt;
+&lt;Float64 name="in_z" valueReference="8" causality="local" /&gt;
+&lt;Float64 name="out_v2" valueReference="10" causality="local" /&gt;
+...</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_known_limitations_of_this_standard">6. Known Limitations of This Standard</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>General limitations:</p>
@@ -678,6 +1129,9 @@ By pressing "t", the table of contents can be displayed on the left side or hidd
 <ul class="bibliography">
 <li>
 <p><a id="PW13"></a>[PW13] Preston-Werner, T. (2013): <strong>Semantic Versioning 2.0.0</strong>.  <a href="https://semver.org/spec/v2.0.0.html" class="bare">https://semver.org/spec/v2.0.0.html</a></p>
+</li>
+<li>
+<p><a id="ASAM-MCD2"></a>[ASAM-MCD2] ASAM e.V. (2018) <strong>ASAM MCD-2 MC (aka ASAP2) v1.7.1</strong>. <a href="https://www.asam.net/standards/detail/mcd-2-mc/" class="bare">https://www.asam.net/standards/detail/mcd-2-mc/</a></p>
 </li>
 </ul>
 </div>
