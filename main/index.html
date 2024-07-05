@@ -5,7 +5,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
-<meta name="author" content="#:toc: left">
 <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 <title>Layered Standard for Structured Data</title>
 <style>
@@ -482,13 +481,65 @@ a {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>Layered Standard for Structured Data</h1>
 <div class="details">
-<span id="author" class="author">#:toc: left</span><br>
-<span id="revnumber">version main-6f02d7512c22cc4eaa0377457eaba128f66b1ae6,</span>
+<span id="revnumber">version main-e1e1a1d2a077206785d389ea5c122495395c28ff,</span>
 <span id="revdate">2024-07-05</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#_motivation">1.1. Motivation</a></li>
+<li><a href="#_how_to_read_this_document">1.2. How to Read This Document</a></li>
+<li><a href="#_rough_outline_of_the_approach">1.3. Rough Outline of the Approach</a></li>
+</ul>
+</li>
+<li><a href="#_layered_standard_manifest_file">2. Layered Standard Manifest File</a></li>
+<li><a href="#common-concepts">3. Common concepts for the representation of maps</a>
+<ul class="sectlevel2">
+<li><a href="#_definitions">3.1. Definitions</a>
+<ul class="sectlevel3">
+<li><a href="#_definition_of_terminalkind_attribute_values">3.1.1. Definition of <code>terminalKind</code> attribute values</a></li>
+<li><a href="#_variablekind_attribute_values_of_terminal_member_variables">3.1.2. <code>variableKind</code> attribute values of terminal member variables:</a></li>
+<li><a href="#_definition_of_map_specific_matchingrule">3.1.3. Definition of map specific <code>matchingRule</code></a></li>
+</ul>
+</li>
+<li><a href="#_structure_of_the_fmu_archive">3.2. Structure of the FMU archive</a></li>
+</ul>
+</li>
+<li><a href="#_maps_sampled_on_rectilinear_grids">4. Maps sampled on rectilinear grids</a>
+<ul class="sectlevel2">
+<li><a href="#_definitions_2">4.1. Definitions</a></li>
+<li><a href="#_example">4.2. Example</a></li>
+<li><a href="#_referencing_modelica_library_combitables_matrices">4.3. Referencing Modelica library Combitables matrices</a>
+<ul class="sectlevel3">
+<li><a href="#_referencing_modelica_library_combitable1d">4.3.1. Referencing Modelica library CombiTable1d</a>
+<ul class="sectlevel4">
+<li><a href="#_example_2">4.3.1.1. Example</a></li>
+</ul>
+</li>
+<li><a href="#_referencing_modelica_library_combitable2d">4.3.2. Referencing Modelica library CombiTable2d</a>
+<ul class="sectlevel4">
+<li><a href="#_example_3">4.3.2.1. Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_maps_sampled_on_a_irregular_grid_point_cloud">5. Maps sampled on a irregular grid ("Point Cloud")</a>
+<ul class="sectlevel2">
+<li><a href="#_definitions_3">5.1. Definitions</a></li>
+<li><a href="#_example_4">5.2. Example</a></li>
+</ul>
+</li>
+<li><a href="#_known_limitations_of_this_standard">6. Known Limitations of This Standard</a></li>
+<li><a href="#_references">References</a></li>
+</ul>
 </div>
 </div>
 <div id="content">
