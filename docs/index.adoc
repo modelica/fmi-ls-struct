@@ -1,7 +1,7 @@
 = Layered Standard for Structured Data
 :sectnums:
 :sectnumlevels: 5
-#:toc: left
+:toc: left
 :toc-title: Contents
 :toclevels: 5
 :xrefstyle: short
