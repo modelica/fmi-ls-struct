@@ -61,7 +61,7 @@ A special kind of parameter group defines maps on rectilinear grids (with additi
 
 == Layered Standard Manifest File
 
-The manifst file signals to the importer that the FMU supports this layered standard and enables the interpretation of the `TerminalsAndIcons.xml` file in the intended way.
+The manifest file signals to the importer that the FMU supports this layered standard and enables the interpretation of the `TerminalsAndIcons.xml` file in the intended way.
 
 <<table-schema-fmi-ls-struct-attributes>> shows the content of `fmi-ls-manifest.xml`.
 
@@ -123,12 +123,12 @@ We want to represent a map from a domain set to a codomain by providing points i
 * `org.fmi-standard.fmi-ls-struct.map.domainInput`:: Optionally, for each `domain` variable at most one variable (typically an input or a local variable) can be referenced that represents the current operating point (along this dimension).
 If present, it must be listed directly after the corresponding domain.
 The domain_input isn't required to be a scalar, it could be variable with several dimensions.
-However the size of each `domainInput` must be the same for each domain: For nonscalar inputs latexmath:[v=[v_1,\dots,v_n\], w=[w_1, \dots, w_n\], \dots] the function is evalutated elementwise and we get an output vector latexmath:[z=[f(v_1, w_1, \dots), \dots, f(v_n, w_n, \dots)]].
+However the size of each `domainInput` must be the same for each domain: For nonscalar inputs latexmath:[v=[v_1,\dots,v_n\], w=[w_1, \dots, w_n\], \dots] the function is evaluated element-wise and we get an output vector latexmath:[z=[f(v_1, w_1, \dots), \dots, f(v_n, w_n, \dots)]].
 
 * `org.fmi-standard.fmi-ls-struct.map.codomain`:: For each of the represented points in the domain set, the values to which they are mapped are represented.
-_[There can be multiple terminal member variables with `variablKind` `codomain` to reperenset multiple maps in one terminal.]_
+_[There can be multiple terminal member variables with `variablKind` `codomain` to represent multiple maps in one terminal.]_
 
-* `org.fmi-standard.fmi-ls-struct.map.domainOutput`:: Optionally, for each `domain` variable at most one array variable (typically an input or a local variable) can be referenced that represents calculted output value of the map.
+* `org.fmi-standard.fmi-ls-struct.map.domainOutput`:: Optionally, for each `domain` variable at most one array variable (typically an input or a local variable) can be referenced that represents calculated output value of the map.
 If present, a `domainOutput` variable must be listed directly after the corresponding `codomain` variable.
 
 * Additional terminal member variables can be added to the terminal as related variables but if they do not fit into one of the above categories, they shall not have a `variableKind' starting with `org.fmi-standard.fmi-ls-struct`. 
@@ -213,7 +213,7 @@ include::examples/terminalsAndIcons.xml[]
 
 
 
-=== Referencing Modelica library Combitables matrices
+=== Referencing Modelica library Combitables
 
 The Modelica library defines lookup tables which are stored in a single matrix (https://doc.modelica.org/om/Modelica.Blocks.Tables.html)
 
