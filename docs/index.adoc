@@ -108,42 +108,54 @@ n-D lookup table:: In the context of this layered standard, an n-D lookup table 
 
 ==== Definition of `terminalKind` attribute values
 
-* TerminalKind `org.fmi-standard.fmi-ls-struct.map.rectilinearGrid` for maps defined on the vertices of a rectilinear grid.
-* TerminalKind `org.fmi-standard.fmi-ls-struct.map.combitable1d` for 1-d maps defined on the vertices of a rectilinear grid, stored in a single matrix.
-* TerminalKind `org.fmi-standard.fmi-ls-struct.map.combitable2d` for 2-d maps defined on the vertices of a rectilinear grid, in a single matrix.
-* TerminalKind `org.fmi-standard.fmi-ls-struct.map.irregular` for maps defined by unstructured tuples of ("point cloud").
+`org.fmi-standard.fmi-ls-struct.map.rectilinearGrid`::
+for maps defined on the vertices of a rectilinear grid.
+
+`org.fmi-standard.fmi-ls-struct.map.combitable1d`::
+for 1-d maps defined on the vertices of a rectilinear grid, stored in a single matrix.
+
+`org.fmi-standard.fmi-ls-struct.map.combitable2d`::
+for 2-d maps defined on the vertices of a rectilinear grid, in a single matrix.
+
+`org.fmi-standard.fmi-ls-struct.map.irregular`::
+for maps defined by unstructured tuples of ("point cloud").
 
 
 ==== `variableKind` attribute values of terminal member variables:
 
 We want to represent a map from a domain set to a codomain by providing points in the domain set and the values they are mapped to.
 
-* `org.fmi-standard.fmi-ls-struct.map.domain`:: For each of the n dimensions of the domain set a 1-dimensional array variable (typically a parameter or a constant) of coordinates (along this dimension) is provided
+`org.fmi-standard.fmi-ls-struct.map.domain`::
+For each of the n dimensions of the domain set, a 1-dimensional array variable (typically a parameter or a constant) of coordinates (along this dimension) is provided.
 
-* `org.fmi-standard.fmi-ls-struct.map.domainInput`:: Optionally, for each `domain` variable at most one variable (typically an input or a local variable) can be referenced that represents the current operating point (along this dimension).
-If present, it must be listed directly after the corresponding domain.
+`org.fmi-standard.fmi-ls-struct.map.domainInput`::
+Optionally, for each `domain` variable at most one variable (typically an input or a local variable) can be referenced that represents the current operating point (along this dimension).
+If present, this variable must be listed directly after the corresponding domain.
 The domain_input isn't required to be a scalar, it could be variable with several dimensions.
 However the size of each `domainInput` must be the same for each domain: For nonscalar inputs latexmath:[v=[v_1,\dots,v_n\], w=[w_1, \dots, w_n\], \dots] the function is evaluated element-wise and we get an output vector latexmath:[z=[f(v_1, w_1, \dots), \dots, f(v_n, w_n, \dots)]].
 
-* `org.fmi-standard.fmi-ls-struct.map.codomain`:: For each of the represented points in the domain set, the values to which they are mapped are represented.
+`org.fmi-standard.fmi-ls-struct.map.codomain`::
+For each of the represented points in the domain set, the values to which they are mapped are represented.
 _[There can be multiple terminal member variables with `variablKind` `codomain` to represent multiple maps in one terminal.]_
 
-* `org.fmi-standard.fmi-ls-struct.map.domainOutput`:: Optionally, for each `domain` variable at most one array variable (typically an input or a local variable) can be referenced that represents calculated output value of the map.
+`org.fmi-standard.fmi-ls-struct.map.domainOutput`::
+Optionally, for each `domain` variable at most one array variable (typically an input or a local variable) can be referenced that represents calculated output value of the map.
 If present, a `domainOutput` variable must be listed directly after the corresponding `codomain` variable.
 
-* Additional terminal member variables can be added to the terminal as related variables but if they do not fit into one of the above categories, they shall not have a `variableKind' starting with `org.fmi-standard.fmi-ls-struct`. 
+Additional terminal member variables can be added to the terminal as related variables but if they do not fit into one of the above categories, they shall not have a `variableKind' starting with `org.fmi-standard.fmi-ls-struct`. 
 
 
 ==== Definition of map specific `matchingRule`
 
-* org.fmi-standard.fmi-ls-struct.map
+The matching rule `org.fmi-standard.fmi-ls-struct.map` should be used for terminals that represent maps.
 
-Requirement for the matching:
-The number of domains entries must be the same.
-The terminal member names, its data types and the (effective) size and of all domains (`variableKind=org.fmi-standard.fmi-ls-struct.map.domain`) must match.
-If all domains match, connect all these domains.
-Connect all codomains (`variableKind=org.fmi-standard.fmi-ls-struct.map.codomain`) that match. 
-Don't connect any other terminal member variables.
+Requirements for matching:
+
+* The number of domain entries must be the same.
+* The terminal member names, its data types and the (effective) size and of all domains (`variableKind=org.fmi-standard.fmi-ls-struct.map.domain`) must match.
+* If all domains match, connect all these domains.
+* Connect all codomains (`variableKind=org.fmi-standard.fmi-ls-struct.map.codomain`) that match. 
+* Don't connect any other terminal member variables.
 
 _[This indicates that the variableKind of the member must be considered for the connection of the individual members of the terminal.]_
 
@@ -158,18 +170,23 @@ This layered standard uses and extends the "Terminals and Icons Concept" of FMI 
 
 n-d lookup table on rectilinear grid::  In the context of this layered standard, an n-D lookup table is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on the vertices of a rectilinear grid.
 
-_[In <<ASAM-MCD2>>, such a 1-d lookup table is called a *CURVE*, a 2-d lookup table is called *MAP*, and a 3-d lookup table is called *CUBOID*. 4-d and 5-d lookup tables are called *CUBE_4* and \*CUBE\_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.]_
+_[In <<ASAM-MCD2>>, such a 1-d lookup table is called a *CURVE*, a 2-d lookup table is called *MAP*, and a 3-d lookup table is called *CUBOID*.
+4-d and 5-d lookup tables are called *CUBE_4* and \*CUBE\_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.]_
 
-TerminalKind::
-A terminal with terminalKind `org.fmi-standard.fmi-ls-struct.map.rectilinearGrid` defines  a map on the vertices of a rectilinear grid.
+terminalKind::
+A terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` defines a map on the vertices of a rectilinear grid.
 
-domain:: For each of the n dimensions of the lookup table a 1 dimensional array variable (typically a parameter or a constant) with the sampling points (along this dimension) of the lookup-table must be referenced with variableKind `org.fmi-standard.fmi-ls-struct.map.domain`.
+domain::
+For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
 
-codomain:: For each of the m dimensions of the codomain, the sampled function values (along this dimension of the codomain) are stored in this n-dimensional array variable and references with variableKind `org.fmi-standard.fmi-ls-struct.map.codomain`.
+codomain::
+For each of the m dimensions of the codomain, the sampled function values (along this dimension of the codomain) are stored in this n-dimensional array variable and references with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
 
 The length of the i-th domain vector must be equal to length of the i-th codomain dimension.
 
-_[Note: The standard doesn't define how maps have to be represented in a GUI. In particular, the standard doesn't define if the first two dimensions are displayed as in columns or rows. However, for the example lookup tables of this document, first dimensions are shown columns and the seconds dimensions are shown as rows.]_
+_[Note: This layered standard doesn't define how maps have to be represented in a GUI.
+In particular, the standard doesn't define if the first dimension is displayed as columns or rows.
+However, for the example lookup tables of this document, the sampling points of first dimension of the domain are shown as a column vector, and the values of second dimension are shown as a row vector.]_
 
 
 === Example
@@ -302,7 +319,7 @@ include::examples/combi2d_terminalsAndIcons.xml[]
 
 === Definitions
 
-Definition of domains and codomains as above
+Definition of domains and codomains as above.
 
 For domains latexmath:[x=[x_1, x_2, \dots, x_n\], y=[y_1, y_2, \dots, y_n\], z=[z_1, z_2, \dots, z_n\], \dots]
 and codomains latexmath:[u=[u_1, u_2, \dots, u_n\], v=[v_1, v_2, \dots, v_n\], \dots], the tuple latexmath:[(x_i, y_i, z_i, \dots)] gets mapped to the values latexmath:[(u_i, v_i, ...)].
