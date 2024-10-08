@@ -485,8 +485,8 @@ a {
 <div id="header">
 <h1>Layered Standard for Structured Data</h1>
 <div class="details">
-<span id="revnumber">version main-eb336f095958082699046142f1464a23fae9d4b9,</span>
-<span id="revdate">2024-07-05</span>
+<span id="revnumber">version main-0d4b824fe59b60a1542d47043dd9b6f26a876d89,</span>
+<span id="revdate">2024-10-08</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -515,7 +515,7 @@ a {
 <ul class="sectlevel2">
 <li><a href="#_definitions_2">4.1. Definitions</a></li>
 <li><a href="#_example">4.2. Example</a></li>
-<li><a href="#_referencing_modelica_library_combitables_matrices">4.3. Referencing Modelica library Combitables matrices</a>
+<li><a href="#_referencing_modelica_library_combitables">4.3. Referencing Modelica library Combitables</a>
 <ul class="sectlevel3">
 <li><a href="#_referencing_modelica_library_combitable1d">4.3.1. Referencing Modelica library CombiTable1d</a>
 <ul class="sectlevel4">
@@ -618,7 +618,7 @@ By pressing "t", the table of contents can be displayed on the left side or hidd
 <h2 id="_layered_standard_manifest_file">2. Layered Standard Manifest File</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The manifst file signals to the importer that the FMU supports this layered standard and enables the interpretation of the <code>TerminalsAndIcons.xml</code> file in the intended way.</p>
+<p>The manifest file signals to the importer that the FMU supports this layered standard and enables the interpretation of the <code>TerminalsAndIcons.xml</code> file in the intended way.</p>
 </div>
 <div class="paragraph">
 <p><a href="#table-schema-fmi-ls-struct-attributes">Table 1</a> shows the content of <code>fmi-ls-manifest.xml</code>.</p>
@@ -692,21 +692,25 @@ By pressing "t", the table of contents can be displayed on the left side or hidd
 </div>
 <div class="sect3">
 <h4 id="_definition_of_terminalkind_attribute_values">3.1.1. Definition of <code>terminalKind</code> attribute values</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>TerminalKind <code>org.fmi-standard.fmi-ls-struct.map.rectilinearGrid</code> for maps defined on the vertices of a rectilinear grid.</p>
-</li>
-<li>
-<p>TerminalKind <code>org.fmi-standard.fmi-ls-struct.map.combitable1d</code> for 1-d maps defined on the vertices of a rectilinear grid, stored in a single matrix.</p>
-</li>
-<li>
-<p>TerminalKind <code>org.fmi-standard.fmi-ls-struct.map.combitable2d</code> for 2-d maps defined on the vertices of a rectilinear grid, in a single matrix.</p>
-</li>
-<li>
-<p>TerminalKind <code>org.fmi-standard.fmi-ls-struct.map.irregular</code> for maps defined by unstructured tuples of ("point cloud").</p>
-</li>
-</ul>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.rectilinearGrid</code></dt>
+<dd>
+<p>for maps defined on the vertices of a rectilinear grid.</p>
+</dd>
+<dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.combitable1d</code></dt>
+<dd>
+<p>for 1-d maps defined on the vertices of a rectilinear grid, stored in a single matrix.</p>
+</dd>
+<dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.combitable2d</code></dt>
+<dd>
+<p>for 2-d maps defined on the vertices of a rectilinear grid, in a single matrix.</p>
+</dd>
+<dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.irregular</code></dt>
+<dd>
+<p>for maps defined by unstructured tuples of ("point cloud").</p>
+</dd>
+</dl>
 </div>
 </div>
 <div class="sect3">
@@ -714,47 +718,61 @@ By pressing "t", the table of contents can be displayed on the left side or hidd
 <div class="paragraph">
 <p>We want to represent a map from a domain set to a codomain by providing points in the domain set and the values they are mapped to.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>org.fmi-standard.fmi-ls-struct.map.domain</code>:: For each of the n dimensions of the domain set a 1-dimensional array variable (typically a parameter or a constant) of coordinates (along this dimension) is provided</p>
-</li>
-<li>
-<p><code>org.fmi-standard.fmi-ls-struct.map.domainInput</code>:: Optionally, for each <code>domain</code> variable at most one variable (typically an input or a local variable) can be referenced that represents the current operating point (along this dimension).
-If present, it must be listed directly after the corresponding domain.
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.domain</code></dt>
+<dd>
+<p>For each of the n dimensions of the domain set, a 1-dimensional array variable (typically a parameter or a constant) of coordinates (along this dimension) is provided.</p>
+</dd>
+<dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.domainInput</code></dt>
+<dd>
+<p>Optionally, for each <code>domain</code> variable at most one variable (typically an input or a local variable) can be referenced that represents the current operating point (along this dimension).
+If present, this variable must be listed directly after the corresponding domain.
 The domain_input isn&#8217;t required to be a scalar, it could be variable with several dimensions.
-However the size of each <code>domainInput</code> must be the same for each domain: For nonscalar inputs \(v=[v_1,\dots,v_n], w=[w_1, \dots, w_n], \dots\) the function is evalutated elementwise and we get an output vector \(z=[f(v_1, w_1, \dots), \dots, f(v_n, w_n, \dots)\)].</p>
-</li>
-<li>
-<p><code>org.fmi-standard.fmi-ls-struct.map.codomain</code>:: For each of the represented points in the domain set, the values to which they are mapped are represented.
-<em>[There can be multiple terminal member variables with <code>variablKind</code> <code>codomain</code> to reperenset multiple maps in one terminal.]</em></p>
-</li>
-<li>
-<p><code>org.fmi-standard.fmi-ls-struct.map.domainOutput</code>:: Optionally, for each <code>domain</code> variable at most one array variable (typically an input or a local variable) can be referenced that represents calculted output value of the map.
+However the size of each <code>domainInput</code> must be the same for each domain: For nonscalar inputs \(v=[v_1,\dots,v_n], w=[w_1, \dots, w_n], \dots\) the function is evaluated element-wise and we get an output vector \(z=[f(v_1, w_1, \dots), \dots, f(v_n, w_n, \dots)\)].</p>
+</dd>
+<dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.codomain</code></dt>
+<dd>
+<p>For each of the represented points in the domain set, the values to which they are mapped are represented.
+<em>[There can be multiple terminal member variables with <code>variablKind</code> <code>codomain</code> to represent multiple maps in one terminal.]</em></p>
+</dd>
+<dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.domainOutput</code></dt>
+<dd>
+<p>Optionally, for each <code>domain</code> variable at most one array variable (typically an input or a local variable) can be referenced that represents calculated output value of the map.
 If present, a <code>domainOutput</code> variable must be listed directly after the corresponding <code>codomain</code> variable.</p>
-</li>
-<li>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
 <p>Additional terminal member variables can be added to the terminal as related variables but if they do not fit into one of the above categories, they shall not have a <code>variableKind' starting with `org.fmi-standard.fmi-ls-struct</code>.</p>
-</li>
-</ul>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_definition_of_map_specific_matchingrule">3.1.3. Definition of map specific <code>matchingRule</code></h4>
+<div class="paragraph">
+<p>The matching rule <code>org.fmi-standard.fmi-ls-struct.map</code> should be used for terminals that represent maps.</p>
+</div>
+<div class="paragraph">
+<p>Requirements for matching:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>org.fmi-standard.fmi-ls-struct.map</p>
+<p>The number of domain entries must be the same.</p>
+</li>
+<li>
+<p>The terminal member names, its data types and the (effective) size and of all domains (<code>variableKind=org.fmi-standard.fmi-ls-struct.map.domain</code>) must match.</p>
+</li>
+<li>
+<p>If all domains match, connect all these domains.</p>
+</li>
+<li>
+<p>Connect all codomains (<code>variableKind=org.fmi-standard.fmi-ls-struct.map.codomain</code>) that match.</p>
+</li>
+<li>
+<p>Don&#8217;t connect any other terminal member variables.</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>Requirement for the matching:
-The number of domains entries must be the same.
-The terminal member names, its data types and the (effective) size and of all domains (<code>variableKind=org.fmi-standard.fmi-ls-struct.map.domain</code>) must match.
-If all domains match, connect all these domains.
-Connect all codomains (<code>variableKind=org.fmi-standard.fmi-ls-struct.map.codomain</code>) that match.
-Don&#8217;t connect any other terminal member variables.</p>
 </div>
 <div class="paragraph">
 <p><em>[This indicates that the variableKind of the member must be considered for the connection of the individual members of the terminal.]</em></p>
@@ -783,21 +801,22 @@ Don&#8217;t connect any other terminal member variables.</p>
 </dl>
 </div>
 <div class="paragraph">
-<p><em>[In <a href="#ASAM-MCD2">[ASAM-MCD2]</a>, such a 1-d lookup table is called a <strong>CURVE</strong>, a 2-d lookup table is called <strong>MAP</strong>, and a 3-d lookup table is called <strong>CUBOID</strong>. 4-d and 5-d lookup tables are called <strong>CUBE_4</strong> and *CUBE\_5*, respectively. Higher dimensional lookup tables are not defined in <a href="#ASAM-MCD2">[ASAM-MCD2]</a>.]</em></p>
+<p><em>[In <a href="#ASAM-MCD2">[ASAM-MCD2]</a>, such a 1-d lookup table is called a <strong>CURVE</strong>, a 2-d lookup table is called <strong>MAP</strong>, and a 3-d lookup table is called <strong>CUBOID</strong>.
+4-d and 5-d lookup tables are called <strong>CUBE_4</strong> and *CUBE\_5*, respectively. Higher dimensional lookup tables are not defined in <a href="#ASAM-MCD2">[ASAM-MCD2]</a>.]</em></p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">TerminalKind</dt>
+<dt class="hdlist1">terminalKind</dt>
 <dd>
-<p>A terminal with terminalKind <code>org.fmi-standard.fmi-ls-struct.map.rectilinearGrid</code> defines  a map on the vertices of a rectilinear grid.</p>
+<p>A terminal with <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"</code> defines a map on the vertices of a rectilinear grid.</p>
 </dd>
 <dt class="hdlist1">domain</dt>
 <dd>
-<p>For each of the n dimensions of the lookup table a 1 dimensional array variable (typically a parameter or a constant) with the sampling points (along this dimension) of the lookup-table must be referenced with variableKind <code>org.fmi-standard.fmi-ls-struct.map.domain</code>.</p>
+<p>For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with <code>variableKind="org.fmi-standard.fmi-ls-struct.map.domain"</code>.</p>
 </dd>
 <dt class="hdlist1">codomain</dt>
 <dd>
-<p>For each of the m dimensions of the codomain, the sampled function values (along this dimension of the codomain) are stored in this n-dimensional array variable and references with variableKind <code>org.fmi-standard.fmi-ls-struct.map.codomain</code>.</p>
+<p>For each of the m dimensions of the codomain, the sampled function values (along this dimension of the codomain) are stored in this n-dimensional array variable and references with <code>variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"</code>.</p>
 </dd>
 </dl>
 </div>
@@ -805,7 +824,9 @@ Don&#8217;t connect any other terminal member variables.</p>
 <p>The length of the i-th domain vector must be equal to length of the i-th codomain dimension.</p>
 </div>
 <div class="paragraph">
-<p><em>[Note: The standard doesn&#8217;t define how maps have to be represented in a GUI. In particular, the standard doesn&#8217;t define if the first two dimensions are displayed as in columns or rows. However, for the example lookup tables of this document, first dimensions are shown columns and the seconds dimensions are shown as rows.]</em></p>
+<p><em>[Note: This layered standard doesn&#8217;t define how maps have to be represented in a GUI.
+In particular, the standard doesn&#8217;t define if the first dimension is displayed as columns or rows.
+However, for the example lookup tables of this document, the sampling points of first dimension of the domain are shown as a column vector, and the values of second dimension are shown as a row vector.]</em></p>
 </div>
 </div>
 <div class="sect2">
@@ -824,22 +845,22 @@ Don&#8217;t connect any other terminal member variables.</p>
 <td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">y</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">7.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30.0</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">x</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13.0</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">22.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23.0</p></td>
 </tr>
 </tbody>
 </table>
@@ -889,7 +910,7 @@ Don&#8217;t connect any other terminal member variables.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_referencing_modelica_library_combitables_matrices">4.3. Referencing Modelica library Combitables matrices</h3>
+<h3 id="_referencing_modelica_library_combitables">4.3. Referencing Modelica library Combitables</h3>
 <div class="paragraph">
 <p>The Modelica library defines lookup tables which are stored in a single matrix (<a href="https://doc.modelica.org/om/Modelica.Blocks.Tables.html" class="bare">https://doc.modelica.org/om/Modelica.Blocks.Tables.html</a>)</p>
 </div>
@@ -956,7 +977,7 @@ start="1.0 2.0 4.0 7.0
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;fmiTerminalsAndIcons fmiVersion="3.0"&gt;
   &lt;Terminals&gt;
-    &lt;Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.combitable2d" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
+    &lt;Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.combitable1d" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
       &lt;TerminalMemberVariable variableName="combitable1d_example" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
       &lt;TerminalMemberVariable variableName="in_x" memberName="in_x" variableKind="org.fmi-standard.fmi-ls-struct.domainInput" /&gt;
       &lt;TerminalMemberVariable variableName="combitable1d_example" memberName="v1" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
@@ -1053,7 +1074,7 @@ start="  0 1.0 2.0 3.0
 <div class="sect2">
 <h3 id="_definitions_3">5.1. Definitions</h3>
 <div class="paragraph">
-<p>Definition of domains and codomains as above</p>
+<p>Definition of domains and codomains as above.</p>
 </div>
 <div class="paragraph">
 <p>For domains \(x=[x_1, x_2, \dots, x_n], y=[y_1, y_2, \dots, y_n], z=[z_1, z_2, \dots, z_n], \dots\)
