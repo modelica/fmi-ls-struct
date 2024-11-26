@@ -485,8 +485,8 @@ a {
 <div id="header">
 <h1>Layered Standard for Structured Data</h1>
 <div class="details">
-<span id="revnumber">version main-530a23d92ec4d6f69ba58d7d92b2b93fe08b35d7,</span>
-<span id="revdate">2024-11-21</span>
+<span id="revnumber">version main-60027153e0af94a0c26f59078dd6781ac0a35a41,</span>
+<span id="revdate">2024-11-26</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -515,14 +515,14 @@ a {
 <ul class="sectlevel2">
 <li><a href="#_definitions_2">4.1. Definitions</a></li>
 <li><a href="#_example">4.2. Example</a></li>
-<li><a href="#_referencing_modelica_library_combitables">4.3. Referencing Modelica library Combitables</a>
+<li><a href="#_referencing_modelica_standard_library_librarycombitables">4.3. Referencing Modelica Standard Library libraryCombitables</a>
 <ul class="sectlevel3">
-<li><a href="#_referencing_modelica_library_combitable1d">4.3.1. Referencing Modelica library CombiTable1d</a>
+<li><a href="#_referencing_modelica_standard_library_combitable1d">4.3.1. Referencing Modelica Standard Library CombiTable1d</a>
 <ul class="sectlevel4">
 <li><a href="#_example_2">4.3.1.1. Example</a></li>
 </ul>
 </li>
-<li><a href="#_referencing_modelica_library_combitable2d">4.3.2. Referencing Modelica library CombiTable2d</a>
+<li><a href="#_referencing_modelica_standard_library_combitable2d">4.3.2. Referencing Modelica Standard Library CombiTable2d</a>
 <ul class="sectlevel4">
 <li><a href="#_example_3">4.3.2.1. Example</a></li>
 </ul>
@@ -738,7 +738,7 @@ However the size of each <code>domainInput</code> must be the same for each doma
 </dd>
 <dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.domainOutput</code></dt>
 <dd>
-<p>Optionally, for each <code>domain</code> variable at most one array variable (typically an input or a local variable) can be referenced that represents calculated output value of the map.
+<p>Optionally, for each <code>domain</code> variable at most one array variable (typically an output or a local variable) can be referenced that represents calculated output value of the map.
 If present, a <code>domainOutput</code> variable must be listed directly after the corresponding <code>codomain</code> variable.</p>
 </dd>
 </dl>
@@ -896,11 +896,11 @@ However, for the example lookup tables of this document, the sampling points of 
 &lt;fmiTerminalsAndIcons fmiVersion="3.0"&gt;
   &lt;Terminals&gt;
     &lt;Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
-      &lt;TerminalMemberVariable variableName="x" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
-      &lt;TerminalMemberVariable variableName="in_x" memberName="in_x" variableKind="org.fmi-standard.fmi-ls-struct.domainInput" /&gt;
-      &lt;TerminalMemberVariable variableName="y" memberName="y" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
-      &lt;TerminalMemberVariable variableName="in_y" memberName="in_y" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
-      &lt;TerminalMemberVariable variableName="v" memberName="v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
+      &lt;TerminalMemberVariable variableName="x"     memberName="x"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
+      &lt;TerminalMemberVariable variableName="in_x"  memberName="in_x"  variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
+      &lt;TerminalMemberVariable variableName="y"     memberName="y"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
+      &lt;TerminalMemberVariable variableName="in_y"  memberName="in_y"  variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
+      &lt;TerminalMemberVariable variableName="v"     memberName="v"     variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
       &lt;TerminalMemberVariable variableName="out_v" memberName="out_v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" /&gt;
       &lt;TerminalMemberVariable variableName="interpolationOrder" memberName="interpolationOrder" variableKind="com.example.related" /&gt;
     &lt;/Terminal&gt;
@@ -910,12 +910,12 @@ However, for the example lookup tables of this document, the sampling points of 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_referencing_modelica_library_combitables">4.3. Referencing Modelica library Combitables</h3>
+<h3 id="_referencing_modelica_standard_library_librarycombitables">4.3. Referencing Modelica Standard Library libraryCombitables</h3>
 <div class="paragraph">
-<p>The Modelica library defines lookup tables which are stored in a single matrix (<a href="https://doc.modelica.org/om/Modelica.Blocks.Tables.html" class="bare">https://doc.modelica.org/om/Modelica.Blocks.Tables.html</a>)</p>
+<p>The Modelica Standard Library defines lookup tables which are stored in a single matrix (<a href="https://doc.modelica.org/om/Modelica.Blocks.Tables.html" class="bare">https://doc.modelica.org/om/Modelica.Blocks.Tables.html</a>)</p>
 </div>
 <div class="sect3">
-<h4 id="_referencing_modelica_library_combitable1d">4.3.1. Referencing Modelica library CombiTable1d</h4>
+<h4 id="_referencing_modelica_standard_library_combitable1d">4.3.1. Referencing Modelica Standard Library CombiTable1d</h4>
 <div class="sect4">
 <h5 id="_example_2">4.3.1.1. Example</h5>
 <table id="combitable1d_example" class="tableblock frame-all grid-all stretch">
@@ -970,7 +970,7 @@ start="1.0 2.0 4.0 7.0
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to reference the Modelica library CombiTable1D matrix <code>combitable1d_example</code> in the TerminalsAndIcons.xml file:</p>
+<p>The following example shows how to reference the Modelica Standard Library CombiTable1D matrix <code>combitable1d_example</code> in the TerminalsAndIcons.xml file:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -994,7 +994,7 @@ start="1.0 2.0 4.0 7.0
 </div>
 </div>
 <div class="sect3">
-<h4 id="_referencing_modelica_library_combitable2d">4.3.2. Referencing Modelica library CombiTable2d</h4>
+<h4 id="_referencing_modelica_standard_library_combitable2d">4.3.2. Referencing Modelica Standard Library CombiTable2d</h4>
 <div class="sect4">
 <h5 id="_example_3">4.3.2.1. Example</h5>
 <table id="combitable2d_example" class="tableblock frame-all grid-all stretch">
@@ -1043,7 +1043,7 @@ start="  0 1.0 2.0 3.0
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to reference the Modelica library CombiTable2D matrix <code>combitable2d_example</code> in the TerminalsAndIcons.xml file:</p>
+<p>The following example shows how to reference the Modelica Standard Library CombiTable2D matrix <code>combitable2d_example</code> in the TerminalsAndIcons.xml file:</p>
 </div>
 <div class="listingblock">
 <div class="content">
