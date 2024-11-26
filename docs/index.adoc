@@ -139,7 +139,7 @@ For each of the represented points in the domain set, the values to which they a
 _[There can be multiple terminal member variables with `variablKind` `codomain` to represent multiple maps in one terminal.]_
 
 `org.fmi-standard.fmi-ls-struct.map.domainOutput`::
-Optionally, for each `domain` variable at most one array variable (typically an input or a local variable) can be referenced that represents calculated output value of the map.
+Optionally, for each `domain` variable at most one array variable (typically an output or a local variable) can be referenced that represents calculated output value of the map.
 If present, a `domainOutput` variable must be listed directly after the corresponding `codomain` variable.
 
 Additional terminal member variables can be added to the terminal as related variables but if they do not fit into one of the above categories, they shall not have a `variableKind' starting with `org.fmi-standard.fmi-ls-struct`. 
@@ -230,12 +230,12 @@ include::examples/terminalsAndIcons.xml[]
 
 
 
-=== Referencing Modelica library Combitables
+=== Referencing Modelica Standard Library libraryCombitables
 
-The Modelica library defines lookup tables which are stored in a single matrix (https://doc.modelica.org/om/Modelica.Blocks.Tables.html)
+The Modelica Standard Library defines lookup tables which are stored in a single matrix (https://doc.modelica.org/om/Modelica.Blocks.Tables.html)
 
 
-==== Referencing Modelica library CombiTable1d
+==== Referencing Modelica Standard Library CombiTable1d
 
 ===== Example
 
@@ -269,14 +269,14 @@ The Modelica library defines lookup tables which are stored in a single matrix (
 include::examples/combi1d_modelDescription.xml[]
 ----
 
-The following example shows how to reference the Modelica library CombiTable1D matrix `combitable1d_example` in the TerminalsAndIcons.xml file:
+The following example shows how to reference the Modelica Standard Library CombiTable1D matrix `combitable1d_example` in the TerminalsAndIcons.xml file:
 [source, xml]
 ----
 include::examples/combi1d_terminalsAndIcons.xml[]
 ----
 
 
-==== Referencing Modelica library CombiTable2d
+==== Referencing Modelica Standard Library CombiTable2d
 
 ===== Example
 
@@ -304,7 +304,7 @@ include::examples/combi1d_terminalsAndIcons.xml[]
 include::examples/combi2d_modelDescription.xml[]
 ----
 
-The following example shows how to reference the Modelica library CombiTable2D matrix `combitable2d_example` in the TerminalsAndIcons.xml file:
+The following example shows how to reference the Modelica Standard Library CombiTable2D matrix `combitable2d_example` in the TerminalsAndIcons.xml file:
 [source, xml]
 ----
 include::examples/combi2d_terminalsAndIcons.xml[]
