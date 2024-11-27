@@ -98,6 +98,8 @@ An example of a manifest file for this layered standard is shown below:
 include::examples/fmi_ls_struct_manifest_example.xml[]
 ----
 
+The manifest file shall be stored inside the FMU at the following path: `/extra/org.fmi-standard.fmi-ls-struct/fmi-ls-manifest.xml`.
+
 [#common-concepts]
 == Common concepts for the representation of maps 
 
