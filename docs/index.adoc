@@ -1,4 +1,6 @@
 = Layered Standard for Structured Data
+:doctype: book
+:imagesdir: images
 :sectnums:
 :sectnumlevels: 5
 :toc: left
@@ -6,7 +8,6 @@
 :toclevels: 5
 :xrefstyle: short
 :docinfo: shared
-:docinfodir: docs
 :stylesheet: fmi-spec.css
 :stem: latexmath
 :source-highlighter: highlightjs
