@@ -13,8 +13,6 @@
 :source-highlighter: highlightjs
 :nofooter:
 :favicon: images/favicon.ico
-:revdate: unreleased
-:revnumber: 1.0
 :icons: font
 
 Based on FMI 3.0, this layered standard defines how variables (especially parameters) of an FMU can be structured and grouped in a more flexible way than with the "structured naming convention" of the FMI Standard.
@@ -82,7 +80,7 @@ The manifest file signals to the importer that the FMU supports this layered sta
 
 |`fmi-ls-version`
 | `\http://fmi-standard.org/fmi-ls-manifest`
-| `1.0.0`
+| `1.0.0-alpha.1`
 | Version of the layered standard. This layered standard uses semantic versioning, as defined in <<PW13>>.
 
 |`fmi-ls-description`
