@@ -314,7 +314,7 @@ include::examples/combi2d_terminalsAndIcons.xml[]
 
 
 
-==  Maps sampled on a irregular grid ("Point Cloud")
+==  Maps sampled on irregular grids ("Point Cloud")
 
 
 === Definitions
