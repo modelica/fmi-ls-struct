@@ -137,7 +137,7 @@ However the size of each `domainInput` must be the same for each domain: For non
 
 `org.fmi-standard.fmi-ls-struct.map.codomain`::
 For each of the represented points in the domain set, the values to which they are mapped are represented.
-_[There can be multiple terminal member variables with `variablKind` `codomain` to represent multiple maps in one terminal.]_
+_[There can be multiple terminal member variables with `variableKind` `codomain` to represent multiple maps in one terminal.]_
 
 `org.fmi-standard.fmi-ls-struct.map.domainOutput`::
 Optionally, for each `domain` variable at most one array variable (typically an output or a local variable) can be referenced that represents calculated output value of the map.
