@@ -234,15 +234,26 @@ include::examples/terminalsAndIcons.xml[]
 
 === Definitions
 
-Definition of domains and codomains as above.
+n-d lookup table on an irregular grid::
+In the context of this layered standard, an n-d lookup table on an irregular grid is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on arbitrarily chosen points of the domain.
+
+terminalKind::
+A terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` defines a map on the vertices of an irregular grid.
+
+domain::
+For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
+
+codomain::
+For each of the m dimensions of the codomain of the lookup table, a 1-dimensional array variable containing the sampling values of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
 
 For domains latexmath:[x=[x_1, x_2, \dots, x_n\], y=[y_1, y_2, \dots, y_n\], z=[z_1, z_2, \dots, z_n\], \dots]
 and codomains latexmath:[u=[u_1, u_2, \dots, u_n\], v=[v_1, v_2, \dots, v_n\], \dots], the tuple latexmath:[(x_i, y_i, z_i, \dots)] gets mapped to the values latexmath:[(u_i, v_i, ...)].
 
-All domains and codomains must have the same length.
+All domain arrays and codomain arrays must have the same length.
 
 _[Note: A map on a 1-dimensional domain can be equivalently represented with a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.]_
 
+_[Note: Any n-d lookup table that can be described with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` could be also represented an n-d lookup table with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"`.]_
 
 ToDo add picture
 
