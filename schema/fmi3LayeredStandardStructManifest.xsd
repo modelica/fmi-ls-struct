@@ -3,7 +3,7 @@
 	<xs:import namespace="http://fmi-standard.org/fmi-ls-manifest" schemaLocation="fmi3LayeredStandardManifest.xsd"/>
 	<xs:annotation>
 		<xs:documentation>
-Copyright(c) 2023 Modelica Association Project "FMI".
+Copyright(c) 2024-2025 Modelica Association Project "FMI".
              All rights reserved.
 
 This file is licensed by the copyright holders under the 2-Clause BSD License
@@ -32,7 +32,7 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------------------------------------------------------------------------
-        </xs:documentation>
+		</xs:documentation>
 	</xs:annotation>
 	<xs:element name="fmiLayeredStandardManifest">
 		<xs:complexType>
