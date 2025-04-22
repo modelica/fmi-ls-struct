@@ -35,7 +35,6 @@ The licenses text can be found in the https://raw.githubusercontent.com/modelica
 
 For many use cases, the grouping of variables gives the user a better overview about the usage of variables. For certain groupings the importing tool might be able to provide a more user-friendly interface.
 FMUs might use maps/functions sampled on the vertices of a grid to calculate output values. The values at these sampling points and even the locations of the sampling points might get exposed as parameter variables of the FMU to allow calibrations. However, the FMI standard only defines n-dimensional array variable but doesn't define any relation between these variables. This layered standard defines how to group variables to represent maps.
-E.g., CombiTable1D or CombiTable2D blocks of the Modelica standard library used within an FMU can be exposed with this approach.
 
 This layered standard uses terminals of the FMI 3.0 standard to represent structures like maps by grouping variables in terminals. Terminals are used to group variables and already define means to connect its variables between FMUs. Such a connections could ensure that the same map values are used by different FMUs or allow one FMU to provide the map values to be used by other FMUs.
 
