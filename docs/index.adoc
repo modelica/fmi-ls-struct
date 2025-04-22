@@ -103,7 +103,9 @@ The manifest file shall be stored inside the FMU at the following path: `/extra/
 
 ===  Definitions
 
-n-D lookup table:: In the context of this layered standard, an n-D lookup table is a sampled representation of a function of n input variables latexmath:[(y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)], sampled on points of the n-dimensional domain. Such an n-D lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.
+n-d lookup table::
+In the context of this layered standard, an n-d lookup table is a sampled representation of a function of n input variables latexmath:[(y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)], sampled on points of the n-dimensional domain.
+Such an n-d lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.
 
 
 ==== Definition of `terminalKind` attribute values
@@ -155,14 +157,16 @@ _[This indicates that the variableKind of the member must be considered for the 
 
 === Structure of the FMU archive
 
-This layered standard uses and extends the "Terminals and Icons Concept" of FMI 3.0. All information is stored in the TerminalsAndIcons.xml file in the TerminalsAndIcons folder of an FMU.
+This layered standard uses "Terminals and Icons" mechanism of FMI 3.0.
+All information is stored in the TerminalsAndIcons.xml file in the TerminalsAndIcons folder of an FMU.
 
 
 ==  Maps sampled on rectilinear grids
 
 === Definitions
 
-n-d lookup table on rectilinear grid::  In the context of this layered standard, an n-D lookup table is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on the vertices of a rectilinear grid.
+n-d lookup table on a rectilinear grid::
+In the context of this layered standard, an n-d lookup table on a rectilinear grid is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on the vertices of a rectilinear grid.
 
 _[In <<ASAM-MCD2>>, such a 1-d lookup table is called a *CURVE*, a 2-d lookup table is called *MAP*, and a 3-d lookup table is called *CUBOID*.
 4-d and 5-d lookup tables are called *CUBE_4* and \*CUBE\_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.]_
@@ -237,7 +241,8 @@ and codomains latexmath:[u=[u_1, u_2, \dots, u_n\], v=[v_1, v_2, \dots, v_n\], \
 
 All domains and codomains must have the same length.
 
-_[Note: A map on a 1 dimensional domain can be equivalently represented with a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.]_
+_[Note: A map on a 1-dimensional domain can be equivalently represented with a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.]_
+
 
 ToDo add picture
 
