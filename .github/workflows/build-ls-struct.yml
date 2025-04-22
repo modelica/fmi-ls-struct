@@ -11,7 +11,7 @@ jobs:
   build-ls-struct:
     name: Build Layered Standard Struct
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: checkout
