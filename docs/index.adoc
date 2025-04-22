@@ -169,7 +169,7 @@ n-d lookup table on a rectilinear grid::
 In the context of this layered standard, an n-d lookup table on a rectilinear grid is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on the vertices of a rectilinear grid.
 
 _[In <<ASAM-MCD2>>, such a 1-d lookup table is called a *CURVE*, a 2-d lookup table is called *MAP*, and a 3-d lookup table is called *CUBOID*.
-4-d and 5-d lookup tables are called *CUBE_4* and \*CUBE\_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.]_
+4-d and 5-d lookup tables are called *CUBE_4* and *CUBE_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.]_
 
 terminalKind::
 A terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` defines a map on the vertices of a rectilinear grid.
