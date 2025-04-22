@@ -112,12 +112,6 @@ n-D lookup table:: In the context of this layered standard, an n-D lookup table 
 `org.fmi-standard.fmi-ls-struct.map.rectilinearGrid`::
 for maps defined on the vertices of a rectilinear grid.
 
-`org.fmi-standard.fmi-ls-struct.map.combitable1d`::
-for 1-d maps defined on the vertices of a rectilinear grid, stored in a single matrix.
-
-`org.fmi-standard.fmi-ls-struct.map.combitable2d`::
-for 2-d maps defined on the vertices of a rectilinear grid, in a single matrix.
-
 `org.fmi-standard.fmi-ls-struct.map.irregular`::
 for maps defined by unstructured tuples of ("point cloud").
 
@@ -228,89 +222,6 @@ These variables are grouped in a terminal with the terminalKind `org.fmi-standar
 ----
 include::examples/terminalsAndIcons.xml[]
 ----
-
-
-
-=== Referencing Modelica Standard Library Combitables
-
-The Modelica Standard Library defines lookup tables which are stored in a single matrix (https://doc.modelica.org/om/Modelica.Blocks.Tables.html)
-
-
-==== Referencing Modelica Standard Library CombiTable1d
-
-===== Example
-
-
-[[combitable1d_example]]
-[cols="1,1,1,2"]
-|====
-|x.0
-|v1
-|v2
-|v3
-
-|1.0
-|2.0
-|4.0
-|7.0
-
-|2.0 
-|3.0
-|2.0 
-|5.0 
-
-|3.0
-|4.0 
-|1.0
-|2.0
-|====
-
-[source, xml]
-----
-include::examples/combi1d_modelDescription.xml[]
-----
-
-The following example shows how to reference the Modelica Standard Library CombiTable1D matrix `combitable1d_example` in the TerminalsAndIcons.xml file:
-[source, xml]
-----
-include::examples/combi1d_terminalsAndIcons.xml[]
-----
-
-
-==== Referencing Modelica Standard Library CombiTable2d
-
-===== Example
-
-[[combitable2d_example]]
-[cols="1,1,1,2"]
-|====
-|
-|1.0
-|2.0
-|3.0
-
-|1.0
-|1.0 
-|3.0
-|5.0 
-
-|2.0
-|2.0
-|4.0 
-|6.0
-|====
-
-[source, xml]
-----
-include::examples/combi2d_modelDescription.xml[]
-----
-
-The following example shows how to reference the Modelica Standard Library CombiTable2D matrix `combitable2d_example` in the TerminalsAndIcons.xml file:
-[source, xml]
-----
-include::examples/combi2d_terminalsAndIcons.xml[]
-----
-
 
 
 
