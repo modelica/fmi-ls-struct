@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fmiLayeredStandardManifest
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="../../schema/fmi3LayeredStandardStructManifest.xsd"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/modelica/fmi-ls-struct/v1.0.0-alpha.1/schema/fmi3LayeredStandardStructManifest.xsd"
+
 	xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest"
 	fmi-ls:fmi-ls-name="org.fmi-standard.fmi-ls-struct"
 	fmi-ls:fmi-ls-version="1.0.0-alpha.1"
