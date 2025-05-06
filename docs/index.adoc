@@ -300,6 +300,74 @@ include::examples/irregular3d_modelDescription.xml[]
 ----
 
 
+=== 2-d example of a lookup table on an irregular grid which could be represented with a rectilinear grid
+
+The previous <<rectilinear_example, 2-d rectilinear grid example>> with 2 sampling points in the x dimension and 3 sampling points points in the y dimension
+[[irregular_rectilinear_example]]
+[cols="1,1,1,1,1"]
+|====
+2.2+|v
+3+|y
+|10.0
+|25.0
+|30.0
+
+.2+|x
+|2.0
+|11.0
+|12.0 
+|13.0 
+
+|3.0
+|21.0 
+|22.0
+|23.0
+|====
+
+can be represented as a lookup table on a irregular grid with the same 6 sampling points:
+
+[[irregular_irregular_rectilinear_example]]
+[cols="1,1,1"]
+
+|====
+|x
+|y
+|v
+
+|2.0
+|10.0
+|11.0
+
+|2.0
+|25.0
+|12.0
+
+|2.0
+|30.0
+|13.0
+
+|3.0
+|10.0
+|21.0
+
+|3.0
+|25.0
+|22.0
+
+|3.0
+|30.0
+|23.0
+
+|====
+
+[source, xml]
+----
+include::examples/irregular2d_terminalsAndIcons.xml[]
+----
+
+[source, xml]
+----
+include::examples/irregular2d_modelDescription.xml[]
 
 == Known Limitations of This Standard
 
