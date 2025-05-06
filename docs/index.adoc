@@ -244,7 +244,7 @@ domain::
 For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
 
 codomain::
-For each of the m dimensions of the codomain of the lookup table, a 1-dimensional array variable containing the sampling values of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
+For each of the m dimensions of the codomain of the lookup table, a 1-dimensional array variable containing the sampling values of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
 
 For domains latexmath:[x=[x_1, x_2, \dots, x_n\], y=[y_1, y_2, \dots, y_n\], z=[z_1, z_2, \dots, z_n\], \dots]
 and codomains latexmath:[u=[u_1, u_2, \dots, u_n\], v=[v_1, v_2, \dots, v_n\], \dots], the tuple latexmath:[(x_i, y_i, z_i, \dots)] gets mapped to the values latexmath:[(u_i, v_i, ...)].
