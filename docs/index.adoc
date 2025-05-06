@@ -255,9 +255,9 @@ _[Note: A map on a 1-dimensional domain can be equivalently represented with a t
 
 _[Note: Any n-d lookup table that can be described with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` could be also represented an n-d lookup table with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"`.]_
 
-ToDo add picture
+=== 3-d example of a lookup table on an irregular grid
 
-=== Example
+The lookup table is sampled at 3 different points of the domain (2, 10, 10), (3, 25, 28) and (10, 30, 30) with the values (11, 1), (1, 4) and (13, 3) on the 2 dimensional codomain.
 
 [[irregular_example]]
 [cols="1,1,1,1,1"]
@@ -291,12 +291,12 @@ ToDo add picture
 
 [source, xml]
 ----
-include::examples/irregular_terminalsAndIcons.xml[]
+include::examples/irregular3d_terminalsAndIcons.xml[]
 ----
 
 [source, xml]
 ----
-include::examples/irregular_modelDescription.xml[]
+include::examples/irregular3d_modelDescription.xml[]
 ----
 
 
