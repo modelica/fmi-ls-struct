@@ -187,7 +187,7 @@ In particular, the standard doesn't define if the first dimension is displayed a
 However, for the example lookup tables of this document, the sampling points of first dimension of the domain are shown as a column vector, and the values of second dimension are shown as a row vector.]_
 
 
-=== Example
+=== 2-d example of a lookup table on a rectilinear grid
 
 
 [[rectilinear_example]]
