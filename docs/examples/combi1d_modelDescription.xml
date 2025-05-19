@@ -1,0 +1,13 @@
+...
+<Float64 name="combitable1d_example " valueReference="1" causality="parameter"
+start="1.0 2.0 4.0 7.0
+       2.0 3.0 2.0 5.0
+       3.0 4.0 1.0 2.0">
+  <Dimension start="3"/>
+  <Dimension start="4"/>
+</Float64>
+<Int64 name="InterpolationOrder" valueReference="2" causality="parameter" start="1" />
+<Float64 name="in_x" valueReference="3" causality="input" start="2.0"/>
+<Float64 name="out_v1" valueReference="4" causality="local" />
+<Float64 name="out_v3" valueReference="5" causality="local" />
+...
