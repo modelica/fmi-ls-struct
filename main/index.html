@@ -587,8 +587,8 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>Layered Standard for Structured Data</h1>
 <div class="details">
-<span id="revnumber">version dc360fe,</span>
-<span id="revdate">2025-04-22</span>
+<span id="revnumber">version 6bf0b04,</span>
+<span id="revdate">2025-05-19</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -617,26 +617,12 @@ document.addEventListener('keydown', (event) => {
 <ul class="sectlevel2">
 <li><a href="#_definitions_2">4.1. Definitions</a></li>
 <li><a href="#_example">4.2. Example</a></li>
-<li><a href="#_referencing_modelica_standard_library_combitables">4.3. Referencing Modelica Standard Library Combitables</a>
-<ul class="sectlevel3">
-<li><a href="#_referencing_modelica_standard_library_combitable1d">4.3.1. Referencing Modelica Standard Library CombiTable1d</a>
-<ul class="sectlevel4">
-<li><a href="#_example_2">4.3.1.1. Example</a></li>
-</ul>
-</li>
-<li><a href="#_referencing_modelica_standard_library_combitable2d">4.3.2. Referencing Modelica Standard Library CombiTable2d</a>
-<ul class="sectlevel4">
-<li><a href="#_example_3">4.3.2.1. Example</a></li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 </li>
 <li><a href="#_maps_sampled_on_irregular_grids_point_cloud">5. Maps sampled on irregular grids ("Point Cloud")</a>
 <ul class="sectlevel2">
 <li><a href="#_definitions_3">5.1. Definitions</a></li>
-<li><a href="#_example_4">5.2. Example</a></li>
+<li><a href="#_example_2">5.2. Example</a></li>
 </ul>
 </li>
 <li><a href="#_known_limitations_of_this_standard">6. Known Limitations of This Standard</a></li>
@@ -675,8 +661,7 @@ The licenses text can be found in the <a href="https://raw.githubusercontent.com
 <h3 id="_motivation">1.1. Motivation</h3>
 <div class="paragraph">
 <p>For many use cases, the grouping of variables gives the user a better overview about the usage of variables. For certain groupings the importing tool might be able to provide a more user-friendly interface.
-FMUs might use maps/functions sampled on the vertices of a grid to calculate output values. The values at these sampling points and even the locations of the sampling points might get exposed as parameter variables of the FMU to allow calibrations. However, the FMI standard only defines n-dimensional array variable but doesn&#8217;t define any relation between these variables. This layered standard defines how to group variables to represent maps.
-E.g., CombiTable1D or CombiTable2D blocks of the Modelica standard library used within an FMU can be exposed with this approach.</p>
+FMUs might use maps/functions sampled on the vertices of a grid to calculate output values. The values at these sampling points and even the locations of the sampling points might get exposed as parameter variables of the FMU to allow calibrations. However, the FMI standard only defines n-dimensional array variable but doesn&#8217;t define any relation between these variables. This layered standard defines how to group variables to represent maps.</p>
 </div>
 <div class="paragraph">
 <p>This layered standard uses terminals of the FMI 3.0 standard to represent structures like maps by grouping variables in terminals. Terminals are used to group variables and already define means to connect its variables between FMUs. Such a connections could ensure that the same map values are used by different FMUs or allow one FMU to provide the map values to be used by other FMUs.</p>
@@ -803,14 +788,6 @@ By pressing "t", the table of contents can be displayed on the left side or hidd
 <dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.rectilinearGrid</code></dt>
 <dd>
 <p>for maps defined on the vertices of a rectilinear grid.</p>
-</dd>
-<dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.combitable1d</code></dt>
-<dd>
-<p>for 1-d maps defined on the vertices of a rectilinear grid, stored in a single matrix.</p>
-</dd>
-<dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.combitable2d</code></dt>
-<dd>
-<p>for 2-d maps defined on the vertices of a rectilinear grid, in a single matrix.</p>
 </dd>
 <dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.irregular</code></dt>
 <dd>
@@ -1015,163 +992,6 @@ However, for the example lookup tables of this document, the sampling points of 
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_referencing_modelica_standard_library_combitables">4.3. Referencing Modelica Standard Library Combitables</h3>
-<div class="paragraph">
-<p>The Modelica Standard Library defines lookup tables which are stored in a single matrix (<a href="https://doc.modelica.org/om/Modelica.Blocks.Tables.html" class="bare">https://doc.modelica.org/om/Modelica.Blocks.Tables.html</a>)</p>
-</div>
-<div class="sect3">
-<h4 id="_referencing_modelica_standard_library_combitable1d">4.3.1. Referencing Modelica Standard Library CombiTable1d</h4>
-<div class="sect4">
-<h5 id="_example_2">4.3.1.1. Example</h5>
-<table id="combitable1d_example" class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 40%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">x.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">v1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">v2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">v3</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">7.0</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5.0</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-</tr>
-</tbody>
-</table>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">...
-&lt;Float64 name="combitable1d_example " valueReference="1" causality="parameter"
-start="1.0 2.0 4.0 7.0
-       2.0 3.0 2.0 5.0
-       3.0 4.0 1.0 2.0"&gt;
-  &lt;Dimension start="3"/&gt;
-  &lt;Dimension start="4"/&gt;
-&lt;/Float64&gt;
-&lt;Int64 name="InterpolationOrder" valueReference="2" causality="parameter" start="1" /&gt;
-&lt;Float64 name="in_x" valueReference="3" causality="input" start="2.0"/&gt;
-&lt;Float64 name="out_v1" valueReference="4" causality="local" /&gt;
-&lt;Float64 name="out_v3" valueReference="5" causality="local" /&gt;
-...</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The following example shows how to reference the Modelica Standard Library CombiTable1D matrix <code>combitable1d_example</code> in the TerminalsAndIcons.xml file:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;fmiTerminalsAndIcons fmiVersion="3.0"&gt;
-  &lt;Terminals&gt;
-    &lt;Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.combitable1d" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
-      &lt;TerminalMemberVariable variableName="combitable1d_example" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
-      &lt;TerminalMemberVariable variableName="in_x" memberName="in_x" variableKind="org.fmi-standard.fmi-ls-struct.domainInput" /&gt;
-      &lt;TerminalMemberVariable variableName="combitable1d_example" memberName="v1" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
-      &lt;TerminalMemberVariable variableName="out_v1" memberName="out_v1" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" /&gt;
-      &lt;TerminalMemberVariable variableName="combitable1d_example" memberName="v2" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
-      &lt;TerminalMemberVariable variableName="combitable1d_example" memberName="v3" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
-      &lt;TerminalMemberVariable variableName="out_v3" memberName="out_v3" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" /&gt;
-      &lt;TerminalMemberVariable variableName="interpolationOrder" memberName="interpolationOrder" variableKind="com.example.related" /&gt;
-    &lt;/Terminal&gt;
-  &lt;/Terminals&gt;
-&lt;/fmiTerminalsAndIcons&gt;</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_referencing_modelica_standard_library_combitable2d">4.3.2. Referencing Modelica Standard Library CombiTable2d</h4>
-<div class="sect4">
-<h5 id="_example_3">4.3.2.1. Example</h5>
-<table id="combitable2d_example" class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 40%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5.0</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">6.0</p></td>
-</tr>
-</tbody>
-</table>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">...
-&lt;Float64 name="combitable2d_example" valueReference="1" causality="parameter"
-start="  0 1.0 2.0 3.0
-       1.0 1.0 3.0 5.0
-       2.0 2.0 4.0 6.0"&gt;
-  &lt;Dimension start="3"/&gt;
-  &lt;Dimension start="4"/&gt;
-&lt;/Float64&gt;
-&lt;Int64 name="InterpolationOrder" valueReference="2" causality="parameter" start="1" /&gt;
-&lt;Float64 name="in_x" valueReference="3" causality="input" start="2.0"/&gt;
-&lt;Float64 name="in_y" valueReference="4" causality="local" /&gt;
-&lt;Float64 name="out_v" valueReference="5" causality="local" /&gt;
-...</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The following example shows how to reference the Modelica Standard Library CombiTable2D matrix <code>combitable2d_example</code> in the TerminalsAndIcons.xml file:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;fmiTerminalsAndIcons fmiVersion="3.0"&gt;
-  &lt;Terminals&gt;
-    &lt;Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.combitable2d" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
-      &lt;TerminalMemberVariable variableName="combitable2d_example" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
-      &lt;TerminalMemberVariable variableName="in_x" memberName="in_x" variableKind="org.fmi-standard.fmi-ls-struct.domainInput" /&gt;
-      &lt;TerminalMemberVariable variableName="combitable2d_example" memberName="y" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
-      &lt;TerminalMemberVariable variableName="in_y" memberName="in_y" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
-      &lt;TerminalMemberVariable variableName="combitable2d_example" memberName="v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
-      &lt;TerminalMemberVariable variableName="out_v" memberName="out_v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" /&gt;
-      &lt;TerminalMemberVariable variableName="interpolationOrder" memberName="interpolationOrder" variableKind="com.example.related" /&gt;
-    &lt;/Terminal&gt;
-  &lt;/Terminals&gt;
-&lt;/fmiTerminalsAndIcons&gt;</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -1197,7 +1017,7 @@ and codomains \(u=[u_1, u_2, \dots, u_n], v=[v_1, v_2, \dots, v_n], \dots\), the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_example_4">5.2. Example</h3>
+<h3 id="_example_2">5.2. Example</h3>
 <table id="irregular_example" class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
