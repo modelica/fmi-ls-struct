@@ -251,9 +251,9 @@ and codomains latexmath:[u=[u_1, u_2, \dots, u_n\], v=[v_1, v_2, \dots, v_n\], \
 
 All domain arrays and codomain arrays must have the same length.
 
-_[Note: A map on a 1-dimensional domain can be equivalently represented with a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.]_
+_[Note: A map on a 1-dimensional domain can be equivalently represented by a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.]_
 
-_[Note: Any n-d lookup table that can be described with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` could be also represented an n-d lookup table with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"`.]_
+_[Note: Any n-d lookup table that can be described with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` could be also represented by an n-d lookup table with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"`.]_
 
 === 3-d example of a lookup table on an irregular grid
 
