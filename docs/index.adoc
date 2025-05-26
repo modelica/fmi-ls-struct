@@ -368,6 +368,7 @@ include::examples/irregular2d_terminalsAndIcons.xml[]
 [source, xml]
 ----
 include::examples/irregular2d_modelDescription.xml[]
+----
 
 == Known Limitations of This Standard
 
