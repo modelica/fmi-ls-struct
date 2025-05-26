@@ -587,8 +587,8 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>Layered Standard for Structured Data</h1>
 <div class="details">
-<span id="revnumber">version 6bf0b04,</span>
-<span id="revdate">2025-05-19</span>
+<span id="revnumber">version b08456f,</span>
+<span id="revdate">2025-05-26</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -616,13 +616,14 @@ document.addEventListener('keydown', (event) => {
 <li><a href="#_maps_sampled_on_rectilinear_grids">4. Maps sampled on rectilinear grids</a>
 <ul class="sectlevel2">
 <li><a href="#_definitions_2">4.1. Definitions</a></li>
-<li><a href="#_example">4.2. Example</a></li>
+<li><a href="#_2_d_example_of_a_lookup_table_on_a_rectilinear_grid">4.2. 2-d example of a lookup table on a rectilinear grid</a></li>
 </ul>
 </li>
 <li><a href="#_maps_sampled_on_irregular_grids_point_cloud">5. Maps sampled on irregular grids ("Point Cloud")</a>
 <ul class="sectlevel2">
 <li><a href="#_definitions_3">5.1. Definitions</a></li>
-<li><a href="#_example_2">5.2. Example</a></li>
+<li><a href="#_3_d_example_of_a_lookup_table_on_an_irregular_grid">5.2. 3-d example of a lookup table on an irregular grid</a></li>
+<li><a href="#_2_d_example_of_a_lookup_table_on_an_irregular_grid_which_could_be_represented_with_a_rectilinear_grid">5.3. 2-d example of a lookup table on an irregular grid which could be represented with a rectilinear grid</a></li>
 </ul>
 </li>
 <li><a href="#_known_limitations_of_this_standard">6. Known Limitations of This Standard</a></li>
@@ -775,9 +776,10 @@ By pressing "t", the table of contents can be displayed on the left side or hidd
 <h3 id="_definitions">3.1. Definitions</h3>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">n-D lookup table</dt>
+<dt class="hdlist1">n-d lookup table</dt>
 <dd>
-<p>In the context of this layered standard, an n-D lookup table is a sampled representation of a function of n input variables \((y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)\), sampled on points of the n-dimensional domain. Such an n-D lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.</p>
+<p>In the context of this layered standard, an n-d lookup table is a sampled representation of a function of n input variables \((y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)\), sampled on points of the n-dimensional domain.
+Such an n-d lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.</p>
 </dd>
 </dl>
 </div>
@@ -865,7 +867,8 @@ If present, a <code>domainOutput</code> variable must be listed directly after t
 <div class="sect2">
 <h3 id="_structure_of_the_fmu_archive">3.2. Structure of the FMU archive</h3>
 <div class="paragraph">
-<p>This layered standard uses and extends the "Terminals and Icons Concept" of FMI 3.0. All information is stored in the TerminalsAndIcons.xml file in the TerminalsAndIcons folder of an FMU.</p>
+<p>This layered standard uses "Terminals and Icons" mechanism of FMI 3.0.
+All information is stored in the TerminalsAndIcons.xml file in the TerminalsAndIcons folder of an FMU.</p>
 </div>
 </div>
 </div>
@@ -877,15 +880,15 @@ If present, a <code>domainOutput</code> variable must be listed directly after t
 <h3 id="_definitions_2">4.1. Definitions</h3>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">n-d lookup table on rectilinear grid</dt>
+<dt class="hdlist1">n-d lookup table on a rectilinear grid</dt>
 <dd>
-<p>In the context of this layered standard, an n-D lookup table is a sampled representation of a function of n input variables \(y=F(x_1, x_2, x_3, \dots, x_n)\) sampled on the vertices of a rectilinear grid.</p>
+<p>In the context of this layered standard, an n-d lookup table on a rectilinear grid is a sampled representation of a function of n input variables \(y=F(x_1, x_2, x_3, \dots, x_n)\) sampled on the vertices of a rectilinear grid.</p>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
 <p><em>[In <a href="#ASAM-MCD2">[ASAM-MCD2]</a>, such a 1-d lookup table is called a <strong>CURVE</strong>, a 2-d lookup table is called <strong>MAP</strong>, and a 3-d lookup table is called <strong>CUBOID</strong>.
-4-d and 5-d lookup tables are called <strong>CUBE_4</strong> and *CUBE\_5*, respectively. Higher dimensional lookup tables are not defined in <a href="#ASAM-MCD2">[ASAM-MCD2]</a>.]</em></p>
+4-d and 5-d lookup tables are called <strong>CUBE_4</strong> and <strong>CUBE_5</strong>, respectively. Higher dimensional lookup tables are not defined in <a href="#ASAM-MCD2">[ASAM-MCD2]</a>.]</em></p>
 </div>
 <div class="dlist">
 <dl>
@@ -913,7 +916,7 @@ However, for the example lookup tables of this document, the sampling points of 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_example">4.2. Example</h3>
+<h3 id="_2_d_example_of_a_lookup_table_on_a_rectilinear_grid">4.2. 2-d example of a lookup table on a rectilinear grid</h3>
 <table id="rectilinear_example" class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -999,25 +1002,45 @@ However, for the example lookup tables of this document, the sampling points of 
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_definitions_3">5.1. Definitions</h3>
-<div class="paragraph">
-<p>Definition of domains and codomains as above.</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">n-d lookup table on an irregular grid</dt>
+<dd>
+<p>In the context of this layered standard, an n-d lookup table on an irregular grid is a sampled representation of a function of n input variables \(y=F(x_1, x_2, x_3, \dots, x_n)\) sampled on arbitrarily chosen points of the domain.</p>
+</dd>
+<dt class="hdlist1">terminalKind</dt>
+<dd>
+<p>A terminal with <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"</code> defines a map on the vertices of an irregular grid.</p>
+</dd>
+<dt class="hdlist1">domain</dt>
+<dd>
+<p>For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with <code>variableKind="org.fmi-standard.fmi-ls-struct.map.domain"</code>.</p>
+</dd>
+<dt class="hdlist1">codomain</dt>
+<dd>
+<p>For each of the m dimensions of the codomain of the lookup table, a 1-dimensional array variable containing the sampling values of the lookup table must be referenced with <code>variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"</code>.</p>
+</dd>
+</dl>
 </div>
 <div class="paragraph">
 <p>For domains \(x=[x_1, x_2, \dots, x_n], y=[y_1, y_2, \dots, y_n], z=[z_1, z_2, \dots, z_n], \dots\)
 and codomains \(u=[u_1, u_2, \dots, u_n], v=[v_1, v_2, \dots, v_n], \dots\), the tuple \((x_i, y_i, z_i, \dots)\) gets mapped to the values \((u_i, v_i, ...)\).</p>
 </div>
 <div class="paragraph">
-<p>All domains and codomains must have the same length.</p>
+<p>All domain arrays and codomain arrays must have the same length.</p>
 </div>
 <div class="paragraph">
-<p><em>[Note: A map on a 1 dimensional domain can be equivalently represented with a terminal of <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"</code> or a terminal with <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"</code>.]</em></p>
+<p><em>[Note: A map on a 1-dimensional domain can be equivalently represented by a terminal of <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"</code> or a terminal with <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"</code>.]</em></p>
 </div>
 <div class="paragraph">
-<p>ToDo add picture</p>
+<p><em>[Note: Any n-d lookup table that can be described with <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"</code> could be also represented by an n-d lookup table with <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"</code>.]</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_example_2">5.2. Example</h3>
+<h3 id="_3_d_example_of_a_lookup_table_on_an_irregular_grid">5.2. 3-d example of a lookup table on an irregular grid</h3>
+<div class="paragraph">
+<p>The lookup table is sampled at 3 different points of the domain (2, 10, 10), (3, 25, 28) and (10, 30, 30) with the values (11, 1), (1, 4) and (13, 3) on the 2 dimensional codomain.</p>
+</div>
 <table id="irregular_example" class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -1099,6 +1122,129 @@ and codomains \(u=[u_1, u_2, \dots, u_n], v=[v_1, v_2, \dots, v_n], \dots\), the
 &lt;Float64 name="in_x" valueReference="7" causality="input" start="2.0"/&gt;
 &lt;Float64 name="in_z" valueReference="8" causality="local" /&gt;
 &lt;Float64 name="out_v2" valueReference="10" causality="local" /&gt;
+...</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_d_example_of_a_lookup_table_on_an_irregular_grid_which_could_be_represented_with_a_rectilinear_grid">5.3. 2-d example of a lookup table on an irregular grid which could be represented with a rectilinear grid</h3>
+<div class="paragraph">
+<p>The previous <a href="#rectilinear_example">2-d rectilinear grid example</a> with 2 sampling points in the x dimension and 3 sampling points points in the y dimension</p>
+</div>
+<table id="irregular_rectilinear_example" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2" rowspan="2"><p class="tableblock">v</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">y</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">22.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23.0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>can be represented as a lookup table on a irregular grid with the same 6 sampling points:</p>
+</div>
+<table id="irregular_irregular_rectilinear_example" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">y</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">22.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23.0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;fmiTerminalsAndIcons fmiVersion="3.0"&gt;
+  &lt;Terminals&gt;
+    &lt;Terminal name="points" terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
+      &lt;TerminalMemberVariable variableName="x" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
+      &lt;TerminalMemberVariable variableName="in_x" memberName="in_x" variableKind="org.fmi-standard.fmi-ls-struct.domainInput" /&gt;
+      &lt;TerminalMemberVariable variableName="y" memberName="y" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
+      &lt;TerminalMemberVariable variableName="in_y" memberName="in_y" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
+      &lt;TerminalMemberVariable variableName="v" memberName="v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
+      &lt;TerminalMemberVariable variableName="out_v" memberName="out_v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" /&gt;
+      &lt;TerminalMemberVariable variableName="interpolationOrder" memberName="interpolationOrder" variableKind="com.example.related" /&gt;
+    &lt;/Terminal&gt;
+  &lt;/Terminals&gt;
+&lt;/fmiTerminalsAndIcons&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">...
+&lt;Float64 name="x" valueReference="1" causality="parameter" start="2.0 2.0 2.0 3.0 3.0 3.0"&gt;
+  &lt;Dimension start="3"/&gt;
+&lt;/Float64&gt;
+&lt;Float64 name="y" valueReference="2" causality="parameter" start="10.0 25.0 30.0 10.0 25.0 30.0"&gt;
+  &lt;Dimension start="3"/&gt;
+&lt;/Float64&gt;
+&lt;Float64 name="v" valueReference="3" causality="parameter" start="11.0 12.0 13.0 21.0 22.0 23.0"&gt;
+  &lt;Dimension start="3"/&gt;
+&lt;/Float64&gt;
+&lt;Int64 name="InterpolationOrder" valueReference="4" causality="parameter" start="1" /&gt;
+&lt;Float64 name="in_x" valueReference="5" causality="input" start="2.0"/&gt;
+&lt;Float64 name="in_y" valueReference="6" causality="input" start="10.0"/&gt;
+&lt;Float64 name="out_v" valueReference="10" causality="local" /&gt;
 ...</code></pre>
 </div>
 </div>
