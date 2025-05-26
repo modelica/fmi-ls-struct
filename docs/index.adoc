@@ -103,7 +103,9 @@ The manifest file shall be stored inside the FMU at the following path: `/extra/
 
 ===  Definitions
 
-n-D lookup table:: In the context of this layered standard, an n-D lookup table is a sampled representation of a function of n input variables latexmath:[(y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)], sampled on points of the n-dimensional domain. Such an n-D lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.
+n-d lookup table::
+In the context of this layered standard, an n-d lookup table is a sampled representation of a function of n input variables latexmath:[(y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)], sampled on points of the n-dimensional domain.
+Such an n-d lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.
 
 
 ==== Definition of `terminalKind` attribute values
@@ -155,17 +157,19 @@ _[This indicates that the variableKind of the member must be considered for the 
 
 === Structure of the FMU archive
 
-This layered standard uses and extends the "Terminals and Icons Concept" of FMI 3.0. All information is stored in the TerminalsAndIcons.xml file in the TerminalsAndIcons folder of an FMU.
+This layered standard uses "Terminals and Icons" mechanism of FMI 3.0.
+All information is stored in the TerminalsAndIcons.xml file in the TerminalsAndIcons folder of an FMU.
 
 
 ==  Maps sampled on rectilinear grids
 
 === Definitions
 
-n-d lookup table on rectilinear grid::  In the context of this layered standard, an n-D lookup table is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on the vertices of a rectilinear grid.
+n-d lookup table on a rectilinear grid::
+In the context of this layered standard, an n-d lookup table on a rectilinear grid is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on the vertices of a rectilinear grid.
 
 _[In <<ASAM-MCD2>>, such a 1-d lookup table is called a *CURVE*, a 2-d lookup table is called *MAP*, and a 3-d lookup table is called *CUBOID*.
-4-d and 5-d lookup tables are called *CUBE_4* and \*CUBE\_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.]_
+4-d and 5-d lookup tables are called *CUBE_4* and *CUBE_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.]_
 
 terminalKind::
 A terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` defines a map on the vertices of a rectilinear grid.
@@ -183,7 +187,7 @@ In particular, the standard doesn't define if the first dimension is displayed a
 However, for the example lookup tables of this document, the sampling points of first dimension of the domain are shown as a column vector, and the values of second dimension are shown as a row vector.]_
 
 
-=== Example
+=== 2-d example of a lookup table on a rectilinear grid
 
 
 [[rectilinear_example]]
@@ -230,18 +234,30 @@ include::examples/terminalsAndIcons.xml[]
 
 === Definitions
 
-Definition of domains and codomains as above.
+n-d lookup table on an irregular grid::
+In the context of this layered standard, an n-d lookup table on an irregular grid is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on arbitrarily chosen points of the domain.
+
+terminalKind::
+A terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` defines a map on the vertices of an irregular grid.
+
+domain::
+For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
+
+codomain::
+For each of the m dimensions of the codomain of the lookup table, a 1-dimensional array variable containing the sampling values of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
 
 For domains latexmath:[x=[x_1, x_2, \dots, x_n\], y=[y_1, y_2, \dots, y_n\], z=[z_1, z_2, \dots, z_n\], \dots]
 and codomains latexmath:[u=[u_1, u_2, \dots, u_n\], v=[v_1, v_2, \dots, v_n\], \dots], the tuple latexmath:[(x_i, y_i, z_i, \dots)] gets mapped to the values latexmath:[(u_i, v_i, ...)].
 
-All domains and codomains must have the same length.
+All domain arrays and codomain arrays must have the same length.
 
-_[Note: A map on a 1 dimensional domain can be equivalently represented with a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.]_
+_[Note: A map on a 1-dimensional domain can be equivalently represented by a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.]_
 
-ToDo add picture
+_[Note: Any n-d lookup table that can be described with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` could be also represented by an n-d lookup table with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"`.]_
 
-=== Example
+=== 3-d example of a lookup table on an irregular grid
+
+The lookup table is sampled at 3 different points of the domain (2, 10, 10), (3, 25, 28) and (10, 30, 30) with the values (11, 1), (1, 4) and (13, 3) on the 2 dimensional codomain.
 
 [[irregular_example]]
 [cols="1,1,1,1,1"]
@@ -275,15 +291,84 @@ ToDo add picture
 
 [source, xml]
 ----
-include::examples/irregular_terminalsAndIcons.xml[]
+include::examples/irregular3d_terminalsAndIcons.xml[]
 ----
 
 [source, xml]
 ----
-include::examples/irregular_modelDescription.xml[]
+include::examples/irregular3d_modelDescription.xml[]
 ----
 
 
+=== 2-d example of a lookup table on an irregular grid which could be represented with a rectilinear grid
+
+The previous <<rectilinear_example, 2-d rectilinear grid example>> with 2 sampling points in the x dimension and 3 sampling points points in the y dimension
+[[irregular_rectilinear_example]]
+[cols="1,1,1,1,1"]
+|====
+2.2+|v
+3+|y
+|10.0
+|25.0
+|30.0
+
+.2+|x
+|2.0
+|11.0
+|12.0 
+|13.0 
+
+|3.0
+|21.0 
+|22.0
+|23.0
+|====
+
+can be represented as a lookup table on a irregular grid with the same 6 sampling points:
+
+[[irregular_irregular_rectilinear_example]]
+[cols="1,1,1"]
+
+|====
+|x
+|y
+|v
+
+|2.0
+|10.0
+|11.0
+
+|2.0
+|25.0
+|12.0
+
+|2.0
+|30.0
+|13.0
+
+|3.0
+|10.0
+|21.0
+
+|3.0
+|25.0
+|22.0
+
+|3.0
+|30.0
+|23.0
+
+|====
+
+[source, xml]
+----
+include::examples/irregular2d_terminalsAndIcons.xml[]
+----
+
+[source, xml]
+----
+include::examples/irregular2d_modelDescription.xml[]
+----
 
 == Known Limitations of This Standard
 
