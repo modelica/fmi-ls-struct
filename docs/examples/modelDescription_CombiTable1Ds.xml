@@ -1,0 +1,50 @@
+...
+<Float64
+  name="combiTable1Ds1.u"
+  valueReference="1711276041"
+  description="Connector of Real input signal"
+  declaredType="Modelica.Blocks.Interfaces.RealInput"
+  unit="s">
+  <Annotations>
+    <Annotation
+      type="com.3ds.dymola">
+      <DeclarationOrder
+        order="5 38"/>
+    </Annotation>
+  </Annotations>
+  <Alias
+    name="realExpression1.y"
+    description="Value of Real output"/>
+</Float64>
+<Float64
+  name="combiTable1Ds1.y"
+  valueReference="1879048192"
+  description="Connector of Real output signals"
+  declaredType="Modelica.Blocks.Interfaces.RealOutput">
+  <Annotations>
+    <Annotation
+      type="com.3ds.dymola">
+      <DeclarationOrder
+         order="7"/>
+    </Annotation>
+  </Annotations>
+  <Dimension start="2"/>
+</Float64>
+<Float64
+  name="combiTable1Ds1.table"
+  valueReference="268435457"
+  description="Table matrix (grid = first column; e.g., table=[0, 0; 1, 1; 2, 4])"
+  causality="parameter"
+  variability="fixed"
+  start="1 2 4 7 2 3 2 5 3 4 1 2">
+  <Annotations>
+    <Annotation
+      type="com.3ds.dymola">
+      <DeclarationOrder
+        order="11"/>
+    </Annotation>
+  </Annotations>
+  <Dimension start="3"/>
+  <Dimension start="4"/>
+</Float64>
+...

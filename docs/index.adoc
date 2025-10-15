@@ -226,8 +226,67 @@ These variables are grouped in a terminal with the terminalKind `org.fmi-standar
 include::examples/terminalsAndIcons.xml[]
 ----
 
+=== 1-d example of a CombiTable1Ds as a rectilinear grid
 
+In the Modelica Standard Library, `CombiTable1Ds` is a lookup table (part of the link:https://doc.modelica.org/Modelica%204.0.0/Resources/helpDymola/Modelica_Blocks_Tables.html#Modelica.Blocks.Tables[Modelica.Blocks.Tables] package) used to interpolate data based on one input variable and multiple output variables. It performs univariate interpolation on a table matrix using methods such as constant, linear, or cubic Hermite splines.
 
+The data in a `CombiTable1Ds` is stored in a parameter-matrix called `table[i,j]`. The first column represents the domain, while the rest of the columns define the codomain. Below is a simple example of such a table:
+[[combiTable1D_example]]
+[cols="1,1,1,1"]
+|====
+| x (input) | y (output 1) | y (output 2) | y (output 3)
+
+| 1         | 2             | 4             | 7
+| 2         | 3             | 2             | 5
+| 3         | 4             | 1             | 2
+|====
+
+The following Modelica model uses `Modelica.Blocks.Tables.CombiTable1Ds` to represent the data shown above. 
+```
+model ExampleWithCombi 
+ Modelica.Blocks.Tables.CombiTable1Ds combiTable1Ds1(
+  table={{1,2,4,7},
+  {2,3,2,5},
+  {3,4,1,2}},
+  columns={2,3},
+    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments) annotation(Placement(transformation(extent={{-70,15},{-50,35}})));
+ Modelica.Blocks.Sources.RealExpression realExpression1(y=time) annotation(Placement(transformation(extent={{-115,15},{-95,35}})));
+equation 
+  connect(realExpression1.y,combiTable1Ds1.u) annotation(Line(
+   points={{-94,25},{-89,25},{-77,25},{-72,25}},
+   color={0,0,127}));
+ annotation(
+  uses(Modelica(version="4.0.0")),
+  experiment(
+   StopTime=3,
+   StartTime=1,
+   Interval=0.001));
+end ExampleWithCombi;
+```
+Both the domain and codomain are contained in the matrix:
+
+```
+table={{1,2,4,7},
+       {2,3,2,5},
+       {3,4,1,2}}.
+```
+The first column always represents the domain, while the rest of the columns contain the codomain values. The assignment `columns = {2,3}` specifies which columns are interpreted as output variables and interpolated based on the input. Therefore the third output in the table above is omitted.
+
+The variables representing the table, inputs, and outputs are given in the modelDescription.xml:
+[source, xml]
+----
+include::examples/modelDescription_CombiTable1Ds.xml[]
+----
+
+The structured representation of the data is defined in `terminalsAndIcons.xml`:
+[source, xml]
+----
+include::examples/terminalsAndIcons_CombiTable1Ds.xml[]
+----
+
+The `combiTable1Ds1.table` variable appears twice: once with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"` and again with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`, since both domain and codomain data are stored in the same variable. The `terminalMemberVariable`, `combiTable1Ds1.y`, is a 2D-array, since the Modelica code specified two outputs with `columns = {2,3}`. 
+
+_[Note: According to this FMI layered standard, the domain must be represented as a 1-dimensional array variable. In this example, the first column of the `combiTable1Ds1.table` variable conceptually represents the 1D domain. While the full table is a 2D array, the domain values are treated as a separate 1D array. Therefore, even though `combiTable1Ds1.table` is a 2D array in the FMU and Modelica model, the domain is interpreted as a 1D array by the terminal definition, through the domain input `combiTable1Ds1.u`.]_
 
 ==  Maps sampled on irregular grids ("Point Cloud")
 
