@@ -5,7 +5,7 @@
   <Terminals>
     <Terminal
       name="combiTable1Ds1"
-      terminalKind="org.fmi-standard.fmi-ls-struct.map.CombiTable1Ds"
+      terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"
       matchingRule="org.fmi-standard.fmi-ls-struct.map">
       <TerminalMemberVariable
         variableName="combiTable1Ds1.table"
