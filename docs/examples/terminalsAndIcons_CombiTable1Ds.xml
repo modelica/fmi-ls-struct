@@ -4,8 +4,8 @@
   fmiVersion="3.0.1">
   <Terminals>
     <Terminal
-      name="CombiTable1Ds"
-      terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"
+      name="combiTable1Ds1"
+      terminalKind="org.fmi-standard.fmi-ls-struct.map.CombiTable1Ds"
       matchingRule="org.fmi-standard.fmi-ls-struct.map">
       <TerminalMemberVariable
         variableName="combiTable1Ds1.table"
