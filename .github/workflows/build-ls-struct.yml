@@ -14,8 +14,16 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-    - name: checkout
-      uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4.1.7
+      with:
+        submodules: recursive
+
+    - uses: actions/download-artifact@v4.1.8
+      with:
+        name: schema-figures
+        path: docs/images/schema
+
     - name: Generate revnumber
       run: |
         [[ $GITHUB_REF_TYPE == "tag" ]] && REVNUMBER=${GITHUB_REF:11} || REVNUMBER=${GITHUB_SHA:0:7}
@@ -24,26 +32,31 @@ jobs:
         echo GITHUB_REF:      $GITHUB_REF
         echo REVNUMBER:       $REVNUMBER
         echo "REVNUMBER=$REVNUMBER" >> $GITHUB_ENV
+
     - name: Create build directory
       run: |
+        mkdir -p build/headers
         mkdir -p build/schema
-        mkdir -p build/images
-    - name: build layered standard struct
+        mkdir -p build/images/schema
+
+    - name: Generate HTML
       uses: avattathil/asciidoctor-action@master
       with:
-        program: "asciidoctor -D build --backend=html5 --attribute=revnumber=${{ env.REVNUMBER }} --attribute=revdate=$(date +%F) docs/index.adoc"
-    - name: Copy resources
-      run: |
-        cp LICENSE.txt build
-        cp schema/*.xsd build/schema
-        cp docs/images/favicon.ico build/images
-        cp docs/images/*.svg build/images
-    - name: archive layered standard struct
-      uses: actions/upload-artifact@v4
+        program: asciidoctor --attribute=revnumber=${{ env.REVNUMBER }} --attribute=revdate=$(date +%F) docs/index.adoc
+
+    - name: Create ZIP archive
+      uses: actions/upload-artifact@v5
       with:
-        name: FMI-LS-STRUCT
-        path: build/*
+        name: FMI-LS-Struct-${{ env.REVNUMBER }}
+        path: |
+          LICENSE.txt build
+          docs/index.html
+          docs/images/*.svg
+          docs/theme/css/*.css
+          docs/theme/images/*.svg
+          docs/theme/js/*.js
         if-no-files-found: error
+
     - name: extract branch name
       id: extract_branch
       shell: bash
