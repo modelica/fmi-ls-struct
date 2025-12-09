@@ -44,7 +44,6 @@ jobs:
       with:
         name: FMI-LS-Struct-${{ env.REVNUMBER }}
         path: |
-          LICENSE.txt build
           docs/index.html
           docs/images/*.svg
           docs/theme/css/*.css
