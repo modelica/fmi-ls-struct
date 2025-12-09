@@ -19,11 +19,6 @@ jobs:
       with:
         submodules: recursive
 
-    - uses: actions/download-artifact@v4.1.8
-      with:
-        name: schema-figures
-        path: docs/images/schema
-
     - name: Generate revnumber
       run: |
         [[ $GITHUB_REF_TYPE == "tag" ]] && REVNUMBER=${GITHUB_REF:11} || REVNUMBER=${GITHUB_SHA:0:7}
