@@ -28,16 +28,13 @@ jobs:
         echo REVNUMBER:       $REVNUMBER
         echo "REVNUMBER=$REVNUMBER" >> $GITHUB_ENV
 
-    - name: Create build directory
-      run: |
-        mkdir -p build/headers
-        mkdir -p build/schema
-        mkdir -p build/images/schema
-
     - name: Generate HTML
       uses: avattathil/asciidoctor-action@master
       with:
         program: asciidoctor --attribute=revnumber=${{ env.REVNUMBER }} --attribute=revdate=$(date +%F) docs/index.adoc
+
+    - name: Copy license
+      run: cp LICENSE.txt docs
 
     - name: Create ZIP archive
       uses: actions/upload-artifact@v5
@@ -45,6 +42,7 @@ jobs:
         name: FMI-LS-Struct-${{ env.REVNUMBER }}
         path: |
           docs/index.html
+          docs/LICENSE.txt
           docs/images/*.svg
           docs/theme/css/*.css
           docs/theme/images/*.svg
