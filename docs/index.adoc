@@ -25,7 +25,7 @@ Copyright (C) 2025 The Modelica Association Project FMI.
 
 This document is licensed under the Attribution-ShareAlike 4.0 International license.
 The code is released under the 2-Clause BSD License.
-The licenses text can be found in the https://raw.githubusercontent.com/modelica/fmi-standard/main/LICENSE.txt[LICENSE.txt] file that accompanies this distribution.
+The licenses text can be found in the link:LICENSE.txt[LICENSE.txt] file that accompanies this distribution.
 
 == Introduction
 
@@ -45,7 +45,9 @@ In key parts of this document, non-normative examples are used to help understan
 
 Conventions used in this document:
 
-* Non-normative text is given in square brackets in italic font: _[Especially examples are defined in this style.]_
+* Non-normative text is given like this:
++
+NOTE: Especially examples are defined in this style.
 
 * The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in https://tools.ietf.org/html/rfc2119[RFC 2119] (regardless of formatting and capitalization).
 
@@ -105,7 +107,6 @@ n-d lookup table::
 In the context of this layered standard, an n-d lookup table is a sampled representation of a function of n input variables latexmath:[(y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)], sampled on points of the n-dimensional domain.
 Such an n-d lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.
 
-
 ==== Definition of `terminalKind` attribute values
 
 `org.fmi-standard.fmi-ls-struct.map.rectilinearGrid`::
@@ -113,7 +114,6 @@ for maps defined on the vertices of a rectilinear grid.
 
 `org.fmi-standard.fmi-ls-struct.map.irregular`::
 for maps defined by unstructured tuples of ("point cloud").
-
 
 ==== `variableKind` attribute values of terminal member variables:
 
@@ -130,14 +130,14 @@ However the size of each `domainInput` must be the same for each domain: For non
 
 `org.fmi-standard.fmi-ls-struct.map.codomain`::
 For each of the represented points in the domain set, the values to which they are mapped are represented.
-_[There can be multiple terminal member variables with `variableKind` `codomain` to represent multiple maps in one terminal.]_
++
+NOTE: There can be multiple terminal member variables with `variableKind` `codomain` to represent multiple maps in one terminal.
 
 `org.fmi-standard.fmi-ls-struct.map.domainOutput`::
 Optionally, for each `domain` variable at most one array variable (typically an output or a local variable) can be referenced that represents calculated output value of the map.
 If present, a `domainOutput` variable must be listed directly after the corresponding `codomain` variable.
 
 Additional terminal member variables can be added to the terminal as related variables but if they do not fit into one of the above categories, they shall not have a `variableKind` starting with `org.fmi-standard.fmi-ls-struct`. 
-
 
 ==== Definition of map specific `matchingRule`
 
@@ -146,18 +146,21 @@ The matching rule `org.fmi-standard.fmi-ls-struct.map` should be used for termin
 Requirements for matching:
 
 * The number of domain entries must be the same.
-* The terminal member names, its data types and the (effective) size and of all domains (`variableKind=org.fmi-standard.fmi-ls-struct.map.domain`) must match.
-* If all domains match, connect all these domains.
-* Connect all codomains (`variableKind=org.fmi-standard.fmi-ls-struct.map.codomain`) that match. 
-* Don't connect any other terminal member variables.
 
-_[This indicates that the variableKind of the member must be considered for the connection of the individual members of the terminal.]_
+* The terminal member names, its data types and the (effective) size and of all domains (`variableKind=org.fmi-standard.fmi-ls-struct.map.domain`) must match.
+
+* If all domains match, connect all these domains.
+
+* Connect all codomains (`variableKind=org.fmi-standard.fmi-ls-struct.map.codomain`) that match. 
+
+* Don't connect any other terminal member variables.
++
+NOTE: This indicates that the variableKind of the member must be considered for the connection of the individual members of the terminal.
 
 === Structure of the FMU archive
 
 This layered standard uses "Terminals and Icons" mechanism of FMI 3.0.
 All information is stored in the TerminalsAndIcons.xml file in the TerminalsAndIcons folder of an FMU.
-
 
 ==  Maps sampled on rectilinear grids
 
@@ -165,9 +168,9 @@ All information is stored in the TerminalsAndIcons.xml file in the TerminalsAndI
 
 n-d lookup table on a rectilinear grid::
 In the context of this layered standard, an n-d lookup table on a rectilinear grid is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on the vertices of a rectilinear grid.
-
-_[In <<ASAM-MCD2>>, such a 1-d lookup table is called a *CURVE*, a 2-d lookup table is called *MAP*, and a 3-d lookup table is called *CUBOID*.
-4-d and 5-d lookup tables are called *CUBE_4* and *CUBE_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.]_
++
+NOTE: In <<ASAM-MCD2>>, such a 1-d lookup table is called a *CURVE*, a 2-d lookup table is called *MAP*, and a 3-d lookup table is called *CUBOID*.
+4-d and 5-d lookup tables are called *CUBE_4* and *CUBE_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.
 
 terminalKind::
 A terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` defines a map on the vertices of a rectilinear grid.
@@ -180,24 +183,22 @@ For each of the m dimensions of the codomain, the sampled function values (along
 
 The length of the i-th domain vector must be equal to length of the i-th codomain dimension.
 
-_[Note: This layered standard doesn't define how maps have to be represented in a GUI.
+NOTE: Note: This layered standard doesn't define how maps have to be represented in a GUI.
 In particular, the standard doesn't define if the first dimension is displayed as columns or rows.
-However, for the example lookup tables of this document, the sampling points of first dimension of the domain are shown as a column vector, and the values of second dimension are shown as a row vector.]_
-
+However, for the example lookup tables of this document, the sampling points of first dimension of the domain are shown as a column vector, and the values of second dimension are shown as a row vector.
 
 === 2-d example of a lookup table on a rectilinear grid
-
 
 [[rectilinear_example]]
 [cols="1,1,1,1,1"]
 |====
-2.2+|v
-3+|y
+2.2+h|v
+3+h|y
 |10.0
 |25.0
 |30.0
 
-.2+|x
+.2+h|x
 |2.0
 |11.0
 |12.0 
@@ -208,7 +209,6 @@ However, for the example lookup tables of this document, the sampling points of 
 |22.0
 |23.0
 |====
-
 
 The individual variables of the example 2-dimensional map on a rectilinear grid are given in the modelDescription.xml.
 
@@ -224,11 +224,7 @@ These variables are grouped in a terminal with the terminalKind `org.fmi-standar
 include::examples/terminalsAndIcons.xml[]
 ----
 
-
-
-
 ==  Maps sampled on irregular grids ("Point Cloud")
-
 
 === Definitions
 
@@ -249,9 +245,9 @@ and codomains latexmath:[u=[u_1, u_2, \dots, u_n\], v=[v_1, v_2, \dots, v_n\], \
 
 All domain arrays and codomain arrays must have the same length.
 
-_[Note: A map on a 1-dimensional domain can be equivalently represented by a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.]_
+NOTE: Note: A map on a 1-dimensional domain can be equivalently represented by a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.
 
-_[Note: Any n-d lookup table that can be described with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` could be also represented by an n-d lookup table with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"`.]_
+NOTE: Note: Any n-d lookup table that can be described with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` could be also represented by an n-d lookup table with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"`.
 
 === 3-d example of a lookup table on an irregular grid
 
@@ -261,11 +257,11 @@ The lookup table is sampled at 3 different points of the domain (2, 10, 10), (3,
 [cols="1,1,1,1,1"]
 
 |====
-|x
-|y
-|z
-|v1
-|v2
+h|x
+h|y
+h|z
+h|v1
+h|v2
 
 |2.0
 |10.0
@@ -284,7 +280,6 @@ The lookup table is sampled at 3 different points of the domain (2, 10, 10), (3,
 |30.0
 |13.0
 |3.0
-
 |====
 
 [source, xml]
@@ -304,13 +299,13 @@ The previous <<rectilinear_example, 2-d rectilinear grid example>> with 2 sampli
 [[irregular_rectilinear_example]]
 [cols="1,1,1,1,1"]
 |====
-2.2+|v
-3+|y
+2.2+h|v
+3+h|y
 |10.0
 |25.0
 |30.0
 
-.2+|x
+.2+h|x
 |2.0
 |11.0
 |12.0 
@@ -326,11 +321,10 @@ can be represented as a lookup table on a irregular grid with the same 6 samplin
 
 [[irregular_irregular_rectilinear_example]]
 [cols="1,1,1"]
-
 |====
-|x
-|y
-|v
+h|x
+h|y
+h|v
 
 |2.0
 |10.0
@@ -355,7 +349,6 @@ can be represented as a lookup table on a irregular grid with the same 6 samplin
 |3.0
 |30.0
 |23.0
-
 |====
 
 [source, xml]
