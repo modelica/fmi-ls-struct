@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  fmiVersion="3.0.1"
+  modelName="TestTables.ct1d"
+  instantiationToken="{47a5ab03-6c05-4c75-b3f3-bac3165850d2}"
+  generationTool="Dymola Version 2026x Dev 3, 2025-06-18 (Co-simulation using Cvode)"
+  generationDateAndTime="2025-06-23T14:41:07Z"
+  variableNamingConvention="structured">
+  <ModelExchange
+    modelIdentifier="TestTables_ct1d"
+    providesDirectionalDerivatives="true"/>
+  <CoSimulation
+    modelIdentifier="TestTables_ct1d"
+    canHandleVariableCommunicationStepSize="true"
+    maxOutputDerivativeOrder="1"
+    providesIntermediateUpdate="true"
+    mightReturnEarlyFromDoStep="true"
+    canGetAndSetFMUState="true"
+    canSerializeFMUState="true"
+    providesDirectionalDerivatives="true"
+    hasEventMode="true"/>
+  <UnitDefinitions>
+    <Unit
+      name="s">
+      <BaseUnit s="1"/>
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <Float64Type
+      name="Modelica.Blocks.Interfaces.RealInput"/>
+    <Float64Type
+      name="Modelica.Blocks.Interfaces.RealOutput"/>
+    <EnumerationType
+      name="Modelica.Blocks.Types.Extrapolation">
+      <Item name="HoldLastPoint"
+        value="1"
+        description="Hold the first/last table point outside of the table scope"/>
+      <Item name="LastTwoPoints"
+        value="2"
+        description="Extrapolate by using the derivative at the first/last table points outside of the table scope"/>
+      <Item name="Periodic"
+        value="3"
+        description="Repeat the table scope periodically"/>
+      <Item name="NoExtrapolation"
+        value="4"
+        description="Extrapolation triggers an error"/>
+    </EnumerationType>
+    <EnumerationType
+      name="Modelica.Blocks.Types.Smoothness">
+      <Item name="LinearSegments"
+        value="1"
+        description="Linear interpolation of table points"/>
+      <Item name="ContinuousDerivative"
+        value="2"
+        description="Akima spline interpolation of table points (such that the first derivative is continuous)"/>
+      <Item name="ConstantSegments"
+        value="3"
+        description="Piecewise constant interpolation of table points (the value from the previous abscissa point is returned)"/>
+      <Item name="MonotoneContinuousDerivative1"
+        value="4"
+        description="Fritsch-Butland spline interpolation (such that the monotonicity is preserved and the first derivative is continuous)"/>
+      <Item name="MonotoneContinuousDerivative2"
+        value="5"
+        description="Steffen spline interpolation of table points (such that the monotonicity is preserved and the first derivative is continuous)"/>
+      <Item name="ModifiedContinuousDerivative"
+        value="6"
+        description="Modified Akima spline interpolation of table points (such that the first derivative is continuous and shortcomings of the original Akima method are avoided)"/>
+    </EnumerationType>
+  </TypeDefinitions>
+  <DefaultExperiment startTime="0.0"
+    stopTime="1.0"
+    tolerance="0.0001"/>
+  <ModelVariables>
+    <Float64
+      name="time"
+      valueReference="268435455"
+      causality="independent"
+      unit="s">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="3"/>
+        </Annotation>
+      </Annotations>
+    </Float64>
+    <Int32
+      name="combiTable1Ds.nout"
+      valueReference="100663296"
+      description="Number of outputs"
+      variability="constant"
+      start="2">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="4"/>
+        </Annotation>
+      </Annotations>
+    </Int32>
+    <Float64
+      name="combiTable1Ds.u"
+      valueReference="1711276042"
+      description="Connector of Real input signal"
+      declaredType="Modelica.Blocks.Interfaces.RealInput">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="5"/>
+        </Annotation>
+      </Annotations>
+    </Float64>
+    <Float64
+      name="combiTable1Ds.y"
+      valueReference="1879048192"
+      description="Connector of Real output signals"
+      declaredType="Modelica.Blocks.Interfaces.RealOutput">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="7"/>
+        </Annotation>
+      </Annotations>
+      <Dimension start="2"/>
+    </Float64>
+    <Boolean
+      name="combiTable1Ds.tableOnFile"
+      valueReference="100663297"
+      description="= true, if table is defined on file or in function usertab"
+      variability="constant"
+      start="false">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="9"/>
+        </Annotation>
+      </Annotations>
+    </Boolean>
+    <Float64
+      name="combiTable1Ds.table"
+      valueReference="268435457"
+      description="Table matrix (grid = first column; e.g., table=[0, 0; 1, 1; 2, 4])"
+      causality="parameter"
+      variability="fixed"
+      start="1 1 1 2 4 8 3 9 27 4 16 64 5 25 125 6 36 216 7 49 343 8 64 512 9 81 729 10 100 1000">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="11"/>
+        </Annotation>
+      </Annotations>
+      <Dimension start="10"/>
+      <Dimension start="3"/>
+    </Float64>
+    <String
+      name="combiTable1Ds.tableName"
+      valueReference="134217728"
+      description="Table name on file or in function usertab (see docu)"
+      causality="parameter"
+      variability="fixed">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="41"/>
+        </Annotation>
+      </Annotations>
+      <Start
+        value="NoName"/>
+    </String>
+    <String
+      name="combiTable1Ds.fileName"
+      valueReference="134217729"
+      description="File where matrix is stored"
+      causality="parameter"
+      variability="fixed">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="42"/>
+        </Annotation>
+      </Annotations>
+      <Start
+        value="NoName"/>
+    </String>
+    <Boolean
+      name="combiTable1Ds.verboseRead"
+      valueReference="16777246"
+      description="= true, if info message that file is loading is to be printed"
+      causality="parameter"
+      variability="fixed"
+      start="true">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="43"/>
+        </Annotation>
+      </Annotations>
+    </Boolean>
+    <Int32
+      name="combiTable1Ds.columns"
+      valueReference="268435458"
+      description="Columns of table to be interpolated"
+      variability="constant"
+      start="2 3">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="45"/>
+        </Annotation>
+      </Annotations>
+      <Dimension start="2"/>
+    </Int32>
+    <Enumeration
+      name="combiTable1Ds.smoothness"
+      valueReference="100663300"
+      description="Smoothness of table interpolation"
+      variability="constant"
+      declaredType="Modelica.Blocks.Types.Smoothness"
+      start="1">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="47"/>
+        </Annotation>
+      </Annotations>
+    </Enumeration>
+    <Enumeration
+      name="combiTable1Ds.extrapolation"
+      valueReference="100663301"
+      description="Extrapolation of data outside the definition range"
+      variability="constant"
+      declaredType="Modelica.Blocks.Types.Extrapolation"
+      start="2">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="48"/>
+        </Annotation>
+      </Annotations>
+    </Enumeration>
+    <Boolean
+      name="combiTable1Ds.verboseExtrapolation"
+      valueReference="100663302"
+      description="= true, if warning messages are to be printed if table input is outside the definition range"
+      variability="constant"
+      start="false">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="49"/>
+        </Annotation>
+      </Annotations>
+    </Boolean>
+    <Float64
+      name="combiTable1Ds.u_min"
+      valueReference="100663303"
+      description="Minimum abscissa value defined in table"
+      variability="fixed">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="50"/>
+        </Annotation>
+      </Annotations>
+    </Float64>
+    <Float64
+      name="combiTable1Ds.u_max"
+      valueReference="100663304"
+      description="Maximum abscissa value defined in table"
+      variability="fixed">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="51"/>
+        </Annotation>
+      </Annotations>
+    </Float64>
+    <Float64
+      name="u1"
+      valueReference="620756992"
+      description="Connector of Real input signal"
+      causality="input"
+      intermediateUpdate="true"
+      declaredType="Modelica.Blocks.Interfaces.RealInput"
+      start="0.0">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="53"/>
+        </Annotation>
+      </Annotations>
+    </Float64>
+  </ModelVariables>
+  <ModelStructure/>
+</fmiModelDescription>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiTerminalsAndIcons
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  fmiVersion="3.0.1">
+  <Terminals>
+    <Terminal
+      name="CombiTimeTable"
+      terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"
+      matchingRule="org.fmi-standard.fmi-ls-struct.map">
+      <TerminalMemberVariable
+        variableName="combiTimeTable.table"
+        memberName="table"
+        variableKind="org.fmi-standard.fmi-ls-struct.map.domain"/>
+      <TerminalMemberVariable
+        variableName="time"
+        memberName="Time"
+        variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput"/>
+      <TerminalMemberVariable
+        variableName="combiTimeTable.table"
+        memberName="table"
+        variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"/>
+      <TerminalMemberVariable
+        variableName="combiTimeTable.y"
+        memberName="y"
+        variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput"/>
+      <TerminalMemberVariable
+        variableName="combiTimeTable.table"
+        memberName="table"
+        variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"/>
+      <TerminalMemberVariable
+        variableName="combiTimeTable.y"
+        memberName="y"
+        variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput"/>
+    </Terminal>
+  </Terminals>
+</fmiTerminalsAndIcons>

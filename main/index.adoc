@@ -1,0 +1,376 @@
+= Layered Standard for Structured Data
+:sectnums:
+:sectnumlevels: 5
+:toc: left
+:toc-title: Contents
+:toclevels: 5
+:idprefix:
+:idseparator: -
+:xrefstyle: short
+:docinfo: shared
+:docinfodir: theme/docinfo
+:stem: latexmath
+:source-highlighter: highlightjs
+:highlightjs-theme: github
+:nofooter:
+:icons: font
+:website-url: https://fmi-standard.org/
+:repo-url: https://github.com/modelica/fmi-ls-struct
+:logo: FMI
+
+Based on FMI 3.0, this layered standard defines how variables (especially parameters) of an FMU can be structured and grouped in a more flexible way than with the "structured naming convention" of the FMI Standard.
+The first version of this layered standard is focused on the definition of sampled maps.
+
+Copyright (C) 2025 The Modelica Association Project FMI.
+
+This document is licensed under the Attribution-ShareAlike 4.0 International license.
+The code is released under the 2-Clause BSD License.
+The licenses text can be found in the link:LICENSE.txt[LICENSE.txt] file that accompanies this distribution.
+
+== Introduction
+
+=== Motivation 
+
+For many use cases, the grouping of variables gives the user a better overview about the usage of variables. For certain groupings the importing tool might be able to provide a more user-friendly interface.
+FMUs might use maps/functions sampled on the vertices of a grid to calculate output values. The values at these sampling points and even the locations of the sampling points might get exposed as parameter variables of the FMU to allow calibrations. However, the FMI standard only defines n-dimensional array variable but doesn't define any relation between these variables. This layered standard defines how to group variables to represent maps.
+
+This layered standard uses terminals of the FMI 3.0 standard to represent structures like maps by grouping variables in terminals. Terminals are used to group variables and already define means to connect its variables between FMUs. Such a connections could ensure that the same map values are used by different FMUs or allow one FMU to provide the map values to be used by other FMUs.
+
+=== How to Read This Document
+
+The standard document is in HTML allowing use of in-document links.
+By pressing "t", the table of contents can be displayed on the left side or hidden.
+
+In key parts of this document, non-normative examples are used to help understand the standard.
+
+Conventions used in this document:
+
+* Non-normative text is given like this:
++
+NOTE: Especially examples are defined in this style.
+
+* The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in https://tools.ietf.org/html/rfc2119[RFC 2119] (regardless of formatting and capitalization).
+
+=== Rough Outline of the Approach
+
+FMI 3.0 https://fmi-standard.org/docs/3.0/#fmiTerminalsAndIcons[Terminals] are used to define groups of variables, especially parameters.
+
+A special kind of parameter group defines maps on rectilinear grids (with additional semantic meaning).
+
+== Layered Standard Manifest File
+
+The manifest file signals to the importer that the FMU supports this layered standard and enables the interpretation of the `TerminalsAndIcons.xml` file in the intended way.
+
+<<table-schema-fmi-ls-struct-attributes>> shows the content of `fmi-ls-manifest.xml`.
+
+.`fmiLayeredStandardManifest` attribute details.
+[[table-schema-fmi-ls-struct-attributes]]
+[cols="1,1,1,2",options="header"]
+|====
+|Attribute
+|Namespace
+|Value
+|Description
+
+|`fmi-ls-name`
+| `\http://fmi-standard.org/fmi-ls-manifest`
+| `org.fmi-standard.fmi-ls-struct`
+| Name of the layered standard in reverse domain name notation.
+
+|`fmi-ls-version`
+| `\http://fmi-standard.org/fmi-ls-manifest`
+| `1.0.0-alpha.1`
+| Version of the layered standard. This layered standard uses semantic versioning, as defined in <<PW13>>.
+
+|`fmi-ls-description`
+| `\http://fmi-standard.org/fmi-ls-manifest`
+| `Layered standard for structuring of variables`
+| String with a brief description of the layered standard that is suitable for display to users.
+
+|====
+
+An example of a manifest file for this layered standard is shown below:
+
+[source, xml]
+----
+include::examples/fmi_ls_struct_manifest_example.xml[]
+----
+
+The manifest file shall be stored inside the FMU at the following path: `/extra/org.fmi-standard.fmi-ls-struct/fmi-ls-manifest.xml`.
+
+[#common-concepts]
+== Common concepts for the representation of maps 
+
+===  Definitions
+
+n-d lookup table::
+In the context of this layered standard, an n-d lookup table is a sampled representation of a function of n input variables latexmath:[(y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)], sampled on points of the n-dimensional domain.
+Such an n-d lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.
+
+==== Definition of `terminalKind` attribute values
+
+`org.fmi-standard.fmi-ls-struct.map.rectilinearGrid`::
+for maps defined on the vertices of a rectilinear grid.
+
+`org.fmi-standard.fmi-ls-struct.map.irregular`::
+for maps defined by unstructured tuples of ("point cloud").
+
+==== `variableKind` attribute values of terminal member variables:
+
+We want to represent a map from a domain set to a codomain by providing points in the domain set and the values they are mapped to.
+
+`org.fmi-standard.fmi-ls-struct.map.domain`::
+For each of the n dimensions of the domain set, a 1-dimensional array variable (typically a parameter or a constant) of coordinates (along this dimension) is provided.
+
+`org.fmi-standard.fmi-ls-struct.map.domainInput`::
+Optionally, for each `domain` variable at most one variable (typically an input or a local variable) can be referenced that represents the current operating point (along this dimension).
+If present, this variable must be listed directly after the corresponding domain.
+The domain_input isn't required to be a scalar, it could be variable with several dimensions.
+However the size of each `domainInput` must be the same for each domain: For nonscalar inputs latexmath:[v=[v_1,\dots,v_n\], w=[w_1, \dots, w_n\], \dots] the function is evaluated element-wise and we get an output vector latexmath:[z=[f(v_1, w_1, \dots), \dots, f(v_n, w_n, \dots)]].
+
+`org.fmi-standard.fmi-ls-struct.map.codomain`::
+For each of the represented points in the domain set, the values to which they are mapped are represented.
++
+NOTE: There can be multiple terminal member variables with `variableKind` `codomain` to represent multiple maps in one terminal.
+
+`org.fmi-standard.fmi-ls-struct.map.domainOutput`::
+Optionally, for each `domain` variable at most one array variable (typically an output or a local variable) can be referenced that represents calculated output value of the map.
+If present, a `domainOutput` variable must be listed directly after the corresponding `codomain` variable.
+
+Additional terminal member variables can be added to the terminal as related variables but if they do not fit into one of the above categories, they shall not have a `variableKind` starting with `org.fmi-standard.fmi-ls-struct`. 
+
+==== Definition of map specific `matchingRule`
+
+The matching rule `org.fmi-standard.fmi-ls-struct.map` should be used for terminals that represent maps.
+
+Requirements for matching:
+
+* The number of domain entries must be the same.
+
+* The terminal member names, its data types and the (effective) size and of all domains (`variableKind=org.fmi-standard.fmi-ls-struct.map.domain`) must match.
+
+* If all domains match, connect all these domains.
+
+* Connect all codomains (`variableKind=org.fmi-standard.fmi-ls-struct.map.codomain`) that match. 
+
+* Don't connect any other terminal member variables.
++
+NOTE: This indicates that the variableKind of the member must be considered for the connection of the individual members of the terminal.
+
+=== Structure of the FMU archive
+
+This layered standard uses "Terminals and Icons" mechanism of FMI 3.0.
+All information is stored in the TerminalsAndIcons.xml file in the TerminalsAndIcons folder of an FMU.
+
+==  Maps sampled on rectilinear grids
+
+=== Definitions
+
+n-d lookup table on a rectilinear grid::
+In the context of this layered standard, an n-d lookup table on a rectilinear grid is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on the vertices of a rectilinear grid.
++
+NOTE: In <<ASAM-MCD2>>, such a 1-d lookup table is called a *CURVE*, a 2-d lookup table is called *MAP*, and a 3-d lookup table is called *CUBOID*.
+4-d and 5-d lookup tables are called *CUBE_4* and *CUBE_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.
+
+terminalKind::
+A terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` defines a map on the vertices of a rectilinear grid.
+
+domain::
+For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
+
+codomain::
+For each of the m dimensions of the codomain, the sampled function values (along this dimension of the codomain) are stored in this n-dimensional array variable and references with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
+
+The length of the i-th domain vector must be equal to length of the i-th codomain dimension.
+
+NOTE: Note: This layered standard doesn't define how maps have to be represented in a GUI.
+In particular, the standard doesn't define if the first dimension is displayed as columns or rows.
+However, for the example lookup tables of this document, the sampling points of first dimension of the domain are shown as a column vector, and the values of second dimension are shown as a row vector.
+
+=== 2-d example of a lookup table on a rectilinear grid
+
+[[rectilinear_example]]
+[cols="1,1,1,1,1"]
+|====
+2.2+h|v
+3+h|y
+|10.0
+|25.0
+|30.0
+
+.2+h|x
+|2.0
+|11.0
+|12.0 
+|13.0 
+
+|3.0
+|21.0 
+|22.0
+|23.0
+|====
+
+The individual variables of the example 2-dimensional map on a rectilinear grid are given in the modelDescription.xml.
+
+[source, xml]
+----
+include::examples/modelDescription.xml[]
+----
+
+These variables are grouped in a terminal with the terminalKind `org.fmi-standard.fmi-ls-struct.map.rectilinearGrid` in the TerminalsAndIcons.xml file:
+
+[source, xml]
+----
+include::examples/terminalsAndIcons.xml[]
+----
+
+==  Maps sampled on irregular grids ("Point Cloud")
+
+=== Definitions
+
+n-d lookup table on an irregular grid::
+In the context of this layered standard, an n-d lookup table on an irregular grid is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on arbitrarily chosen points of the domain.
+
+terminalKind::
+A terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` defines a map on the vertices of an irregular grid.
+
+domain::
+For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
+
+codomain::
+For each of the m dimensions of the codomain of the lookup table, a 1-dimensional array variable containing the sampling values of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
+
+For domains latexmath:[x=[x_1, x_2, \dots, x_n\], y=[y_1, y_2, \dots, y_n\], z=[z_1, z_2, \dots, z_n\], \dots]
+and codomains latexmath:[u=[u_1, u_2, \dots, u_n\], v=[v_1, v_2, \dots, v_n\], \dots], the tuple latexmath:[(x_i, y_i, z_i, \dots)] gets mapped to the values latexmath:[(u_i, v_i, ...)].
+
+All domain arrays and codomain arrays must have the same length.
+
+NOTE: Note: A map on a 1-dimensional domain can be equivalently represented by a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.
+
+NOTE: Note: Any n-d lookup table that can be described with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` could be also represented by an n-d lookup table with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"`.
+
+=== 3-d example of a lookup table on an irregular grid
+
+The lookup table is sampled at 3 different points of the domain (2, 10, 10), (3, 25, 28) and (10, 30, 30) with the values (11, 1), (1, 4) and (13, 3) on the 2 dimensional codomain.
+
+[[irregular_example]]
+[cols="1,1,1,1,1"]
+
+|====
+h|x
+h|y
+h|z
+h|v1
+h|v2
+
+|2.0
+|10.0
+|10.0
+|11.0
+|1.0
+
+|3.0
+|25.0
+|28.0
+|1.0
+|4.0
+
+|10.0
+|30.0
+|30.0
+|13.0
+|3.0
+|====
+
+[source, xml]
+----
+include::examples/irregular3d_terminalsAndIcons.xml[]
+----
+
+[source, xml]
+----
+include::examples/irregular3d_modelDescription.xml[]
+----
+
+
+=== 2-d example of a lookup table on an irregular grid which could be represented with a rectilinear grid
+
+The previous <<rectilinear_example, 2-d rectilinear grid example>> with 2 sampling points in the x dimension and 3 sampling points points in the y dimension
+[[irregular_rectilinear_example]]
+[cols="1,1,1,1,1"]
+|====
+2.2+h|v
+3+h|y
+|10.0
+|25.0
+|30.0
+
+.2+h|x
+|2.0
+|11.0
+|12.0 
+|13.0 
+
+|3.0
+|21.0 
+|22.0
+|23.0
+|====
+
+can be represented as a lookup table on a irregular grid with the same 6 sampling points:
+
+[[irregular_irregular_rectilinear_example]]
+[cols="1,1,1"]
+|====
+h|x
+h|y
+h|v
+
+|2.0
+|10.0
+|11.0
+
+|2.0
+|25.0
+|12.0
+
+|2.0
+|30.0
+|13.0
+
+|3.0
+|10.0
+|21.0
+
+|3.0
+|25.0
+|22.0
+
+|3.0
+|30.0
+|23.0
+|====
+
+[source, xml]
+----
+include::examples/irregular2d_terminalsAndIcons.xml[]
+----
+
+[source, xml]
+----
+include::examples/irregular2d_modelDescription.xml[]
+----
+
+== Known Limitations of This Standard
+
+General limitations:
+
+* todo
+
+[bibliography]
+== References
+
+- [[[PW13]]] Preston-Werner, T. (2013): **Semantic Versioning 2.0.0**.  https://semver.org/spec/v2.0.0.html
+- [[[ASAM-MCD2]]] ASAM e.V. (2018) **ASAM MCD-2 MC (aka ASAP2) v1.7.1**. https://www.asam.net/standards/detail/mcd-2-mc/
+
+

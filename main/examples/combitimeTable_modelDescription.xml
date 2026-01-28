@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  fmiVersion="3.0.1"
+  modelName="TestTables.ctt"
+  instantiationToken="{1ac334e9-4b3c-4df4-8c4c-e98b7a6a2d82}"
+  generationTool="Dymola Version 2026x Dev 3, 2025-06-18 (Co-simulation using Cvode)"
+  generationDateAndTime="2025-06-23T15:30:21Z"
+  variableNamingConvention="structured">
+  <ModelExchange
+    modelIdentifier="TestTables_ctt"
+    providesDirectionalDerivatives="true"/>
+  <CoSimulation
+    modelIdentifier="TestTables_ctt"
+    canHandleVariableCommunicationStepSize="true"
+    maxOutputDerivativeOrder="1"
+    providesIntermediateUpdate="true"
+    mightReturnEarlyFromDoStep="true"
+    canGetAndSetFMUState="true"
+    canSerializeFMUState="true"
+    providesDirectionalDerivatives="true"
+    hasEventMode="true"/>
+  <UnitDefinitions>
+    <Unit
+      name="1"/>
+    <Unit
+      name="s">
+      <BaseUnit s="1"/>
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <Float64Type
+      name="Modelica.Blocks.Interfaces.RealOutput"/>
+    <Float64Type
+      name="Modelica.Units.SI.Time"
+      quantity="Time"
+      unit="s"/>
+    <EnumerationType
+      name="Modelica.Blocks.Types.Extrapolation">
+      <Item name="HoldLastPoint"
+        value="1"
+        description="Hold the first/last table point outside of the table scope"/>
+      <Item name="LastTwoPoints"
+        value="2"
+        description="Extrapolate by using the derivative at the first/last table points outside of the table scope"/>
+      <Item name="Periodic"
+        value="3"
+        description="Repeat the table scope periodically"/>
+      <Item name="NoExtrapolation"
+        value="4"
+        description="Extrapolation triggers an error"/>
+    </EnumerationType>
+    <EnumerationType
+      name="Modelica.Blocks.Types.Smoothness">
+      <Item name="LinearSegments"
+        value="1"
+        description="Linear interpolation of table points"/>
+      <Item name="ContinuousDerivative"
+        value="2"
+        description="Akima spline interpolation of table points (such that the first derivative is continuous)"/>
+      <Item name="ConstantSegments"
+        value="3"
+        description="Piecewise constant interpolation of table points (the value from the previous abscissa point is returned)"/>
+      <Item name="MonotoneContinuousDerivative1"
+        value="4"
+        description="Fritsch-Butland spline interpolation (such that the monotonicity is preserved and the first derivative is continuous)"/>
+      <Item name="MonotoneContinuousDerivative2"
+        value="5"
+        description="Steffen spline interpolation of table points (such that the monotonicity is preserved and the first derivative is continuous)"/>
+      <Item name="ModifiedContinuousDerivative"
+        value="6"
+        description="Modified Akima spline interpolation of table points (such that the first derivative is continuous and shortcomings of the original Akima method are avoided)"/>
+    </EnumerationType>
+    <EnumerationType
+      name="Modelica.Blocks.Types.TimeEvents">
+      <Item name="Always"
+        value="1"
+        description="Always generate time events at interval boundaries"/>
+      <Item name="AtDiscontinuities"
+        value="2"
+        description="Generate time events at discontinuities (defined by duplicated sample points)"/>
+      <Item name="NoTimeEvents"
+        value="3"
+        description="No time events at interval boundaries"/>
+    </EnumerationType>
+  </TypeDefinitions>
+  <DefaultExperiment startTime="0.0"
+    stopTime="1.0"
+    tolerance="0.0001"/>
+  <ModelVariables>
+    <Float64
+      name="time"
+      valueReference="268435455"
+      causality="independent"
+      unit="s">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="3"/>
+        </Annotation>
+      </Annotations>
+    </Float64>
+    <Int32
+      name="combiTimeTable.nout"
+      valueReference="100663296"
+      description="Number of outputs"
+      variability="constant"
+      min="1"
+      start="2">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="4"/>
+        </Annotation>
+      </Annotations>
+    </Int32>
+    <Float64
+      name="combiTimeTable.y"
+      valueReference="1879048192"
+      description="Connector of Real output signals"
+      declaredType="Modelica.Blocks.Interfaces.RealOutput">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="6"/>
+        </Annotation>
+      </Annotations>
+      <Dimension start="2"/>
+    </Float64>
+    <Boolean
+      name="combiTimeTable.tableOnFile"
+      valueReference="100663297"
+      description="= true, if table is defined on file or in function usertab"
+      variability="constant"
+      start="false">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="8"/>
+        </Annotation>
+      </Annotations>
+    </Boolean>
+    <Float64
+      name="combiTimeTable.table"
+      valueReference="268435457"
+      description="Table matrix (time = first column; e.g., table=[0, 0; 1, 1; 2, 4])"
+      causality="parameter"
+      variability="fixed"
+      start="1 1 1 2 4 8 3 9 27 4 16 64 5 25 125 6 36 216 7 49 343 8 64 512 9 81 729 10 100 1000">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="10"/>
+        </Annotation>
+      </Annotations>
+      <Dimension start="10"/>
+      <Dimension start="3"/>
+    </Float64>
+    <String
+      name="combiTimeTable.tableName"
+      valueReference="134217728"
+      description="Table name on file or in function usertab (see docu)"
+      causality="parameter"
+      variability="fixed">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="40"/>
+        </Annotation>
+      </Annotations>
+      <Start
+        value="NoName"/>
+    </String>
+    <String
+      name="combiTimeTable.fileName"
+      valueReference="134217729"
+      description="File where matrix is stored"
+      causality="parameter"
+      variability="fixed">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="41"/>
+        </Annotation>
+      </Annotations>
+      <Start
+        value="NoName"/>
+    </String>
+    <Boolean
+      name="combiTimeTable.verboseRead"
+      valueReference="16777246"
+      description="= true, if info message that file is loading is to be printed"
+      causality="parameter"
+      variability="fixed"
+      start="true">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="42"/>
+        </Annotation>
+      </Annotations>
+    </Boolean>
+    <Int32
+      name="combiTimeTable.columns"
+      valueReference="268435458"
+      description="Columns of table to be interpolated"
+      variability="constant"
+      start="2 3">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="44"/>
+        </Annotation>
+      </Annotations>
+      <Dimension start="2"/>
+    </Int32>
+    <Enumeration
+      name="combiTimeTable.smoothness"
+      valueReference="100663300"
+      description="Smoothness of table interpolation"
+      variability="constant"
+      declaredType="Modelica.Blocks.Types.Smoothness"
+      start="1">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="46"/>
+        </Annotation>
+      </Annotations>
+    </Enumeration>
+    <Enumeration
+      name="combiTimeTable.extrapolation"
+      valueReference="100663301"
+      description="Extrapolation of data outside the definition range"
+      variability="constant"
+      declaredType="Modelica.Blocks.Types.Extrapolation"
+      start="2">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="47"/>
+        </Annotation>
+      </Annotations>
+    </Enumeration>
+    <Float64
+      name="combiTimeTable.timeScale"
+      valueReference="100663302"
+      description="Time scale of first table column"
+      variability="constant"
+      declaredType="Modelica.Units.SI.Time"
+      min="1E-15"
+      start="1">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="48"/>
+        </Annotation>
+      </Annotations>
+    </Float64>
+    <Float64
+      name="combiTimeTable.offset"
+      valueReference="268435459"
+      description="Offsets of output signals"
+      causality="parameter"
+      variability="tunable"
+      start="0">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="50"/>
+        </Annotation>
+      </Annotations>
+      <Dimension start="1"/>
+    </Float64>
+    <Float64
+      name="combiTimeTable.startTime"
+      valueReference="16777248"
+      description="Output = offset for time &lt; startTime"
+      causality="parameter"
+      variability="fixed"
+      declaredType="Modelica.Units.SI.Time"
+      start="0">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="51"/>
+        </Annotation>
+      </Annotations>
+    </Float64>
+    <Float64
+      name="combiTimeTable.shiftTime"
+      valueReference="100663304"
+      description="Shift time of first table column"
+      variability="fixed"
+      declaredType="Modelica.Units.SI.Time">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="52"/>
+        </Annotation>
+      </Annotations>
+    </Float64>
+    <Enumeration
+      name="combiTimeTable.timeEvents"
+      valueReference="16777249"
+      description="Time event handling of table interpolation"
+      causality="parameter"
+      variability="fixed"
+      declaredType="Modelica.Blocks.Types.TimeEvents"
+      start="1">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="53"/>
+        </Annotation>
+      </Annotations>
+    </Enumeration>
+    <Boolean
+      name="combiTimeTable.verboseExtrapolation"
+      valueReference="100663303"
+      description="= true, if warning messages are to be printed if time is outside the table definition range"
+      variability="constant"
+      start="false">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="54"/>
+        </Annotation>
+      </Annotations>
+    </Boolean>
+    <Float64
+      name="combiTimeTable.t_min"
+      valueReference="100663305"
+      description="Minimum abscissa value defined in table"
+      variability="fixed"
+      declaredType="Modelica.Units.SI.Time">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="55"/>
+        </Annotation>
+      </Annotations>
+    </Float64>
+    <Float64
+      name="combiTimeTable.t_max"
+      valueReference="100663306"
+      description="Maximum abscissa value defined in table"
+      variability="fixed"
+      declaredType="Modelica.Units.SI.Time">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="56"/>
+        </Annotation>
+      </Annotations>
+    </Float64>
+    <Float64
+      name="combiTimeTable.t_minScaled"
+      valueReference="100663307"
+      description="Minimum (scaled) abscissa value defined in table"
+      variability="fixed"
+      unit="1">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="57"/>
+        </Annotation>
+      </Annotations>
+    </Float64>
+    <Float64
+      name="combiTimeTable.t_maxScaled"
+      valueReference="100663308"
+      description="Maximum (scaled) abscissa value defined in table"
+      variability="fixed"
+      unit="1">
+      <Annotations>
+        <Annotation
+          type="com.3ds.dymola">
+          <DeclarationOrder
+            order="58"/>
+        </Annotation>
+      </Annotations>
+    </Float64>
+    <Float64
+      name="___Z[1]"
+      valueReference="4294967294"/>
+    <Float64
+      name="___Z[2]"
+      valueReference="4294967293"/>
+  </ModelVariables>
+  <ModelStructure>
+    <EventIndicator valueReference="4294967294"/>
+    <EventIndicator valueReference="4294967293"/>
+  </ModelStructure>
+</fmiModelDescription>
