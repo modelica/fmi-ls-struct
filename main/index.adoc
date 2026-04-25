@@ -1,4 +1,5 @@
-= Layered Standard for Structured Data
+= FMI Layered Standard for Structured Data (FMI-LS-STRUCT)
+
 :sectnums:
 :sectnumlevels: 5
 :toc: left
@@ -32,9 +33,14 @@ The licenses text can be found in the link:LICENSE.txt[LICENSE.txt] file that ac
 === Motivation 
 
 For many use cases, the grouping of variables gives the user a better overview about the usage of variables. For certain groupings the importing tool might be able to provide a more user-friendly interface.
-FMUs might use maps/functions sampled on the vertices of a grid to calculate output values. The values at these sampling points and even the locations of the sampling points might get exposed as parameter variables of the FMU to allow calibrations. However, the FMI standard only defines n-dimensional array variable but doesn't define any relation between these variables. This layered standard defines how to group variables to represent maps.
+FMUs might use maps/functions sampled on the vertices of a grid to calculate output values. 
+The values at these sampling points and even the locations of the sampling points might get exposed as parameter variables of the FMU to allow calibrations. 
+However, the FMI standard only defines n-dimensional array variables but doesn't define any relation between these variables. 
+This layered standard defines how to group variables to represent maps.
 
-This layered standard uses terminals of the FMI 3.0 standard to represent structures like maps by grouping variables in terminals. Terminals are used to group variables and already define means to connect its variables between FMUs. Such a connections could ensure that the same map values are used by different FMUs or allow one FMU to provide the map values to be used by other FMUs.
+This layered standard uses terminals of the FMI 3.0 standard to represent structures like maps by grouping variables in terminals. 
+Terminals are used to group variables and already define means to connect its member variables between FMUs. 
+Such a connection could ensure that the same map values are used by different FMUs or allow one FMU to provide the map values to be used by other FMUs.
 
 === How to Read This Document
 
@@ -53,9 +59,15 @@ NOTE: Especially examples are defined in this style.
 
 === Rough Outline of the Approach
 
-FMI 3.0 https://fmi-standard.org/docs/3.0/#fmiTerminalsAndIcons[Terminals] are used to define groups of variables, especially parameters.
+The concept of this layered standard can be summarized as follows:
 
-A special kind of parameter group defines maps on rectilinear grids (with additional semantic meaning).
+* In `modelDescription.xml`, an FMU defines the variables that represent domain sampling points and codomain values.
+* In `TerminalsAndIcons.xml`, these variables are grouped in https://fmi-standard.org/docs/3.0/#fmiTerminalsAndIcons[Terminals] using:
+** `terminalKind` to describe the map type (for example rectilinear grid or irregular grid),
+** `variableKind` to label each terminal member (`domain`, `domainInput`, `codomain`, `codomainOutput`), and
+** `matchingRule` to describe how map terminals could connected.
+* Importing tools read the manifest and terminal metadata to provide map-aware handling (for example map-oriented grouping/visualization of variables and ).
+
 
 == Layered Standard Manifest File
 
@@ -101,68 +113,78 @@ The manifest file shall be stored inside the FMU at the following path: `/extra/
 [#common-concepts]
 == Common concepts for the representation of maps 
 
-===  Definitions
+=== Definitions
 
 n-d lookup table::
-In the context of this layered standard, an n-d lookup table is a sampled representation of a function of n input variables latexmath:[(y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)], sampled on points of the n-dimensional domain.
+In the context of this layered standard, an n-d lookup table is a sampled representation of an m-valued function of n input variables latexmath:[(y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)], sampled on points of the n-dimensional domain.
 Such an n-d lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.
 
-==== Definition of `terminalKind` attribute values
+Each lookup table is represented by a terminal with FMI variables that represent the sampling points of the domain and the sampled values of the codomain.
+
+==== `terminalKind` attribute values
 
 `org.fmi-standard.fmi-ls-struct.map.rectilinearGrid`::
-for maps defined on the vertices of a rectilinear grid.
+for maps sampled on the vertices of a rectilinear grid.
 
 `org.fmi-standard.fmi-ls-struct.map.irregular`::
-for maps defined by unstructured tuples of ("point cloud").
+for maps sampled on the vertices of an irregular grid ("point cloud").
 
-==== `variableKind` attribute values of terminal member variables:
 
-We want to represent a map from a domain set to a codomain by providing points in the domain set and the values they are mapped to.
+==== `variableKind` attribute values of terminal member variables
+
+We want to represent a sampled map from a domain set to a codomain by providing sampled points in the domain set and the values they are mapped to.
 
 `org.fmi-standard.fmi-ls-struct.map.domain`::
-For each of the n dimensions of the domain set, a 1-dimensional array variable (typically a parameter or a constant) of coordinates (along this dimension) is provided.
+For each of the n dimensions of the domain set, a 1-dimensional array variable containing the coordinates (along this dimension) is provided. +
+The `causality` of such a variable is `parameter` if the sampling points are meant to be changed after the FMU is created, and `constant` otherwise.
 
 `org.fmi-standard.fmi-ls-struct.map.domainInput`::
-Optionally, for each `domain` variable at most one variable (typically an input or a local variable) can be referenced that represents the current operating point (along this dimension).
-If present, this variable must be listed directly after the corresponding domain.
-The domain_input isn't required to be a scalar, it could be variable with several dimensions.
-However the size of each `domainInput` must be the same for each domain: For nonscalar inputs latexmath:[v=[v_1,\dots,v_n\], w=[w_1, \dots, w_n\], \dots] the function is evaluated element-wise and we get an output vector latexmath:[z=[f(v_1, w_1, \dots), \dots, f(v_n, w_n, \dots)]].
+Optionally, for each `domain` variable at most one variable can be referenced that represents the current operating point (along this dimension).
+The `causality` of such a variable can be `input`, `output` or `local` (i.e. the operating point may be provided externally, computed internally, or exposed as an observable). +
+If present, this variable must be listed directly after the corresponding domain variable. +
+The `domainInput` variable is not required to be a scalar; it may have multiple dimensions.
+However the size of each `domainInput` variable must be the same for each domain: For nonscalar inputs latexmath:[v=[v_1,\dots,v_K\], w=[w_1, \dots, w_K\], \dots] the function is evaluated element-wise and we get an output vector latexmath:[z=[f(v_1, w_1, \dots), \dots, f(v_K, w_K, \dots)]].
+The indices latexmath:[1, \dots, K] are the serialization indices of the nonscalar input variable and latexmath:[K] is the product of dimension sizes.
+These indices are not related to the indices of the domain arrays.
 
 `org.fmi-standard.fmi-ls-struct.map.codomain`::
-For each of the represented points in the domain set, the values to which they are mapped are represented.
+For each of the represented points in the domain set, the values to which they are mapped are provided.
+The shape of this variable is grid-type-specific: for a rectilinear grid it is an n-dimensional array (one dimension per domain axis), while for an irregular grid it is a 1-dimensional array (one entry per sample point).
 +
 NOTE: There can be multiple terminal member variables with `variableKind` `codomain` to represent multiple maps in one terminal.
 
-`org.fmi-standard.fmi-ls-struct.map.domainOutput`::
-Optionally, for each `domain` variable at most one array variable (typically an output or a local variable) can be referenced that represents calculated output value of the map.
-If present, a `domainOutput` variable must be listed directly after the corresponding `codomain` variable.
+`org.fmi-standard.fmi-ls-struct.map.codomainOutput`::
+Optionally, for each `codomain` variable at most one array variable can be referenced that represents the calculated output value of the map. +
+The `causality` of such a variable can be `output` or `local`, since it represents a value computed from the map and cannot be driven from outside the FMU. +
+If present, a `codomainOutput` variable must be listed directly after the corresponding `codomain` variable.
 
 Additional terminal member variables can be added to the terminal as related variables but if they do not fit into one of the above categories, they shall not have a `variableKind` starting with `org.fmi-standard.fmi-ls-struct`. 
 
-==== Definition of map specific `matchingRule`
+
+==== Map-specific `matchingRule`
 
 The matching rule `org.fmi-standard.fmi-ls-struct.map` should be used for terminals that represent maps.
 
 Requirements for matching:
 
-* The number of domain entries must be the same.
-
-* The terminal member names, its data types and the (effective) size and of all domains (`variableKind=org.fmi-standard.fmi-ls-struct.map.domain`) must match.
-
+* The number of domain variables must be the same.
+* The terminal member names, their data types and the (effective) sizes of all domains (`variableKind=org.fmi-standard.fmi-ls-struct.map.domain`) must match.
 * If all domains match, connect all these domains.
-
 * Connect all codomains (`variableKind=org.fmi-standard.fmi-ls-struct.map.codomain`) that match. 
+* Do not connect any other terminal member variables.
 
-* Don't connect any other terminal member variables.
-+
 NOTE: This indicates that the variableKind of the member must be considered for the connection of the individual members of the terminal.
+
+Related variables are not considered by the map matching rule.
+Tools may use them for user interface support or algorithm configuration, but they should not be required for map compatibility.
 
 === Structure of the FMU archive
 
 This layered standard uses "Terminals and Icons" mechanism of FMI 3.0.
 All information is stored in the TerminalsAndIcons.xml file in the TerminalsAndIcons folder of an FMU.
 
-==  Maps sampled on rectilinear grids
+
+== Maps sampled on rectilinear grids
 
 === Definitions
 
@@ -179,26 +201,27 @@ domain::
 For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
 
 codomain::
-For each of the m dimensions of the codomain, the sampled function values (along this dimension of the codomain) are stored in this n-dimensional array variable and references with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
+For each of the m dimensions of the codomain, the sampled function values (along this dimension of the codomain) are stored in this n-dimensional array variable and referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
 
 The length of the i-th domain vector must be equal to length of the i-th codomain dimension.
 
-NOTE: Note: This layered standard doesn't define how maps have to be represented in a GUI.
+NOTE: This layered standard doesn't define how maps have to be represented in a GUI.
 In particular, the standard doesn't define if the first dimension is displayed as columns or rows.
-However, for the example lookup tables of this document, the sampling points of first dimension of the domain are shown as a column vector, and the values of second dimension are shown as a row vector.
+However, for the example lookup tables of this document, the sampling points of the first dimension of the domain are shown as a column vector, and the values of the second dimension are shown as a row vector.
 
 === 2-d example of a lookup table on a rectilinear grid
+
 
 [[rectilinear_example]]
 [cols="1,1,1,1,1"]
 |====
-2.2+h|v
-3+h|y
+2.2+|v
+3+|y
 |10.0
 |25.0
 |30.0
 
-.2+h|x
+.2+|x
 |2.0
 |11.0
 |12.0 
@@ -209,6 +232,7 @@ However, for the example lookup tables of this document, the sampling points of 
 |22.0
 |23.0
 |====
+
 
 The individual variables of the example 2-dimensional map on a rectilinear grid are given in the modelDescription.xml.
 
@@ -224,7 +248,15 @@ These variables are grouped in a terminal with the terminalKind `org.fmi-standar
 include::examples/terminalsAndIcons.xml[]
 ----
 
-==  Maps sampled on irregular grids ("Point Cloud")
+
+
+
+== Maps sampled on irregular grids ("Point Cloud")
+
+Irregular maps represent sampled functions at explicitly listed domain points.
+This representation is intended for data sets that do not lie on a complete rectilinear grid, for example measurements whose sample points do not form a complete Cartesian product of per-dimension sampling vectors, or sparse calibration points.
+Compared to rectilinear maps, irregular maps are more general because they can describe arbitrary point clouds; however, they do not implicitly provide per-dimension grid structure.
+
 
 === Definitions
 
@@ -240,28 +272,28 @@ For each of the n dimensions of the lookup table, a 1-dimensional array variable
 codomain::
 For each of the m dimensions of the codomain of the lookup table, a 1-dimensional array variable containing the sampling values of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
 
-For domains latexmath:[x=[x_1, x_2, \dots, x_n\], y=[y_1, y_2, \dots, y_n\], z=[z_1, z_2, \dots, z_n\], \dots]
-and codomains latexmath:[u=[u_1, u_2, \dots, u_n\], v=[v_1, v_2, \dots, v_n\], \dots], the tuple latexmath:[(x_i, y_i, z_i, \dots)] gets mapped to the values latexmath:[(u_i, v_i, ...)].
+For domain arrays latexmath:[x=[x_1, x_2, \dots, x_N\], y=[y_1, y_2, \dots, y_N\], z=[z_1, z_2, \dots, z_N\], \dots]
+and codomain arrays latexmath:[u=[u_1, u_2, \dots, u_N\], v=[v_1, v_2, \dots, v_N\], \dots], each sample index latexmath:[i \in \{1, \dots, N\}] maps the tuple latexmath:[(x_i, y_i, z_i, \dots)] to the values latexmath:[(u_i, v_i, \dots)].
 
-All domain arrays and codomain arrays must have the same length.
+NOTE: A map on a 1-dimensional domain can be equivalently represented by a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.
 
-NOTE: Note: A map on a 1-dimensional domain can be equivalently represented by a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.
+NOTE: Any n-d lookup table that can be described with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` can also be represented by an n-d lookup table with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"`.
 
-NOTE: Note: Any n-d lookup table that can be described with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` could be also represented by an n-d lookup table with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"`.
+NOTE: The reverse is not true in general. An irregular map can only be represented as `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` if its sampled domain points form a complete Cartesian product of per-dimension sampling vectors.
 
 === 3-d example of a lookup table on an irregular grid
 
-The lookup table is sampled at 3 different points of the domain (2, 10, 10), (3, 25, 28) and (10, 30, 30) with the values (11, 1), (1, 4) and (13, 3) on the 2 dimensional codomain.
+The lookup table is sampled at 3 different points of the domain (2, 10, 10), (3, 25, 28) and (10, 30, 30) with the values (11, 1), (1, 4) and (13, 3) on the 2-dimensional codomain.
 
 [[irregular_example]]
 [cols="1,1,1,1,1"]
 
 |====
-h|x
-h|y
-h|z
-h|v1
-h|v2
+|x
+|y
+|z
+|v1
+|v2
 
 |2.0
 |10.0
@@ -280,6 +312,7 @@ h|v2
 |30.0
 |13.0
 |3.0
+
 |====
 
 [source, xml]
@@ -295,17 +328,17 @@ include::examples/irregular3d_modelDescription.xml[]
 
 === 2-d example of a lookup table on an irregular grid which could be represented with a rectilinear grid
 
-The previous <<rectilinear_example, 2-d rectilinear grid example>> with 2 sampling points in the x dimension and 3 sampling points points in the y dimension
+The previous <<rectilinear_example, 2-d rectilinear grid example>> with 2 sampling points in the x dimension and 3 sampling points in the y dimension
 [[irregular_rectilinear_example]]
 [cols="1,1,1,1,1"]
 |====
-2.2+h|v
-3+h|y
+2.2+|v
+3+|y
 |10.0
 |25.0
 |30.0
 
-.2+h|x
+.2+|x
 |2.0
 |11.0
 |12.0 
@@ -317,14 +350,15 @@ The previous <<rectilinear_example, 2-d rectilinear grid example>> with 2 sampli
 |23.0
 |====
 
-can be represented as a lookup table on a irregular grid with the same 6 sampling points:
+can be represented as a lookup table on an irregular grid with the same 6 sampling points:
 
 [[irregular_irregular_rectilinear_example]]
 [cols="1,1,1"]
+
 |====
-h|x
-h|y
-h|v
+|x
+|y
+|v
 
 |2.0
 |10.0
@@ -349,6 +383,7 @@ h|v
 |3.0
 |30.0
 |23.0
+
 |====
 
 [source, xml]
