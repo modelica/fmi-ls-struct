@@ -1,7 +1,7 @@
 # FMI Layered Standard for Structured Data (FMI-LS-STRUCT)
 [![Build Specification](https://github.com/modelica/fmi-ls-struct/actions/workflows/build-ls-struct.yml/badge.svg)](https://github.com/modelica/fmi-ls-struct/actions/workflows/build-ls-struct.yml)
 
-This repository contains a current prototype draft for the FMI Layered Standard for Structured Data (FMI-LS-STRUCT) based on the [Functional Mock-up Interface][FMI].
+This repository contains a current prototype draft for the FMI Layered Standard for Structured Data (FMI-LS-STRUCT) based on the [Functional Mock-up Interface][FMI]. The Standard release is now driven by the MAP-COORD project so that this standard can be applied to models following the Modelica, FMI and SSP standards. 
 
 Based on FMI 3.0, this layered standard defines how variables (especially parameters) of an FMU can be structured and grouped in a more flexible way than with the "structured naming convention" of the FMI Standard. The first version of this layered standard is focused on the definition of sampled maps.
 
