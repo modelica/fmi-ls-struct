@@ -145,7 +145,9 @@ If present, this variable must be listed directly after the corresponding domain
 The `domainInput` variable is not required to be a scalar; it may have multiple dimensions.
 However the size of each `domainInput` variable must be the same for each domain: For nonscalar inputs latexmath:[v=[v_1,\dots,v_K\], w=[w_1, \dots, w_K\], \dots] the function is evaluated element-wise and we get an output vector latexmath:[z=[f(v_1, w_1, \dots), \dots, f(v_K, w_K, \dots)]].
 The indices latexmath:[1, \dots, K] are the serialization indices of the nonscalar input variable and latexmath:[K] is the product of dimension sizes.
-These indices are not related to the indices of the domain arrays.
+These indices are not related to the indices of the domain arrays. +
+The data type of a `domainInput` variable shall be identical to the data type of the corresponding `domain` variable.
+Corresponding variable pairs may have different data types from other pairs.
 
 `org.fmi-standard.fmi-ls-struct.map.codomain`::
 For each of the represented points in the domain set, the values to which they are mapped are provided.
@@ -156,7 +158,9 @@ NOTE: There can be multiple terminal member variables with `variableKind` `codom
 `org.fmi-standard.fmi-ls-struct.map.codomainOutput`::
 Optionally, for each `codomain` variable at most one array variable can be referenced that represents the calculated output value of the map. +
 The `causality` of such a variable can be `output` or `local`, since it represents a value computed from the map and cannot be driven from outside the FMU. +
-If present, a `codomainOutput` variable must be listed directly after the corresponding `codomain` variable.
+If present, a `codomainOutput` variable must be listed directly after the corresponding `codomain` variable. +
+The data type of a `codomainOutput` variable shall be identical to the data type of the corresponding `codomain` variable.
+Corresponding variable pairs may have different data types from other pairs.
 
 Additional terminal member variables can be added to the terminal as related variables but if they do not fit into one of the above categories, they shall not have a `variableKind` starting with `org.fmi-standard.fmi-ls-struct`. 
 
