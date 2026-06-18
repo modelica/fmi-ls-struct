@@ -162,6 +162,10 @@ If present, a `codomainOutput` variable must be listed directly after the corres
 The data type of a `codomainOutput` variable shall be identical to the data type of the corresponding `codomain` variable.
 Corresponding variable pairs may have different data types from other pairs.
 
+NOTE: A sampled map may contain domain and codomain variables with heterogeneous data types.
+No restriction is imposed that all domain variables, or all codomain variables, have the same data type.
+For example, the domain variables could be of type `Float32` while the codomain variables could be of type `Int16`.
+
 Additional terminal member variables can be added to the terminal as related variables but if they do not fit into one of the above categories, they shall not have a `variableKind` starting with `org.fmi-standard.fmi-ls-struct`. 
 
 
