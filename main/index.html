@@ -438,8 +438,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>FMI Layered Standard for Structured Data (FMI-LS-STRUCT)</h1>
 <div class="details">
-<span id="revnumber">version 3b8c7fd,</span>
-<span id="revdate">2026-06-03</span>
+<span id="revnumber">version e28eb57,</span>
+<span id="revdate">2026-06-19</span>
 </div>
 </div>
 <div id="content">
@@ -665,7 +665,9 @@ If present, this variable must be listed directly after the corresponding domain
 The <code>domainInput</code> variable is not required to be a scalar; it may have multiple dimensions.
 However the size of each <code>domainInput</code> variable must be the same for each domain: For nonscalar inputs \(v=[v_1,\dots,v_K], w=[w_1, \dots, w_K], \dots\) the function is evaluated element-wise and we get an output vector \(z=[f(v_1, w_1, \dots), \dots, f(v_K, w_K, \dots)\)].
 The indices \(1, \dots, K\) are the serialization indices of the nonscalar input variable and \(K\) is the product of dimension sizes.
-These indices are not related to the indices of the domain arrays.</p>
+These indices are not related to the indices of the domain arrays.<br>
+The data type of a <code>domainInput</code> variable shall be identical to the data type of the corresponding <code>domain</code> variable.
+Corresponding variable pairs may have different data types from other pairs.</p>
 </dd>
 <dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.codomain</code></dt>
 <dd>
@@ -688,9 +690,25 @@ There can be multiple terminal member variables with <code>variableKind</code> <
 <dd>
 <p>Optionally, for each <code>codomain</code> variable at most one array variable can be referenced that represents the calculated output value of the map.<br>
 The <code>causality</code> of such a variable can be <code>output</code> or <code>local</code>, since it represents a value computed from the map and cannot be driven from outside the FMU.<br>
-If present, a <code>codomainOutput</code> variable must be listed directly after the corresponding <code>codomain</code> variable.</p>
+If present, a <code>codomainOutput</code> variable must be listed directly after the corresponding <code>codomain</code> variable.<br>
+The data type of a <code>codomainOutput</code> variable shall be identical to the data type of the corresponding <code>codomain</code> variable.
+Corresponding variable pairs may have different data types from other pairs.</p>
 </dd>
 </dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A sampled map may contain domain and codomain variables with heterogeneous data types.
+No restriction is imposed that all domain variables, or all codomain variables, have the same data type.
+For example, the domain variables could be of type <code>Float32</code> while the codomain variables could be of type <code>Int16</code>.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Additional terminal member variables can be added to the terminal as related variables but if they do not fit into one of the above categories, they shall not have a <code>variableKind</code> starting with <code>org.fmi-standard.fmi-ls-struct</code>.</p>
