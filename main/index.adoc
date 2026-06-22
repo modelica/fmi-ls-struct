@@ -90,7 +90,7 @@ The manifest file signals to the importer that the FMU supports this layered sta
 
 |`fmi-ls-version`
 | `\http://fmi-standard.org/fmi-ls-manifest`
-| `1.0.0-beta.1`
+| `1.0.0-rc.1`
 | Version of the layered standard. This layered standard uses semantic versioning, as defined in <<PW13>>.
 
 |`fmi-ls-description`
