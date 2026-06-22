@@ -384,11 +384,6 @@ include::examples/irregular2d_terminalsAndIcons.xml[]
 include::examples/irregular2d_modelDescription.xml[]
 ----
 
-== Known Limitations of This Standard
-
-General limitations:
-
-* todo
 
 [bibliography]
 == References
