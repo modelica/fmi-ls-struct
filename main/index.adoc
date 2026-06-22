@@ -128,7 +128,6 @@ for maps sampled on the vertices of a rectilinear grid.
 `org.fmi-standard.fmi-ls-struct.map.irregular`::
 for maps sampled on the vertices of an irregular grid ("point cloud").
 
-
 ==== `variableKind` attribute values of terminal member variables
 
 We want to represent a sampled map from a domain set to a codomain by providing sampled points in the domain set and the values they are mapped to.
@@ -167,7 +166,6 @@ For example, the domain variables could be of type `Float32` while the codomain 
 
 Additional terminal member variables can be added to the terminal as related variables but if they do not fit into one of the above categories, they shall not have a `variableKind` starting with `org.fmi-standard.fmi-ls-struct`. 
 
-
 ==== Map-specific `matchingRule`
 
 The matching rule `org.fmi-standard.fmi-ls-struct.map` should be used for terminals that represent maps.
@@ -189,7 +187,6 @@ Tools may use them for user interface support or algorithm configuration, but th
 
 This layered standard uses "Terminals and Icons" mechanism of FMI 3.0.
 All information is stored in the TerminalsAndIcons.xml file in the TerminalsAndIcons folder of an FMU.
-
 
 == Maps sampled on rectilinear grids
 
@@ -218,17 +215,16 @@ However, for the example lookup tables of this document, the sampling points of 
 
 === 2-d example of a lookup table on a rectilinear grid
 
-
 [[rectilinear_example]]
-[cols="1,1,1,1,1"]
+[%autowidth, cols="1,1,1,1,1"]
 |====
-2.2+|v
-3+|y
+2.2+h|v
+3+h|y
 |10.0
 |25.0
 |30.0
 
-.2+|x
+.2+h|x
 |2.0
 |11.0
 |12.0 
@@ -239,7 +235,6 @@ However, for the example lookup tables of this document, the sampling points of 
 |22.0
 |23.0
 |====
-
 
 The individual variables of the example 2-dimensional map on a rectilinear grid are given in the modelDescription.xml.
 
@@ -255,15 +250,11 @@ These variables are grouped in a terminal with the terminalKind `org.fmi-standar
 include::examples/terminalsAndIcons.xml[]
 ----
 
-
-
-
 == Maps sampled on irregular grids ("Point Cloud")
 
 Irregular maps represent sampled functions at explicitly listed domain points.
 This representation is intended for data sets that do not lie on a complete rectilinear grid, for example measurements whose sample points do not form a complete Cartesian product of per-dimension sampling vectors, or sparse calibration points.
 Compared to rectilinear maps, irregular maps are more general because they can describe arbitrary point clouds; however, they do not implicitly provide per-dimension grid structure.
-
 
 === Definitions
 
@@ -293,14 +284,9 @@ NOTE: The reverse is not true in general. An irregular map can only be represent
 The lookup table is sampled at 3 different points of the domain (2, 10, 10), (3, 25, 28) and (10, 30, 30) with the values (11, 1), (1, 4) and (13, 3) on the 2-dimensional codomain.
 
 [[irregular_example]]
-[cols="1,1,1,1,1"]
-
+[%autowidth, cols="^1,^1,^1,^1,^1"]
 |====
-|x
-|y
-|z
-|v1
-|v2
+|x |y |z |v1 |v2
 
 |2.0
 |10.0
@@ -319,7 +305,6 @@ The lookup table is sampled at 3 different points of the domain (2, 10, 10), (3,
 |30.0
 |13.0
 |3.0
-
 |====
 
 [source, xml]
@@ -337,15 +322,15 @@ include::examples/irregular3d_modelDescription.xml[]
 
 The previous <<rectilinear_example, 2-d rectilinear grid example>> with 2 sampling points in the x dimension and 3 sampling points in the y dimension
 [[irregular_rectilinear_example]]
-[cols="1,1,1,1,1"]
+[%autowidth, cols="1,1,1,1,1"]
 |====
-2.2+|v
-3+|y
+2.2+h|v
+3+h|y
 |10.0
 |25.0
 |30.0
 
-.2+|x
+.2+h|x
 |2.0
 |11.0
 |12.0 
@@ -360,12 +345,9 @@ The previous <<rectilinear_example, 2-d rectilinear grid example>> with 2 sampli
 can be represented as a lookup table on an irregular grid with the same 6 sampling points:
 
 [[irregular_irregular_rectilinear_example]]
-[cols="1,1,1"]
-
+[%autowidth, cols="^1,^1,^1"]
 |====
-|x
-|y
-|v
+|x |y |v
 
 |2.0
 |10.0
@@ -390,7 +372,6 @@ can be represented as a lookup table on an irregular grid with the same 6 sampli
 |3.0
 |30.0
 |23.0
-
 |====
 
 [source, xml]
@@ -414,5 +395,3 @@ General limitations:
 
 - [[[PW13]]] Preston-Werner, T. (2013): **Semantic Versioning 2.0.0**.  https://semver.org/spec/v2.0.0.html
 - [[[ASAM-MCD2]]] ASAM e.V. (2018) **ASAM MCD-2 MC (aka ASAP2) v1.7.1**. https://www.asam.net/standards/detail/mcd-2-mc/
-
-

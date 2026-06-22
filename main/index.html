@@ -478,8 +478,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>FMI Layered Standard for Structured Data (FMI-LS-STRUCT)</h1>
 <div class="details">
-<span id="revnumber">version d17182b,</span>
-<span id="revdate">2026-06-20</span>
+<span id="revnumber">version 9692b9d,</span>
+<span id="revdate">2026-06-22</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -906,18 +906,18 @@ However, for the example lookup tables of this document, the sampling points of 
 </div>
 <div class="sect2">
 <h3 id="2-d-example-of-a-lookup-table-on-a-rectilinear-grid">4.2. 2-d example of a lookup table on a rectilinear grid</h3>
-<table id="rectilinear_example" class="tableblock frame-all grid-all stretch">
+<table id="rectilinear_example" class="tableblock frame-all grid-all fit-content">
 <colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
+<col>
+<col>
+<col>
+<col>
+<col>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" colspan="2" rowspan="2"><p class="tableblock">v</p></td>
-<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">y</p></td>
+<th class="tableblock halign-left valign-top" colspan="2" rowspan="2"><p class="tableblock">v</p></th>
+<th class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">y</p></th>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
@@ -925,7 +925,7 @@ However, for the example lookup tables of this document, the sampling points of 
 <td class="tableblock halign-left valign-top"><p class="tableblock">30.0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">x</p></td>
+<th class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">x</p></th>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">11.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">12.0</p></td>
@@ -1063,42 +1063,44 @@ The reverse is not true in general. An irregular map can only be represented as 
 <div class="paragraph">
 <p>The lookup table is sampled at 3 different points of the domain (2, 10, 10), (3, 25, 28) and (10, 30, 30) with the values (11, 1), (1, 4) and (13, 3) on the 2-dimensional codomain.</p>
 </div>
-<table id="irregular_example" class="tableblock frame-all grid-all stretch">
+<table id="irregular_example" class="tableblock frame-all grid-all fit-content">
 <colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
+<col>
+<col>
+<col>
+<col>
+<col>
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">x</th>
+<th class="tableblock halign-center valign-top">y</th>
+<th class="tableblock halign-center valign-top">z</th>
+<th class="tableblock halign-center valign-top">v1</th>
+<th class="tableblock halign-center valign-top">v2</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">y</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">z</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">v1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">v2</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">11.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1.0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">11.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">25.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">28.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">4.0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">25.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">28.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4.0</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">13.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">30.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">30.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">13.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">3.0</p></td>
 </tr>
 </tbody>
 </table>
@@ -1156,18 +1158,18 @@ The reverse is not true in general. An irregular map can only be represented as 
 <div class="paragraph">
 <p>The previous <a href="#rectilinear_example">2-d rectilinear grid example</a> with 2 sampling points in the x dimension and 3 sampling points in the y dimension</p>
 </div>
-<table id="irregular_rectilinear_example" class="tableblock frame-all grid-all stretch">
+<table id="irregular_rectilinear_example" class="tableblock frame-all grid-all fit-content">
 <colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
+<col>
+<col>
+<col>
+<col>
+<col>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" colspan="2" rowspan="2"><p class="tableblock">v</p></td>
-<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">y</p></td>
+<th class="tableblock halign-left valign-top" colspan="2" rowspan="2"><p class="tableblock">v</p></th>
+<th class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">y</p></th>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
@@ -1175,7 +1177,7 @@ The reverse is not true in general. An irregular map can only be represented as 
 <td class="tableblock halign-left valign-top"><p class="tableblock">30.0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">x</p></td>
+<th class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">x</p></th>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">11.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">12.0</p></td>
@@ -1192,47 +1194,49 @@ The reverse is not true in general. An irregular map can only be represented as 
 <div class="paragraph">
 <p>can be represented as a lookup table on an irregular grid with the same 6 sampling points:</p>
 </div>
-<table id="irregular_irregular_rectilinear_example" class="tableblock frame-all grid-all stretch">
+<table id="irregular_irregular_rectilinear_example" class="tableblock frame-all grid-all fit-content">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
+<col>
+<col>
+<col>
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">x</th>
+<th class="tableblock halign-center valign-top">y</th>
+<th class="tableblock halign-center valign-top">v</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">x</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">y</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">v</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">11.0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">11.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">25.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">12.0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">25.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">12.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">30.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">13.0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">13.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">21.0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">21.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">25.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">22.0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">25.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">22.0</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">23.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">30.0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">23.0</p></td>
 </tr>
 </tbody>
 </table>
