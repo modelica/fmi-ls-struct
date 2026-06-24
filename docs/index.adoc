@@ -44,7 +44,6 @@ Such a connection could ensure that the same map values are used by different FM
 === How to Read This Document
 
 The standard document is in HTML allowing use of in-document links.
-By pressing "t", the table of contents can be displayed on the left side or hidden.
 
 In key parts of this document, non-normative examples are used to help understand the standard.
 
@@ -185,8 +184,8 @@ Tools may use them for user interface support or algorithm configuration, but th
 
 === Structure of the FMU archive
 
-This layered standard uses "Terminals and Icons" mechanism of FMI 3.0.
-All information is stored in the TerminalsAndIcons.xml file in the TerminalsAndIcons folder of an FMU.
+This layered standard uses the "Terminals and Icons" mechanism of FMI 3.0.
+All information is stored in the `TerminalsAndIcons.xml` file in the TerminalsAndIcons folder of an FMU.
 
 == Maps sampled on rectilinear grids
 
@@ -216,34 +215,17 @@ However, for the example lookup tables of this document, the sampling points of 
 === 2-d example of a lookup table on a rectilinear grid
 
 [[rectilinear_example]]
-[%autowidth, cols="1,1,1,1,1"]
-|====
-2.2+h|v
-3+h|y
-|10.0
-|25.0
-|30.0
+.Example of a 2-dimensional map on a rectilinear grid
+image::images/regular-2-d.svg[width=400]
 
-.2+h|x
-|2.0
-|11.0
-|12.0 
-|13.0 
-
-|3.0
-|21.0 
-|22.0
-|23.0
-|====
-
-The individual variables of the example 2-dimensional map on a rectilinear grid are given in the modelDescription.xml.
+The individual variables of the example 2-dimensional map on a rectilinear grid are given in the `modelDescription.xml`.
 
 [source, xml]
 ----
 include::examples/modelDescription.xml[]
 ----
 
-These variables are grouped in a terminal with the terminalKind `org.fmi-standard.fmi-ls-struct.map.rectilinearGrid` in the TerminalsAndIcons.xml file:
+These variables are grouped in a terminal with the terminalKind `org.fmi-standard.fmi-ls-struct.map.rectilinearGrid` in the `TerminalsAndIcons.xml` file:
 
 [source, xml]
 ----
@@ -281,31 +263,11 @@ NOTE: The reverse is not true in general. An irregular map can only be represent
 
 === 3-d example of a lookup table on an irregular grid
 
-The lookup table is sampled at 3 different points of the domain (2, 10, 10), (3, 25, 28) and (10, 30, 30) with the values (11, 1), (1, 4) and (13, 3) on the 2-dimensional codomain.
+The lookup table is sampled at 3 different points of the domain `{2, 10, 10}`, `{3, 25, 28}` and `{10, 30, 30}` with the values `{11, 1}`, `{1, 4}` and `{13, 3}` on the 2-dimensional codomain.
 
 [[irregular_example]]
-[%autowidth, cols="^1,^1,^1,^1,^1"]
-|====
-|x |y |z |v1 |v2
-
-|2.0
-|10.0
-|10.0
-|11.0
-|1.0
-
-|3.0
-|25.0
-|28.0
-|1.0
-|4.0
-
-|10.0
-|30.0
-|30.0
-|13.0
-|3.0
-|====
+.Example of a 3-dimensional map on a irregular grid
+image::images/irregular-3-d.svg[width=400]
 
 [source, xml]
 ----
@@ -317,62 +279,17 @@ include::examples/irregular3d_terminalsAndIcons.xml[]
 include::examples/irregular3d_modelDescription.xml[]
 ----
 
-
 === 2-d example of a lookup table on an irregular grid which could be represented with a rectilinear grid
 
 The previous <<rectilinear_example, 2-d rectilinear grid example>> with 2 sampling points in the x dimension and 3 sampling points in the y dimension
+
 [[irregular_rectilinear_example]]
-[%autowidth, cols="1,1,1,1,1"]
-|====
-2.2+h|v
-3+h|y
-|10.0
-|25.0
-|30.0
-
-.2+h|x
-|2.0
-|11.0
-|12.0 
-|13.0 
-
-|3.0
-|21.0 
-|22.0
-|23.0
-|====
+image::images/regular-2-d.svg[width=400]
 
 can be represented as a lookup table on an irregular grid with the same 6 sampling points:
 
 [[irregular_irregular_rectilinear_example]]
-[%autowidth, cols="^1,^1,^1"]
-|====
-|x |y |v
-
-|2.0
-|10.0
-|11.0
-
-|2.0
-|25.0
-|12.0
-
-|2.0
-|30.0
-|13.0
-
-|3.0
-|10.0
-|21.0
-
-|3.0
-|25.0
-|22.0
-
-|3.0
-|30.0
-|23.0
-|====
+image::images/irregular-2-d.svg[width=270]
 
 [source, xml]
 ----
