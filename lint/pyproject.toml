@@ -1,0 +1,9 @@
+[project]
+name = "lint"
+version = "0.1.0"
+description = "Validation tool for the XML files in this repo"
+requires-python = ">=3.10"
+dependencies = [
+    "fmpy>=0.3.29",
+    "lxml>=6.1.1",
+]

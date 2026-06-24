@@ -1,4 +1,9 @@
-...
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription fmiVersion="3.0" modelName="struct" instantiationToken="">
+  <CoSimulation modelIdentifier="struct"/>
+  <ModelVariables>
+    <Float64 name="time" valueReference="0" causality="independent"/>
+<!-- tag::variables[] -->
 <Float64 name="x" valueReference="1" causality="parameter" start="2.0 2.0 2.0 3.0 3.0 3.0">
   <Dimension start="6"/>
 </Float64>
@@ -12,4 +17,8 @@
 <Float64 name="in_x" valueReference="5" causality="input" start="2.0"/>
 <Float64 name="in_y" valueReference="6" causality="input" start="10.0"/>
 <Float64 name="out_v" valueReference="10" causality="local" />
-...
+<!-- end::variables[] -->
+  </ModelVariables>
+  <ModelStructure>
+  </ModelStructure>
+</fmiModelDescription>

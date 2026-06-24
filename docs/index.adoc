@@ -222,7 +222,9 @@ The individual variables of the example 2-dimensional map on a rectilinear grid 
 
 [source, xml]
 ----
-include::examples/modelDescription.xml[]
+<!-- ... -->
+include::examples/modelDescription.xml[tags=variables]
+<!-- ... -->
 ----
 
 These variables are grouped in a terminal with the terminalKind `org.fmi-standard.fmi-ls-struct.map.rectilinearGrid` in the `TerminalsAndIcons.xml` file:
@@ -276,7 +278,9 @@ include::examples/irregular3d_terminalsAndIcons.xml[]
 
 [source, xml]
 ----
-include::examples/irregular3d_modelDescription.xml[]
+<!-- ... -->
+include::examples/irregular3d_modelDescription.xml[tags=variables]
+<!-- ... -->
 ----
 
 === 2-d example of a lookup table on an irregular grid which could be represented with a rectilinear grid
@@ -298,9 +302,10 @@ include::examples/irregular2d_terminalsAndIcons.xml[]
 
 [source, xml]
 ----
-include::examples/irregular2d_modelDescription.xml[]
+<!-- ... -->
+include::examples/irregular2d_modelDescription.xml[tags=variables]
+<!-- ... -->
 ----
-
 
 [bibliography]
 == References

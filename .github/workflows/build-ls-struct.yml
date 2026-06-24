@@ -8,6 +8,19 @@ on:
     branches: [ main ]
 
 jobs:
+  lint:
+    name: Lint example files
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./lint/
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv run main.py
+
   build-ls-struct:
     name: Build Layered Standard Struct
 
