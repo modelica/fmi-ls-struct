@@ -216,7 +216,7 @@ However, for the example lookup tables of this document, the sampling points of 
 
 [[rectilinear_example]]
 .Example of a 2-dimensional map on a rectilinear grid
-image::images/regular-2-d.svg[width=400]
+image::images/regular-2-d.svg[width=300]
 
 The individual variables of the example 2-dimensional map on a rectilinear grid are given in the `modelDescription.xml`.
 
@@ -269,7 +269,7 @@ The lookup table is sampled at 3 different points of the domain `{2, 10, 10}`, `
 
 [[irregular_example]]
 .Example of a 3-dimensional map on a irregular grid
-image::images/irregular-3-d.svg[width=400]
+image::images/irregular-3-d.svg[width=300]
 
 [source, xml]
 ----
@@ -288,12 +288,12 @@ include::examples/irregular3d_modelDescription.xml[tags=variables]
 The previous <<rectilinear_example, 2-d rectilinear grid example>> with 2 sampling points in the x dimension and 3 sampling points in the y dimension
 
 [[irregular_rectilinear_example]]
-image::images/regular-2-d.svg[width=400]
+image::images/regular-2-d.svg[width=300]
 
 can be represented as a lookup table on an irregular grid with the same 6 sampling points:
 
 [[irregular_irregular_rectilinear_example]]
-image::images/irregular-2-d.svg[width=270]
+image::images/irregular-2-d.svg[width=200]
 
 [source, xml]
 ----
