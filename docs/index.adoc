@@ -114,9 +114,9 @@ The manifest file shall be stored inside the FMU at the following path: `/extra/
 
 === Definitions
 
-n-d lookup table::
-In the context of this layered standard, an n-d lookup table is a sampled representation of an m-valued function of n input variables latexmath:[(y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)], sampled on points of the n-dimensional domain.
-Such an n-d lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.
+n-dimensional lookup table::
+In the context of this layered standard, an n-dimensional lookup table is a sampled representation of an m-valued function of n input variables latexmath:[(y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)], sampled on points of the n-dimensional domain.
+Such an n-dimensional lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.
 
 Each lookup table is represented by a terminal with FMI variables that represent the sampling points of the domain and the sampled values of the codomain.
 
@@ -192,8 +192,8 @@ All information is stored in the `terminalsAndIcons/terminalsAndIcons.xml` file 
 
 === Definitions
 
-n-d lookup table on a rectilinear grid::
-In the context of this layered standard, an n-d lookup table on a rectilinear grid is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on the vertices of a rectilinear grid.
+n-dimensional lookup table on a rectilinear grid::
+In the context of this layered standard, an n-dimensional lookup table on a rectilinear grid is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on the vertices of a rectilinear grid.
 +
 NOTE: In <<ASAM-MCD2>>, such a 1-d lookup table is called a *CURVE*, a 2-d lookup table is called *MAP*, and a 3-d lookup table is called *CUBOID*.
 4-d and 5-d lookup tables are called *CUBE_4* and *CUBE_5*, respectively. Higher dimensional lookup tables are not defined in <<ASAM-MCD2>>.
@@ -243,8 +243,8 @@ Compared to rectilinear maps, irregular maps are more general because they can d
 
 === Definitions
 
-n-d lookup table on an irregular grid::
-In the context of this layered standard, an n-d lookup table on an irregular grid is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on arbitrarily chosen points of the domain.
+n-dimensional lookup table on an irregular grid::
+In the context of this layered standard, an n-dimensional lookup table on an irregular grid is a sampled representation of a function of n input variables latexmath:[y=F(x_1, x_2, x_3, \dots, x_n)] sampled on arbitrarily chosen points of the domain.
 
 terminalKind::
 A terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` defines a map on the vertices of an irregular grid.
@@ -260,7 +260,7 @@ and codomain arrays latexmath:[u=[u_1, u_2, \dots, u_N\], v=[v_1, v_2, \dots, v_
 
 NOTE: A map on a 1-dimensional domain can be equivalently represented by a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.
 
-NOTE: Any n-d lookup table that can be described with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` can also be represented by an n-d lookup table with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"`.
+NOTE: Any n-dimensional lookup table that can be described with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` can also be represented by an n-dimensional lookup table with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"`.
 
 NOTE: The reverse is not true in general. An irregular map can only be represented as `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` if its sampled domain points form a complete Cartesian product of per-dimension sampling vectors.
 
