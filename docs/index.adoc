@@ -61,7 +61,7 @@ NOTE: Especially examples are defined in this style.
 The concept of this layered standard can be summarized as follows:
 
 * In `modelDescription.xml`, an FMU defines the variables that represent domain sampling points and codomain values.
-* In `TerminalsAndIcons.xml`, these variables are grouped in https://fmi-standard.org/docs/3.0/#fmiTerminalsAndIcons[Terminals] using:
+* In `terminalsAndIcons/terminalsAndIcons.xml`, these variables are grouped in https://fmi-standard.org/docs/3.0/#fmiTerminalsAndIcons[Terminals] using:
 ** `terminalKind` to describe the map type (for example rectilinear grid or irregular grid),
 ** `variableKind` to label each terminal member (`domain`, `domainInput`, `codomain`, `codomainOutput`), and
 ** `matchingRule` to describe how map terminals could connected.
@@ -70,7 +70,7 @@ The concept of this layered standard can be summarized as follows:
 
 == Layered Standard Manifest File
 
-The manifest file signals to the importer that the FMU supports this layered standard and enables the interpretation of the `TerminalsAndIcons.xml` file in the intended way.
+The manifest file signals to the importer that the FMU supports this layered standard and enables the interpretation of the `terminalsAndIcons/terminalsAndIcons.xml` file in the intended way.
 
 <<table-schema-fmi-ls-struct-attributes>> shows the content of `fmi-ls-manifest.xml`.
 
@@ -186,7 +186,7 @@ Tools may use them for user interface support or algorithm configuration, but th
 === Structure of the FMU archive
 
 This layered standard uses the "Terminals and Icons" mechanism of FMI 3.0.
-All information is stored in the `TerminalsAndIcons.xml` file in the TerminalsAndIcons folder of an FMU.
+All information is stored in the `terminalsAndIcons/terminalsAndIcons.xml` file of an FMU.
 
 == Maps sampled on rectilinear grids
 
@@ -228,7 +228,7 @@ include::examples/modelDescription.xml[tags=variables]
 <!-- ... -->
 ----
 
-These variables are grouped in a terminal with the terminalKind `org.fmi-standard.fmi-ls-struct.map.rectilinearGrid` in the `TerminalsAndIcons.xml` file:
+These variables are grouped in a terminal with the terminalKind `org.fmi-standard.fmi-ls-struct.map.rectilinearGrid` in the `terminalsAndIcons/terminalsAndIcons.xml` file:
 
 [source, xml]
 ----
