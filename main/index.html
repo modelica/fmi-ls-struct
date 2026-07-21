@@ -478,8 +478,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>FMI Layered Standard for Structured Data (FMI-LS-STRUCT)</h1>
 <div class="details">
-<span id="revnumber">version 55d3880,</span>
-<span id="revdate">2026-06-25</span>
+<span id="revnumber">version f36eb0a,</span>
+<span id="revdate">2026-07-21</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -544,7 +544,8 @@ The licenses text can be found in the <a href="LICENSE.txt">LICENSE.txt</a> file
 <div class="sect2">
 <h3 id="motivation">1.1. Motivation</h3>
 <div class="paragraph">
-<p>For many use cases, the grouping of variables gives the user a better overview about the usage of variables. For certain groupings the importing tool might be able to provide a more user-friendly interface.
+<p>For many use cases, the grouping of variables gives the user a better overview of the usage of variables.
+For certain groupings the importing tool might be able to provide a more user-friendly interface.
 FMUs might use maps/functions sampled on the vertices of a grid to calculate output values.
 The values at these sampling points and even the locations of the sampling points might get exposed as parameter variables of the FMU to allow calibrations.
 However, the FMI standard only defines n-dimensional array variables but doesn&#8217;t define any relation between these variables.
@@ -601,7 +602,7 @@ Especially examples are defined in this style.
 <p>In <code>modelDescription.xml</code>, an FMU defines the variables that represent domain sampling points and codomain values.</p>
 </li>
 <li>
-<p>In <code>TerminalsAndIcons.xml</code>, these variables are grouped in <a href="https://fmi-standard.org/docs/3.0/#fmiTerminalsAndIcons">Terminals</a> using:</p>
+<p>In <code>terminalsAndIcons/terminalsAndIcons.xml</code>, these variables are grouped in <a href="https://fmi-standard.org/docs/3.0/#fmiTerminalsAndIcons">Terminals</a> using:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -628,7 +629,7 @@ Especially examples are defined in this style.
 <h2 id="layered-standard-manifest-file">2. Layered Standard Manifest File</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The manifest file signals to the importer that the FMU supports this layered standard and enables the interpretation of the <code>TerminalsAndIcons.xml</code> file in the intended way.</p>
+<p>The manifest file signals to the importer that the FMU supports this layered standard and enables the interpretation of the <code>terminalsAndIcons/terminalsAndIcons.xml</code> file in the intended way.</p>
 </div>
 <div class="paragraph">
 <p><a href="#table-schema-fmi-ls-struct-attributes">Table 1</a> shows the content of <code>fmi-ls-manifest.xml</code>.</p>
@@ -698,10 +699,10 @@ Especially examples are defined in this style.
 <h3 id="definitions">3.1. Definitions</h3>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">n-d lookup table</dt>
+<dt class="hdlist1">n-dimensional lookup table</dt>
 <dd>
-<p>In the context of this layered standard, an n-d lookup table is a sampled representation of an m-valued function of n input variables \((y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)\), sampled on points of the n-dimensional domain.
-Such an n-d lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.</p>
+<p>In the context of this layered standard, an n-dimensional lookup table is a sampled representation of an m-valued function of n input variables \((y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)\), sampled on points of the n-dimensional domain.
+Such an n-dimensional lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.</p>
 </dd>
 </dl>
 </div>
@@ -741,7 +742,7 @@ The <code>causality</code> of such a variable is <code>parameter</code> if the s
 The <code>causality</code> of such a variable can be <code>input</code>, <code>output</code> or <code>local</code> (i.e. the operating point may be provided externally, computed internally, or exposed as an observable).<br>
 If present, this variable must be listed directly after the corresponding domain variable.<br>
 The <code>domainInput</code> variable is not required to be a scalar; it may have multiple dimensions.
-However the size of each <code>domainInput</code> variable must be the same for each domain: For nonscalar inputs \(v=[v_1,\dots,v_K], w=[w_1, \dots, w_K], \dots\) the function is evaluated element-wise and we get an output vector \(z=[f(v_1, w_1, \dots), \dots, f(v_K, w_K, \dots)\)].
+However the size of each <code>domainInput</code> variable must be the same for each domain: for nonscalar inputs \(v=[v_1,\dots,v_K], w=[w_1, \dots, w_K], \dots\) the function is evaluated element-wise and we get an output vector \(z=[f(v_1, w_1, \dots), \dots, f(v_K, w_K, \dots)\)].
 The indices \(1, \dots, K\) are the serialization indices of the nonscalar input variable and \(K\) is the product of dimension sizes.
 These indices are not related to the indices of the domain arrays.<br>
 The data type of a <code>domainInput</code> variable shall be identical to the data type of the corresponding <code>domain</code> variable.
@@ -841,7 +842,7 @@ Tools may use them for user interface support or algorithm configuration, but th
 <h3 id="structure-of-the-fmu-archive">3.2. Structure of the FMU archive</h3>
 <div class="paragraph">
 <p>This layered standard uses the "Terminals and Icons" mechanism of FMI 3.0.
-All information is stored in the <code>TerminalsAndIcons.xml</code> file in the TerminalsAndIcons folder of an FMU.</p>
+All information is stored in the <code>terminalsAndIcons/terminalsAndIcons.xml</code> file of an FMU.</p>
 </div>
 </div>
 </div>
@@ -853,9 +854,9 @@ All information is stored in the <code>TerminalsAndIcons.xml</code> file in the 
 <h3 id="definitions-2">4.1. Definitions</h3>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">n-d lookup table on a rectilinear grid</dt>
+<dt class="hdlist1">n-dimensional lookup table on a rectilinear grid</dt>
 <dd>
-<p>In the context of this layered standard, an n-d lookup table on a rectilinear grid is a sampled representation of a function of n input variables \(y=F(x_1, x_2, x_3, \dots, x_n)\) sampled on the vertices of a rectilinear grid.</p>
+<p>In the context of this layered standard, an n-dimensional lookup table on a rectilinear grid is a sampled representation of a function of n input variables \(y=F(x_1, x_2, x_3, \dots, x_n)\) sampled on the vertices of a rectilinear grid.</p>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -926,15 +927,15 @@ However, for the example lookup tables of this document, the sampling points of 
   &lt;Dimension start="2"/&gt;
   &lt;Dimension start="3"/&gt;
 &lt;/Float64&gt;
-&lt;Int64 name="InterpolationOrder" valueReference="9" causality="parameter" start="1" /&gt;
+&lt;Int64 name="InterpolationOrder" valueReference="9" causality="parameter" start="1"/&gt;
 &lt;Float64 name="in_x" valueReference="6" causality="input" start="2"/&gt;
-&lt;Float64 name="in_y" valueReference="7" causality="local" /&gt;
-&lt;Float64 name="out_v" valueReference="8" causality="local" /&gt;
+&lt;Float64 name="in_y" valueReference="7" causality="local"/&gt;
+&lt;Float64 name="out_v" valueReference="8" causality="local"/&gt;
 &lt;!-- ... --&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>These variables are grouped in a terminal with the terminalKind <code>org.fmi-standard.fmi-ls-struct.map.rectilinearGrid</code> in the <code>TerminalsAndIcons.xml</code> file:</p>
+<p>These variables are grouped in a terminal with the terminalKind <code>org.fmi-standard.fmi-ls-struct.map.rectilinearGrid</code> in the <code>terminalsAndIcons/terminalsAndIcons.xml</code> file:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -942,14 +943,14 @@ However, for the example lookup tables of this document, the sampling points of 
 &lt;fmiTerminalsAndIcons fmiVersion="3.0"&gt;
   &lt;Terminals&gt;
     &lt;Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
-      &lt;TerminalMemberVariable variableName="x"     memberName="x"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
-      &lt;TerminalMemberVariable variableName="in_x"  memberName="in_x"  variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
-      &lt;TerminalMemberVariable variableName="y"     memberName="y"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
-      &lt;TerminalMemberVariable variableName="in_y"  memberName="in_y"  variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
-      &lt;TerminalMemberVariable variableName="v"     memberName="v"     variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
-      &lt;TerminalMemberVariable variableName="out_v" memberName="out_v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" /&gt;
+      &lt;TerminalMemberVariable variableName="x"     memberName="x"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain"/&gt;
+      &lt;TerminalMemberVariable variableName="in_x"  memberName="in_x"  variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput"/&gt;
+      &lt;TerminalMemberVariable variableName="y"     memberName="y"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain"/&gt;
+      &lt;TerminalMemberVariable variableName="in_y"  memberName="in_y"  variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput"/&gt;
+      &lt;TerminalMemberVariable variableName="v"     memberName="v"     variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"/&gt;
+      &lt;TerminalMemberVariable variableName="out_v" memberName="out_v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput"/&gt;
       &lt;!-- Example of an additional related variable --&gt;
-      &lt;TerminalMemberVariable variableName="InterpolationOrder" memberName="InterpolationOrder" variableKind="com.example.related" /&gt;
+      &lt;TerminalMemberVariable variableName="InterpolationOrder" memberName="InterpolationOrder" variableKind="com.example.related"/&gt;
     &lt;/Terminal&gt;
   &lt;/Terminals&gt;
 &lt;/fmiTerminalsAndIcons&gt;</code></pre>
@@ -970,9 +971,9 @@ Compared to rectilinear maps, irregular maps are more general because they can d
 <h3 id="definitions-3">5.1. Definitions</h3>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">n-d lookup table on an irregular grid</dt>
+<dt class="hdlist1">n-dimensional lookup table on an irregular grid</dt>
 <dd>
-<p>In the context of this layered standard, an n-d lookup table on an irregular grid is a sampled representation of a function of n input variables \(y=F(x_1, x_2, x_3, \dots, x_n)\) sampled on arbitrarily chosen points of the domain.</p>
+<p>In the context of this layered standard, an n-dimensional lookup table on an irregular grid is a sampled representation of a function of n input variables \(y=F(x_1, x_2, x_3, \dots, x_n)\) sampled on arbitrarily chosen points of the domain.</p>
 </dd>
 <dt class="hdlist1">terminalKind</dt>
 <dd>
@@ -1011,7 +1012,7 @@ A map on a 1-dimensional domain can be equivalently represented by a terminal of
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Any n-d lookup table that can be described with <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"</code> can also be represented by an n-d lookup table with <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"</code>.
+Any n-dimensional lookup table that can be described with <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"</code> can also be represented by an n-dimensional lookup table with <code>terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"</code>.
 </td>
 </tr>
 </table>
@@ -1046,18 +1047,18 @@ The reverse is not true in general. An irregular map can only be represented as 
 &lt;fmiTerminalsAndIcons fmiVersion="3.0"&gt;
   &lt;Terminals&gt;
     &lt;Terminal name="points" terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
-      &lt;TerminalMemberVariable variableName="x" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
-      &lt;TerminalMemberVariable variableName="in_x" memberName="OpPoint_x" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
-      &lt;TerminalMemberVariable variableName="y" memberName="y" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
+      &lt;TerminalMemberVariable variableName="x" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain"/&gt;
+      &lt;TerminalMemberVariable variableName="in_x" memberName="OpPoint_x" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput"/&gt;
+      &lt;TerminalMemberVariable variableName="y" memberName="y" variableKind="org.fmi-standard.fmi-ls-struct.map.domain"/&gt;
       &lt;!-- Optional domainInput for y is omitted intentionally in this example --&gt;
-      &lt;TerminalMemberVariable variableName="z" memberName="z" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
-      &lt;TerminalMemberVariable variableName="in_z" memberName="OpPoint_z" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
-      &lt;TerminalMemberVariable variableName="v1" memberName="v1" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
+      &lt;TerminalMemberVariable variableName="z" memberName="z" variableKind="org.fmi-standard.fmi-ls-struct.map.domain"/&gt;
+      &lt;TerminalMemberVariable variableName="in_z" memberName="OpPoint_z" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput"/&gt;
+      &lt;TerminalMemberVariable variableName="v1" memberName="v1" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"/&gt;
       &lt;!-- Optional codomainOutput for v1 is omitted intentionally in this example --&gt;
-      &lt;TerminalMemberVariable variableName="v2" memberName="v2" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
-      &lt;TerminalMemberVariable variableName="out_v2" memberName="result_2" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" /&gt;
+      &lt;TerminalMemberVariable variableName="v2" memberName="v2" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"/&gt;
+      &lt;TerminalMemberVariable variableName="out_v2" memberName="result_2" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput"/&gt;
       &lt;!-- Example of an additional related variable --&gt;
-      &lt;TerminalMemberVariable variableName="InterpolationOrder" memberName="InterpolationOrder" variableKind="com.example.related" /&gt;
+      &lt;TerminalMemberVariable variableName="InterpolationOrder" memberName="InterpolationOrder" variableKind="com.example.related"/&gt;
     &lt;/Terminal&gt;
   &lt;/Terminals&gt;
 &lt;/fmiTerminalsAndIcons&gt;</code></pre>
@@ -1081,10 +1082,10 @@ The reverse is not true in general. An irregular map can only be represented as 
 &lt;Float64 name="v2" valueReference="5" causality="parameter" start="1 4 3"&gt;
   &lt;Dimension start="3"/&gt;
 &lt;/Float64&gt;
-&lt;Int64 name="InterpolationOrder" valueReference="6" causality="parameter" start="1" /&gt;
+&lt;Int64 name="InterpolationOrder" valueReference="6" causality="parameter" start="1"/&gt;
 &lt;Float64 name="in_x" valueReference="7" causality="input" start="2"/&gt;
-&lt;Float64 name="in_z" valueReference="8" causality="local" /&gt;
-&lt;Float64 name="out_v2" valueReference="10" causality="local" /&gt;
+&lt;Float64 name="in_z" valueReference="8" causality="local"/&gt;
+&lt;Float64 name="out_v2" valueReference="10" causality="local"/&gt;
 &lt;!-- ... --&gt;</code></pre>
 </div>
 </div>
@@ -1113,14 +1114,14 @@ The reverse is not true in general. An irregular map can only be represented as 
 &lt;fmiTerminalsAndIcons fmiVersion="3.0"&gt;
   &lt;Terminals&gt;
     &lt;Terminal name="points" terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
-      &lt;TerminalMemberVariable variableName="x" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
-      &lt;TerminalMemberVariable variableName="in_x" memberName="in_x" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
-      &lt;TerminalMemberVariable variableName="y" memberName="y" variableKind="org.fmi-standard.fmi-ls-struct.map.domain" /&gt;
-      &lt;TerminalMemberVariable variableName="in_y" memberName="in_y" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput" /&gt;
-      &lt;TerminalMemberVariable variableName="v" memberName="v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain" /&gt;
-      &lt;TerminalMemberVariable variableName="out_v" memberName="out_v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput" /&gt;
+      &lt;TerminalMemberVariable variableName="x" memberName="x" variableKind="org.fmi-standard.fmi-ls-struct.map.domain"/&gt;
+      &lt;TerminalMemberVariable variableName="in_x" memberName="in_x" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput"/&gt;
+      &lt;TerminalMemberVariable variableName="y" memberName="y" variableKind="org.fmi-standard.fmi-ls-struct.map.domain"/&gt;
+      &lt;TerminalMemberVariable variableName="in_y" memberName="in_y" variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput"/&gt;
+      &lt;TerminalMemberVariable variableName="v" memberName="v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"/&gt;
+      &lt;TerminalMemberVariable variableName="out_v" memberName="out_v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput"/&gt;
       &lt;!-- Example of an additional related variable --&gt;
-      &lt;TerminalMemberVariable variableName="InterpolationOrder" memberName="InterpolationOrder" variableKind="com.example.related" /&gt;
+      &lt;TerminalMemberVariable variableName="InterpolationOrder" memberName="InterpolationOrder" variableKind="com.example.related"/&gt;
     &lt;/Terminal&gt;
   &lt;/Terminals&gt;
 &lt;/fmiTerminalsAndIcons&gt;</code></pre>
@@ -1129,19 +1130,19 @@ The reverse is not true in general. An irregular map can only be represented as 
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;!-- ... --&gt;
-&lt;Float64 name="x" valueReference="1" causality="parameter" start="2.0 2.0 2.0 3.0 3.0 3.0"&gt;
+&lt;Float64 name="x" valueReference="1" causality="parameter" start="2 2 2 3 3 3"&gt;
   &lt;Dimension start="6"/&gt;
 &lt;/Float64&gt;
-&lt;Float64 name="y" valueReference="2" causality="parameter" start="10.0 25.0 30.0 10.0 25.0 30.0"&gt;
+&lt;Float64 name="y" valueReference="2" causality="parameter" start="10 25 30 10 25 30"&gt;
   &lt;Dimension start="6"/&gt;
 &lt;/Float64&gt;
-&lt;Float64 name="v" valueReference="3" causality="parameter" start="11.0 12.0 13.0 21.0 22.0 23.0"&gt;
+&lt;Float64 name="v" valueReference="3" causality="parameter" start="11 12 13 21 22 23"&gt;
   &lt;Dimension start="6"/&gt;
 &lt;/Float64&gt;
-&lt;Int64 name="InterpolationOrder" valueReference="4" causality="parameter" start="1" /&gt;
-&lt;Float64 name="in_x" valueReference="5" causality="input" start="2.0"/&gt;
-&lt;Float64 name="in_y" valueReference="6" causality="input" start="10.0"/&gt;
-&lt;Float64 name="out_v" valueReference="10" causality="local" /&gt;
+&lt;Int64 name="InterpolationOrder" valueReference="4" causality="parameter" start="1"/&gt;
+&lt;Float64 name="in_x" valueReference="5" causality="input" start="2"/&gt;
+&lt;Float64 name="in_y" valueReference="6" causality="input" start="10"/&gt;
+&lt;Float64 name="out_v" valueReference="10" causality="local"/&gt;
 &lt;!-- ... --&gt;</code></pre>
 </div>
 </div>

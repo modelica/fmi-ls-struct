@@ -19,10 +19,10 @@
 <Float64 name="v2" valueReference="5" causality="parameter" start="1 4 3">
   <Dimension start="3"/>
 </Float64>
-<Int64 name="InterpolationOrder" valueReference="6" causality="parameter" start="1" />
+<Int64 name="InterpolationOrder" valueReference="6" causality="parameter" start="1"/>
 <Float64 name="in_x" valueReference="7" causality="input" start="2"/>
-<Float64 name="in_z" valueReference="8" causality="local" />
-<Float64 name="out_v2" valueReference="10" causality="local" />
+<Float64 name="in_z" valueReference="8" causality="local"/>
+<Float64 name="out_v2" valueReference="10" causality="local"/>
 <!-- end::variables[] -->
   </ModelVariables>
   <ModelStructure>
