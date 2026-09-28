@@ -117,6 +117,12 @@ The manifest file shall be stored inside the FMU at the following path: `/extra/
 n-dimensional lookup table::
 In the context of this layered standard, an n-dimensional lookup table is a sampled representation of an m-valued function of n input variables latexmath:[(y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)], sampled on points of the n-dimensional domain.
 Such an n-dimensional lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.
+More precisely, the domain is a set whose points have n logical scalar coordinates and the codomain is a set whose values have m logical scalar components.
+The domain and codomain need not be vector spaces; their scalar coordinates or components may also have different FMI data types.
+
+In this layered standard, each logical domain coordinate is represented by one terminal member variable with `variableKind=org.fmi-standard.fmi-ls-struct.map.domain`.
+Each logical codomain component is represented by one terminal member variable with `variableKind=org.fmi-standard.fmi-ls-struct.map.codomain`.
+The dimensions and elements of these variables describe the sampling structure and sampled points or values; they do not add logical coordinates or components to the domain or codomain.
 
 Each lookup table is represented by a terminal with FMI variables that represent the sampling points of the domain and the sampled values of the codomain.
 
@@ -135,7 +141,8 @@ for maps sampled on the vertices of an irregular grid ("point cloud").
 We want to represent a sampled map from a domain set to a codomain by providing sampled points in the domain set and the values they are mapped to.
 
 `org.fmi-standard.fmi-ls-struct.map.domain`::
-For each of the n dimensions of the domain set, a 1-dimensional array variable containing the coordinates (along this dimension) is provided. +
+For each of the n logical coordinates of the domain set, one 1-dimensional array variable containing the sampling coordinates along this dimension is provided.
+The variable represents one logical domain coordinate, irrespective of the length of the array. +
 The `causality` of such a variable is `parameter` if the sampling points are meant to be changed after the FMU is created, and `constant` otherwise.
 
 `org.fmi-standard.fmi-ls-struct.map.domainInput`::
@@ -150,7 +157,7 @@ The data type of a `domainInput` variable shall be identical to the data type of
 Corresponding variable pairs may have different data types from other pairs.
 
 `org.fmi-standard.fmi-ls-struct.map.codomain`::
-For each of the represented points in the domain set, the values to which they are mapped are provided.
+For each logical component of the codomain and for each represented point in the domain set, the value to which the point is mapped is provided.
 The shape of this variable is grid-type-specific: for a rectilinear grid it is an n-dimensional array (one dimension per domain axis), while for an irregular grid it is a 1-dimensional array (one entry per sample point).
 +
 NOTE: There can be multiple terminal member variables with `variableKind` `codomain` to represent multiple maps in one terminal.
@@ -204,7 +211,8 @@ terminalKind::
 A terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"` defines a map on the vertices of a rectilinear grid.
 
 domain::
-For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
+For each of the n logical domain coordinates of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points along this coordinate must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
+Each such variable represents one logical domain coordinate; its array elements are sampling points and do not represent additional domain coordinates.
 
 ==== `orderingConstraint` annotation
 
@@ -236,7 +244,7 @@ The constraint applies to array elements, not to the order of `TerminalMemberVar
 A scalar variable trivially satisfies any ordering constraint, since there are no multiple values to compare.
 
 codomain::
-For each of the m dimensions of the codomain, the sampled function values (along this dimension of the codomain) are stored in this n-dimensional array variable and referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
+For each of the m logical components of the codomain, the sampled function values for that component are stored in one n-dimensional array variable and referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
 
 The length of the i-th domain vector must be equal to length of the i-th codomain dimension.
 
@@ -281,10 +289,11 @@ terminalKind::
 A terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` defines a map on the vertices of an irregular grid.
 
 domain::
-For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
+For each of the n logical domain coordinates of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points along this coordinate must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
+Each such variable represents one logical domain coordinate; its array elements are sampling points and do not represent additional domain coordinates.
 
 codomain::
-For each of the m dimensions of the codomain of the lookup table, a 1-dimensional array variable containing the sampling values of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
+For each of the m logical components of the codomain of the lookup table, a 1-dimensional array variable containing the sampled values for that component must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
 
 For domain arrays latexmath:[x=[x_1, x_2, \dots, x_N\], y=[y_1, y_2, \dots, y_N\], z=[z_1, z_2, \dots, z_N\], \dots]
 and codomain arrays latexmath:[u=[u_1, u_2, \dots, u_N\], v=[v_1, v_2, \dots, v_N\], \dots], each sample index latexmath:[i \in \{1, \dots, N\}] maps the tuple latexmath:[(x_i, y_i, z_i, \dots)] to the values latexmath:[(u_i, v_i, \dots)].
