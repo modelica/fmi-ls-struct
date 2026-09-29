@@ -204,6 +204,35 @@ A terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGri
 domain::
 For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.domain"`.
 
+==== `orderingConstraint` annotation
+
+The optional FMI `Annotation` with `type="org.fmi-standard.fmi-ls-struct.orderingConstraint"` specifies the ordering required for the values of the referenced domain variable in its FMI serialization order.
+If the annotation is omitted, its effective value is `unordered`.
+The annotation describes the ordering of the sampling points along one rectilinear-grid axis.
+
+`unordered`::
+No ordering requirement is imposed.
+
+`increasing`::
+Each value shall be greater than or equal to the preceding value.
+
+`decreasing`::
+Each value shall be less than or equal to the preceding value.
+
+`strictlyIncreasing`::
+Each value shall be greater than the preceding value.
+
+`strictlyDecreasing`::
+Each value shall be less than the preceding value.
+
+The annotation content shall contain exactly one of the values above.
+For FMI numeric variable types, values shall be compared numerically.
+For FMI `String` variables, values shall be compared lexicographically according to their Unicode character sequences.
+For other FMI variable types, an ordered constraint shall not be used.
+The annotation shall only be used for regular-map domain variables.
+The constraint applies to array elements, not to the order of `TerminalMemberVariable` elements in the XML.
+A scalar variable trivially satisfies any ordering constraint, since there are no multiple values to compare.
+
 codomain::
 For each of the m dimensions of the codomain, the sampled function values (along this dimension of the codomain) are stored in this n-dimensional array variable and referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
 

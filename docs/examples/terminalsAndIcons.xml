@@ -2,9 +2,17 @@
 <fmiTerminalsAndIcons fmiVersion="3.0">
   <Terminals>
     <Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid" matchingRule="org.fmi-standard.fmi-ls-struct.map">
-      <TerminalMemberVariable variableName="x"     memberName="x"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain"/>
+      <TerminalMemberVariable variableName="x"     memberName="x"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain">
+        <Annotations>
+          <Annotation type="org.fmi-standard.fmi-ls-struct.orderingConstraint">strictlyIncreasing</Annotation>
+        </Annotations>
+      </TerminalMemberVariable>
       <TerminalMemberVariable variableName="in_x"  memberName="in_x"  variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput"/>
-      <TerminalMemberVariable variableName="y"     memberName="y"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain"/>
+      <TerminalMemberVariable variableName="y"     memberName="y"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain">
+        <Annotations>
+          <Annotation type="org.fmi-standard.fmi-ls-struct.orderingConstraint">strictlyIncreasing</Annotation>
+        </Annotations>
+      </TerminalMemberVariable>
       <TerminalMemberVariable variableName="in_y"  memberName="in_y"  variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput"/>
       <TerminalMemberVariable variableName="v"     memberName="v"     variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"/>
       <TerminalMemberVariable variableName="out_v" memberName="out_v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput"/>
