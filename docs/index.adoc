@@ -120,6 +120,8 @@ Such an n-dimensional lookup table could be also called a map from the n-dimensi
 
 Each lookup table is represented by a terminal with FMI variables that represent the sampling points of the domain and the sampled values of the codomain.
 
+NOTE: Some tools and literature also refer to the domain sampling points as breakpoints or grid coordinates.
+
 ==== `terminalKind` attribute values
 
 `org.fmi-standard.fmi-ls-struct.map.rectilinearGrid`::
