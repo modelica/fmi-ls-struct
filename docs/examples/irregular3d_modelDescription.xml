@@ -4,24 +4,24 @@
   <ModelVariables>
     <Float64 name="time" valueReference="0" causality="independent"/>
 <!-- tag::variables[] -->
-<Float64 name="x" valueReference="1" causality="parameter" start="2 3 10">
+<Float32 name="x" valueReference="1" causality="parameter" start="2.5 3.5 10.5">
   <Dimension start="3"/>
-</Float64>
-<Float64 name="y" valueReference="2" causality="parameter" start="10 25 30">
+</Float32>
+<UInt32 name="y" valueReference="2" causality="parameter" start="10 25 30">
   <Dimension start="3"/>
-</Float64>
-<Float64 name="z" valueReference="3" causality="parameter" start="10 28 30">
+</UInt32>
+<Float32 name="z" valueReference="3" causality="parameter" start="10.5 28.5 30.5">
   <Dimension start="3"/>
-</Float64>
-<Float64 name="v1" valueReference="4" causality="parameter" start="11 1 13">
+</Float32>
+<Int16 name="v1" valueReference="4" causality="parameter" start="11 1 13">
   <Dimension start="3"/>
-</Float64>
-<Float64 name="v2" valueReference="5" causality="parameter" start="1 4 3">
+</Int16>
+<Float64 name="v2" valueReference="5" causality="parameter" start="1.5 4.5 3.5">
   <Dimension start="3"/>
 </Float64>
 <Int64 name="InterpolationOrder" valueReference="6" causality="parameter" start="1"/>
-<Float64 name="in_x" valueReference="7" causality="input" start="2"/>
-<Float64 name="in_z" valueReference="8" causality="local"/>
+<Float32 name="in_x" valueReference="7" causality="input" start="2.5"/>
+<Int32 name="in_z" valueReference="8" causality="local"/>
 <Float64 name="out_v2" valueReference="10" causality="local"/>
 <!-- end::variables[] -->
   </ModelVariables>
