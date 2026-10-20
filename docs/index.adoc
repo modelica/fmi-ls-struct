@@ -314,7 +314,8 @@ codomain::
 For each of the m logical components of the codomain of the lookup table, a 1-dimensional array variable containing the sampled values for that component must be referenced with `variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"`.
 
 For domain arrays latexmath:[x=[x_1, x_2, \dots, x_N\], y=[y_1, y_2, \dots, y_N\], z=[z_1, z_2, \dots, z_N\], \dots]
-and codomain arrays latexmath:[u=[u_1, u_2, \dots, u_N\], v=[v_1, v_2, \dots, v_N\], \dots], each sample index latexmath:[i \in \{1, \dots, N\}] maps the tuple latexmath:[(x_i, y_i, z_i, \dots)] to the values latexmath:[(u_i, v_i, \dots)].
+and codomain arrays latexmath:[u=[u_1, u_2, \dots, u_N\], v=[v_1, v_2, \dots, v_N\], \dots], each sample index latexmath:[i \in \{1, \dots, N\}] maps the tuple latexmath:[(x_i, y_i, z_i, \dots)] to the values latexmath:[(u_i, v_i, \dots)]. +
+All domain arrays and codomain arrays must have the same length latexmath:[N]. 
 
 NOTE: A map on a 1-dimensional domain can be equivalently represented by a terminal of `terminalKind="org.fmi-standard.fmi-ls-struct.map.irregular"` or a terminal with `terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid"`.
 
