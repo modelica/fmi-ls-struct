@@ -478,8 +478,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>FMI Layered Standard for Structured Data (FMI-LS-STRUCT)</h1>
 <div class="details">
-<span id="revnumber">version 3542dc9,</span>
-<span id="revdate">2026-09-29</span>
+<span id="revnumber">version af867eb,</span>
+<span id="revdate">2026-10-21</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -506,7 +506,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#maps-sampled-on-rectilinear-grids">4. Maps sampled on rectilinear grids</a>
 <ul class="sectlevel2">
-<li><a href="#definitions-2">4.1. Definitions</a></li>
+<li><a href="#definitions-2">4.1. Definitions</a>
+<ul class="sectlevel3">
+<li><a href="#orderingconstraint-annotation">4.1.1. <code>orderingConstraint</code> annotation</a></li>
+</ul>
+</li>
 <li><a href="#2-d-example-of-a-lookup-table-on-a-rectilinear-grid">4.2. 2-d example of a lookup table on a rectilinear grid</a></li>
 </ul>
 </li>
@@ -702,12 +706,31 @@ Especially examples are defined in this style.
 <dt class="hdlist1">n-dimensional lookup table</dt>
 <dd>
 <p>In the context of this layered standard, an n-dimensional lookup table is a sampled representation of an m-valued function of n input variables \((y_1, y_2, \dots, y_m) = F(x_1, x_2, x_3, \dots, x_n)\), sampled on points of the n-dimensional domain.
-Such an n-dimensional lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.</p>
+Such an n-dimensional lookup table could be also called a map from the n-dimensional domain to an m-dimensional codomain.
+More precisely, the domain is a set whose points have n logical scalar coordinates and the codomain is a set whose values have m logical scalar components.
+The domain and codomain need not be vector spaces; their scalar coordinates or components may also have different FMI data types.</p>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
+<p>In this layered standard, each logical domain coordinate is represented by one terminal member variable with <code>variableKind=org.fmi-standard.fmi-ls-struct.map.domain</code>.
+Each logical codomain component is represented by one terminal member variable with <code>variableKind=org.fmi-standard.fmi-ls-struct.map.codomain</code>.
+The dimensions and elements of these variables describe the sampling structure and sampled points or values; they do not add logical coordinates or components to the domain or codomain.</p>
+</div>
+<div class="paragraph">
 <p>Each lookup table is represented by a terminal with FMI variables that represent the sampling points of the domain and the sampled values of the codomain.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Some tools and literature also refer to the domain sampling points as breakpoints or grid coordinates.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
 <h4 id="terminalkind-attribute-values">3.1.1. <code>terminalKind</code> attribute values</h4>
@@ -733,7 +756,8 @@ Such an n-dimensional lookup table could be also called a map from the n-dimensi
 <dl>
 <dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.domain</code></dt>
 <dd>
-<p>For each of the n dimensions of the domain set, a 1-dimensional array variable containing the coordinates (along this dimension) is provided.<br>
+<p>For each of the n logical coordinates of the domain set, one 1-dimensional array variable containing the sampling coordinates along this dimension is provided.
+The variable represents one logical domain coordinate, irrespective of the length of the array.<br>
 The <code>causality</code> of such a variable is <code>parameter</code> if the sampling points are meant to be changed after the FMU is created, and <code>constant</code> otherwise.</p>
 </dd>
 <dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.domainInput</code></dt>
@@ -750,7 +774,7 @@ Corresponding variable pairs may have different data types from other pairs.</p>
 </dd>
 <dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.codomain</code></dt>
 <dd>
-<p>For each of the represented points in the domain set, the values to which they are mapped are provided.
+<p>For each logical component of the codomain and for each represented point in the domain set, the value to which the point is mapped is provided.
 The shape of this variable is grid-type-specific: for a rectilinear grid it is an n-dimensional array (one dimension per domain axis), while for an irregular grid it is a 1-dimensional array (one entry per sample point).</p>
 <div class="admonitionblock note">
 <table>
@@ -877,11 +901,56 @@ In <a href="#ASAM-MCD2">[ASAM-MCD2]</a>, such a 1-d lookup table is called a <st
 </dd>
 <dt class="hdlist1">domain</dt>
 <dd>
-<p>For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with <code>variableKind="org.fmi-standard.fmi-ls-struct.map.domain"</code>.</p>
+<p>For each of the n logical domain coordinates of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points along this coordinate must be referenced with <code>variableKind="org.fmi-standard.fmi-ls-struct.map.domain"</code>.
+Each such variable represents one logical domain coordinate; its array elements are sampling points and do not represent additional domain coordinates.</p>
 </dd>
+</dl>
+</div>
+<div class="sect3">
+<h4 id="orderingconstraint-annotation">4.1.1. <code>orderingConstraint</code> annotation</h4>
+<div class="paragraph">
+<p>The optional FMI <code>Annotation</code> with <code>type="org.fmi-standard.fmi-ls-struct.orderingConstraint"</code> specifies the ordering required for the values of the referenced domain variable in its FMI serialization order.
+If the annotation is omitted, its effective value is <code>unordered</code>.
+The annotation describes the ordering of the sampling points along one rectilinear-grid axis.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>unordered</code></dt>
+<dd>
+<p>No ordering requirement is imposed.</p>
+</dd>
+<dt class="hdlist1"><code>increasing</code></dt>
+<dd>
+<p>Each value shall be greater than or equal to the preceding value.</p>
+</dd>
+<dt class="hdlist1"><code>decreasing</code></dt>
+<dd>
+<p>Each value shall be less than or equal to the preceding value.</p>
+</dd>
+<dt class="hdlist1"><code>strictlyIncreasing</code></dt>
+<dd>
+<p>Each value shall be greater than the preceding value.</p>
+</dd>
+<dt class="hdlist1"><code>strictlyDecreasing</code></dt>
+<dd>
+<p>Each value shall be less than the preceding value.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The annotation content shall contain exactly one of the values above.
+For FMI numeric variable types, values shall be compared numerically.
+For FMI <code>String</code> variables, values shall be compared lexicographically according to their Unicode character sequences.
+For other FMI variable types, an ordered constraint shall not be used.
+The annotation shall only be used for regular-map domain variables.
+The constraint applies to array elements, not to the order of <code>TerminalMemberVariable</code> elements in the XML.
+A scalar variable trivially satisfies any ordering constraint, since there are no multiple values to compare.</p>
+</div>
+<div class="dlist">
+<dl>
 <dt class="hdlist1">codomain</dt>
 <dd>
-<p>For each of the m dimensions of the codomain, the sampled function values (along this dimension of the codomain) are stored in this n-dimensional array variable and referenced with <code>variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"</code>.</p>
+<p>For each of the m logical components of the codomain, the sampled function values for that component are stored in one n-dimensional array variable and referenced with <code>variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"</code>.</p>
 </dd>
 </dl>
 </div>
@@ -901,6 +970,7 @@ However, for the example lookup tables of this document, the sampling points of 
 </td>
 </tr>
 </table>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -943,9 +1013,17 @@ However, for the example lookup tables of this document, the sampling points of 
 &lt;fmiTerminalsAndIcons fmiVersion="3.0"&gt;
   &lt;Terminals&gt;
     &lt;Terminal name="map2d" terminalKind="org.fmi-standard.fmi-ls-struct.map.rectilinearGrid" matchingRule="org.fmi-standard.fmi-ls-struct.map"&gt;
-      &lt;TerminalMemberVariable variableName="x"     memberName="x"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain"/&gt;
+      &lt;TerminalMemberVariable variableName="x"     memberName="x"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain"&gt;
+        &lt;Annotations&gt;
+          &lt;Annotation type="org.fmi-standard.fmi-ls-struct.orderingConstraint"&gt;strictlyIncreasing&lt;/Annotation&gt;
+        &lt;/Annotations&gt;
+      &lt;/TerminalMemberVariable&gt;
       &lt;TerminalMemberVariable variableName="in_x"  memberName="in_x"  variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput"/&gt;
-      &lt;TerminalMemberVariable variableName="y"     memberName="y"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain"/&gt;
+      &lt;TerminalMemberVariable variableName="y"     memberName="y"     variableKind="org.fmi-standard.fmi-ls-struct.map.domain"&gt;
+        &lt;Annotations&gt;
+          &lt;Annotation type="org.fmi-standard.fmi-ls-struct.orderingConstraint"&gt;strictlyIncreasing&lt;/Annotation&gt;
+        &lt;/Annotations&gt;
+      &lt;/TerminalMemberVariable&gt;
       &lt;TerminalMemberVariable variableName="in_y"  memberName="in_y"  variableKind="org.fmi-standard.fmi-ls-struct.map.domainInput"/&gt;
       &lt;TerminalMemberVariable variableName="v"     memberName="v"     variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"/&gt;
       &lt;TerminalMemberVariable variableName="out_v" memberName="out_v" variableKind="org.fmi-standard.fmi-ls-struct.map.codomainOutput"/&gt;
@@ -981,11 +1059,12 @@ Compared to rectilinear maps, irregular maps are more general because they can d
 </dd>
 <dt class="hdlist1">domain</dt>
 <dd>
-<p>For each of the n dimensions of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points (along this dimension) of the lookup table must be referenced with <code>variableKind="org.fmi-standard.fmi-ls-struct.map.domain"</code>.</p>
+<p>For each of the n logical domain coordinates of the lookup table, a 1-dimensional array variable (typically a parameter or a constant) containing the sampling points along this coordinate must be referenced with <code>variableKind="org.fmi-standard.fmi-ls-struct.map.domain"</code>.
+Each such variable represents one logical domain coordinate; its array elements are sampling points and do not represent additional domain coordinates.</p>
 </dd>
 <dt class="hdlist1">codomain</dt>
 <dd>
-<p>For each of the m dimensions of the codomain of the lookup table, a 1-dimensional array variable containing the sampling values of the lookup table must be referenced with <code>variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"</code>.</p>
+<p>For each of the m logical components of the codomain of the lookup table, a 1-dimensional array variable containing the sampled values for that component must be referenced with <code>variableKind="org.fmi-standard.fmi-ls-struct.map.codomain"</code>.</p>
 </dd>
 </dl>
 </div>
