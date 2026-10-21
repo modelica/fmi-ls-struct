@@ -156,7 +156,7 @@ NOTE: For a map evaluated during simulation, `input` is typically used when the 
 Other causalities may be used if their FMI-defined semantics are appropriate.
 For example, for an operating point set by the importer before simulation, `parameter` may be appropriate;
 `calculatedParameter` may be appropriate if it is computed during initialization or after tunable parameters change;
-and `independent` if the independent variable is used as a the operation point.
+and `independent` if the independent variable is used as the operation point.
 
 If present, this variable must be listed directly after the corresponding domain variable. +
 The `domainInput` variable is not required to be a scalar; it may have multiple dimensions.
