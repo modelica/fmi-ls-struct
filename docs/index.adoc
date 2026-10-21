@@ -143,11 +143,21 @@ We want to represent a sampled map from a domain set to a codomain by providing 
 `org.fmi-standard.fmi-ls-struct.map.domain`::
 For each of the n logical coordinates of the domain set, one 1-dimensional array variable containing the sampling coordinates along this dimension is provided.
 The variable represents one logical domain coordinate, irrespective of the length of the array. +
-The `causality` of such a variable is `parameter` if the sampling points are meant to be changed after the FMU is created, and `constant` otherwise.
+The causality of a `domain` variable is not restricted by this layered standard. +
+
+NOTE:  `causality="local"` with `variability="constant"` is used if the sampling points are determined when the FMU is generated, and causality `parameter` if the importer can set them during initialization (or, for tunable parameters, change them during runtime).
+Other causalities may be used if their FMI-defined semantics are appropriate, for example `input` for sampling points supplied externally during simulation, `local`/`output` for sampling points generated internally, or `calculatedParameter` if the sampling points are computed during initialization or after tunable parameters change.
 
 `org.fmi-standard.fmi-ls-struct.map.domainInput`::
-Optionally, for each `domain` variable at most one variable can be referenced that represents the current operating point (along this dimension).
-The `causality` of such a variable can be `input`, `output` or `local` (i.e. the operating point may be provided externally, computed internally, or exposed as an observable). +
+Optionally, for each `domain` variable at most one variable can be referenced that represents the current operating point (along this dimension). +
+The causality of a `domainInput` variable is not restricted by this layered standard. +
+
+NOTE: For a map evaluated during simulation, `input` is typically used when the operating point is supplied externally, `local` when it is computed internally, and `output` when it is computed internally and exposed.
+Other causalities may be used if their FMI-defined semantics are appropriate.
+For example, for an operating point set by the importer before simulation, `parameter` may be appropriate;
+`calculatedParameter` may be appropriate if it is computed during initialization or after tunable parameters change;
+and `independent` if the independent variable is used as the operation point.
+
 If present, this variable must be listed directly after the corresponding domain variable. +
 The `domainInput` variable is not required to be a scalar; it may have multiple dimensions.
 However the size of each `domainInput` variable must be the same for each domain: for nonscalar inputs latexmath:[v=[v_1,\dots,v_K\], w=[w_1, \dots, w_K\], \dots] the function is evaluated element-wise and we get an output vector latexmath:[z=[f(v_1, w_1, \dots), \dots, f(v_K, w_K, \dots)]].
@@ -157,14 +167,22 @@ The data type of a `domainInput` variable shall be identical to the data type of
 Corresponding variable pairs may have different data types from other pairs.
 
 `org.fmi-standard.fmi-ls-struct.map.codomain`::
-For each logical component of the codomain and for each represented point in the domain set, the value to which the point is mapped is provided.
-The shape of this variable is grid-type-specific: for a rectilinear grid it is an n-dimensional array (one dimension per domain axis), while for an irregular grid it is a 1-dimensional array (one entry per sample point).
-+
+For each logical component of the codomain and for each represented point in the domain set, the value to which the point is mapped is provided. +
+The shape of this variable is grid-type-specific: for a rectilinear grid it is an n-dimensional array (one dimension per domain axis), while for an irregular grid it is a 1-dimensional array (one entry per sample point). +
+The causality of a `codomain` variable is not restricted by this layered standard. +
+
+NOTE:  `causality="local"` with `variability="constant"` is used if the sampling points are determined when the FMU is generated, and causality `parameter` if the importer can set them during initialization (or, for tunable parameters, change them during runtime).
+Other causalities may be used if their FMI-defined semantics are appropriate, for example `input` for sampling points supplied externally during simulation, `local`/`output` for sampling points generated internally, or `calculatedParameter` if the sampling points are computed during initialization or after tunable parameters change.
+
 NOTE: There can be multiple terminal member variables with `variableKind` `codomain` to represent multiple maps in one terminal.
 
 `org.fmi-standard.fmi-ls-struct.map.codomainOutput`::
 Optionally, for each `codomain` variable at most one array variable can be referenced that represents the calculated output value of the map. +
-The `causality` of such a variable can be `output` or `local`, since it represents a value computed from the map and cannot be driven from outside the FMU. +
+The causality of a `codomainOutput` variable shall be `output`, `calculatedParameter`, or `local`, since it represents a value computed from the map and cannot be changed from outside the FMU. +
+
+NOTE: `local` or `output` are typically used if the value changes during runtime.
+`calculatedParameter` may be appropriate when the value is only computed during initialization or after tunable parameters change. +
+
 If present, a `codomainOutput` variable must be listed directly after the corresponding `codomain` variable. +
 The data type of a `codomainOutput` variable shall be identical to the data type of the corresponding `codomain` variable.
 Corresponding variable pairs may have different data types from other pairs.
