@@ -478,8 +478,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>FMI Layered Standard for Structured Data (FMI-LS-STRUCT)</h1>
 <div class="details">
-<span id="revnumber">version af867eb,</span>
-<span id="revdate">2026-10-21</span>
+<span id="revnumber">version a711118,</span>
+<span id="revdate">2026-10-27</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -758,24 +758,80 @@ Some tools and literature also refer to the domain sampling points as breakpoint
 <dd>
 <p>For each of the n logical coordinates of the domain set, one 1-dimensional array variable containing the sampling coordinates along this dimension is provided.
 The variable represents one logical domain coordinate, irrespective of the length of the array.<br>
-The <code>causality</code> of such a variable is <code>parameter</code> if the sampling points are meant to be changed after the FMU is created, and <code>constant</code> otherwise.</p>
+The causality of a <code>domain</code> variable is not restricted by this layered standard.<br></p>
 </dd>
+</dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>causality="local"</code> with <code>variability="constant"</code> is used if the sampling points are determined when the FMU is generated, and causality <code>parameter</code> if the importer can set them during initialization (or, for tunable parameters, change them during runtime).
+Other causalities may be used if their FMI-defined semantics are appropriate, for example <code>input</code> for sampling points supplied externally during simulation, <code>local</code>/<code>output</code> for sampling points generated internally, or <code>calculatedParameter</code> if the sampling points are computed during initialization or after tunable parameters change.
+</td>
+</tr>
+</table>
+</div>
+<div class="dlist">
+<dl>
 <dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.domainInput</code></dt>
 <dd>
-<p>Optionally, for each <code>domain</code> variable at most one variable can be referenced that represents the current operating point (along this dimension).
-The <code>causality</code> of such a variable can be <code>input</code>, <code>output</code> or <code>local</code> (i.e. the operating point may be provided externally, computed internally, or exposed as an observable).<br>
-If present, this variable must be listed directly after the corresponding domain variable.<br>
+<p>Optionally, for each <code>domain</code> variable at most one variable can be referenced that represents the current operating point (along this dimension).<br>
+The causality of a <code>domainInput</code> variable is not restricted by this layered standard.<br></p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For a map evaluated during simulation, <code>input</code> is typically used when the operating point is supplied externally, <code>local</code> when it is computed internally, and <code>output</code> when it is computed internally and exposed.
+Other causalities may be used if their FMI-defined semantics are appropriate.
+For example, for an operating point set by the importer before simulation, <code>parameter</code> may be appropriate;
+<code>calculatedParameter</code> may be appropriate if it is computed during initialization or after tunable parameters change;
+and <code>independent</code> if the independent variable is used as a the operation point.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If present, this variable must be listed directly after the corresponding domain variable.<br>
 The <code>domainInput</code> variable is not required to be a scalar; it may have multiple dimensions.
 However the size of each <code>domainInput</code> variable must be the same for each domain: for nonscalar inputs \(v=[v_1,\dots,v_K], w=[w_1, \dots, w_K], \dots\) the function is evaluated element-wise and we get an output vector \(z=[f(v_1, w_1, \dots), \dots, f(v_K, w_K, \dots)\)].
 The indices \(1, \dots, K\) are the serialization indices of the nonscalar input variable and \(K\) is the product of dimension sizes.
 These indices are not related to the indices of the domain arrays.<br>
 The data type of a <code>domainInput</code> variable shall be identical to the data type of the corresponding <code>domain</code> variable.
 Corresponding variable pairs may have different data types from other pairs.</p>
-</dd>
+</div>
+<div class="dlist">
+<dl>
 <dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.codomain</code></dt>
 <dd>
-<p>For each logical component of the codomain and for each represented point in the domain set, the value to which the point is mapped is provided.
-The shape of this variable is grid-type-specific: for a rectilinear grid it is an n-dimensional array (one dimension per domain axis), while for an irregular grid it is a 1-dimensional array (one entry per sample point).</p>
+<p>For each logical component of the codomain and for each represented point in the domain set, the value to which the point is mapped is provided.<br>
+The shape of this variable is grid-type-specific: for a rectilinear grid it is an n-dimensional array (one dimension per domain axis), while for an irregular grid it is a 1-dimensional array (one entry per sample point).<br>
+The causality of a <code>codomain</code> variable is not restricted by this layered standard.<br></p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>causality="local"</code> with <code>variability="constant"</code> is used if the sampled values are determined when the FMU is generated, and causality <code>parameter</code> if the importer can set them during initialization (or, for tunable parameters, change them during runtime).
+Other causalities may be used if their FMI-defined semantics are appropriate, for example <code>input</code> for sampled values supplied externally during simulation, <code>local</code>/<code>output</code> for sampled values generated internally, or <code>calculatedParameter</code> if the sampled values are computed during initialization or after tunable parameters change.
+</td>
+</tr>
+</table>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -788,16 +844,32 @@ There can be multiple terminal member variables with <code>variableKind</code> <
 </tr>
 </table>
 </div>
-</dd>
+<div class="dlist">
+<dl>
 <dt class="hdlist1"><code>org.fmi-standard.fmi-ls-struct.map.codomainOutput</code></dt>
 <dd>
 <p>Optionally, for each <code>codomain</code> variable at most one array variable can be referenced that represents the calculated output value of the map.<br>
-The <code>causality</code> of such a variable can be <code>output</code> or <code>local</code>, since it represents a value computed from the map and cannot be driven from outside the FMU.<br>
-If present, a <code>codomainOutput</code> variable must be listed directly after the corresponding <code>codomain</code> variable.<br>
-The data type of a <code>codomainOutput</code> variable shall be identical to the data type of the corresponding <code>codomain</code> variable.
-Corresponding variable pairs may have different data types from other pairs.</p>
+The causality of a <code>codomainOutput</code> variable shall be <code>output</code>, <code>calculatedParameter</code>, or <code>local</code>, since it represents a value computed from the map and cannot be changed from outside the FMU.<br></p>
 </dd>
 </dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>local</code> or <code>output</code> are typically used if the value changes during runtime.
+<code>calculatedParameter</code> may be appropriate when the value is only computed during initialization or after tunable parameters change.<br>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If present, a <code>codomainOutput</code> variable must be listed directly after the corresponding <code>codomain</code> variable.<br>
+The data type of a <code>codomainOutput</code> variable shall be identical to the data type of the corresponding <code>codomain</code> variable.
+Corresponding variable pairs may have different data types from other pairs.</p>
 </div>
 <div class="admonitionblock note">
 <table>
