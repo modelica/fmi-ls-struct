@@ -171,8 +171,8 @@ For each logical component of the codomain and for each represented point in the
 The shape of this variable is grid-type-specific: for a rectilinear grid it is an n-dimensional array (one dimension per domain axis), while for an irregular grid it is a 1-dimensional array (one entry per sample point). +
 The causality of a `codomain` variable is not restricted by this layered standard. +
 
-NOTE:  `causality="local"` with `variability="constant"` is used if the sampling points are determined when the FMU is generated, and causality `parameter` if the importer can set them during initialization (or, for tunable parameters, change them during runtime).
-Other causalities may be used if their FMI-defined semantics are appropriate, for example `input` for sampling points supplied externally during simulation, `local`/`output` for sampling points generated internally, or `calculatedParameter` if the sampling points are computed during initialization or after tunable parameters change.
+NOTE:  `causality="local"` with `variability="constant"` is used if the sampled values are determined when the FMU is generated, and causality `parameter` if the importer can set them during initialization (or, for tunable parameters, change them during runtime).
+Other causalities may be used if their FMI-defined semantics are appropriate, for example `input` for sampled values supplied externally during simulation, `local`/`output` for sampled values generated internally, or `calculatedParameter` if the sampled values are computed during initialization or after tunable parameters change.
 
 NOTE: There can be multiple terminal member variables with `variableKind` `codomain` to represent multiple maps in one terminal.
 
