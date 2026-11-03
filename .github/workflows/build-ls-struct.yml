@@ -25,6 +25,8 @@ jobs:
     name: Build Layered Standard Struct
 
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout
@@ -65,14 +67,14 @@ jobs:
           docs/theme/js/*.js
         if-no-files-found: error
 
-    - name: extract branch name
-      id: extract_branch
-      shell: bash
-      run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
-    - name: deploy
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    - name: Deploy
+      if: >-
+        github.event_name == 'push' &&
+        (github.ref == 'refs/heads/main' ||
+         (github.ref_type == 'tag' && startsWith(github.ref_name, 'v')))
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: docs
-        destination_dir: ${{ steps.extract_branch.outputs.branch }}
+        destination_dir: ${{ github.ref_name }}
+        enable_jekyll: true
