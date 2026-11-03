@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription fmiVersion="3.0" modelName="struct" instantiationToken="">
+  <CoSimulation modelIdentifier="struct"/>
+  <ModelVariables>
+    <Float64 name="time" valueReference="0" causality="independent"/>
+<!-- tag::variables[] -->
+<Float32 name="x" valueReference="1" causality="parameter" start="2.5 3.5">
+  <Dimension start="2"/>
+</Float32>
+<Int32 name="y" valueReference="2" causality="parameter" start="10 25 30">
+  <Dimension start="3"/>
+</Int32>
+<Float64 name="v" valueReference="3" causality="parameter" start="11.5 12.5 13.5 21.5 22.5 23.5">
+  <Dimension start="2"/>
+  <Dimension start="3"/>
+</Float64>
+<Int64 name="InterpolationOrder" valueReference="9" causality="parameter" start="1"/>
+<Float32 name="in_x" valueReference="6" causality="input" start="2.5"/>
+<Int32 name="in_y" valueReference="7" causality="local"/>
+<Float64 name="out_v" valueReference="8" causality="local"/>
+<!-- end::variables[] -->
+  </ModelVariables>
+  <ModelStructure>
+  </ModelStructure>
+</fmiModelDescription>
