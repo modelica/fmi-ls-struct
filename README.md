@@ -1,16 +1,18 @@
 # FMI Layered Standard for Structured Data (FMI-LS-STRUCT)
 [![Build Specification](https://github.com/modelica/fmi-ls-struct/actions/workflows/build-ls-struct.yml/badge.svg)](https://github.com/modelica/fmi-ls-struct/actions/workflows/build-ls-struct.yml)
 
-This repository contains a current prototype draft for the FMI Layered Standard for Structured Data (FMI-LS-STRUCT) based on the [Functional Mock-up Interface][FMI]. The Standard release is now driven by the MAP-COORD project so that this standard can be applied to models following the Modelica, FMI and SSP standards. 
+This repository contains the development version of the FMI Layered Standard for Structured Data (FMI-LS-STRUCT) based on the [Functional Mock-up Interface][FMI]. 
 
 Based on FMI 3.0, this layered standard defines how variables (especially parameters) of an FMU can be structured and grouped in a more flexible way than with the "structured naming convention" of the FMI Standard. The first version of this layered standard is focused on the definition of sampled maps.
 
-The [FMI 3.0 Layered Standard for structuring of variables][spec] is currently maintained on [GitHub][githubspec] and is published [here][spec]. It is
-based on the [FMI][] standard.
+The [FMI 3.0 Layered Standard for structuring of variables][spec] is currently maintained on [GitHub][githubspec].
+The current state of development is published [here][spec].
+[Official releases][releases] are directly published via GitHub.
+The specification text of the latest release v1.0.0 can be accessed [here](https://fmi-standard.org/fmi-ls-struct/1.0.0/).
 
 ## News
 
-Dive into our latest video ["FMI, Layered Standards and ASAM Standards - Enabling Seamless SiL Simulation of Virtual ECUs"](https://www.youtube.com/watch?v=KzzKRa3jORs).
+Dive into our video ["FMI, Layered Standards and ASAM Standards - Enabling Seamless SiL Simulation of Virtual ECUs"](https://www.youtube.com/watch?v=KzzKRa3jORs).
 Discover how the cutting-edge FMI 3.0 standard and the layered standards based on it are revolutionizing the world of Software-in-the-Loop (SiL) simulations.
 
 During the presentation the three new layered standards for simulating virtual ECUs with FMI 3.0 are introduced:
