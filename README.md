@@ -5,7 +5,7 @@ This repository contains the development version of the FMI Layered Standard for
 
 Based on FMI 3.0, this layered standard defines how variables (especially parameters) of an FMU can be structured and grouped in a more flexible way than with the "structured naming convention" of the FMI Standard. The first version of this layered standard is focused on the definition of sampled maps.
 
-The [FMI 3.0 Layered Standard for structuring of variables][spec] is currently maintained on [GitHub][githubspec].
+The [FMI 3.0 Layered Standard for Structured Data][spec] is currently maintained on [GitHub][githubspec].
 The current state of development is published [here][spec].
 [Official releases][releases] are directly published via GitHub.
 The specification text of the latest release v1.0.0 can be accessed [here](https://fmi-standard.org/fmi-ls-struct/1.0.0/).
